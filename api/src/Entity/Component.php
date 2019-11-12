@@ -286,6 +286,7 @@ class Component
     /**
      * @var Organisation $owner The organisation that ownes this component (or better said it's repository)
      *
+     * @Assert\Valid
      * @ORM\ManyToOne(targetEntity="App\Entity\Organisation",cascade={"persist"})
      */
     private $owner;
@@ -293,6 +294,7 @@ class Component
     /**
 	 * @var ArrayCollection $apis The APIs provided by this component
 	 *
+     * @Assert\Valid
 	 * @maxDepth(1)
 	 * @Groups({"read"})
      * @ORM\OneToMany(targetEntity="App\Entity\API", mappedBy="component",cascade={"persist"})
@@ -302,6 +304,7 @@ class Component
     /**
 	 * @var ArrayCollection $organisations The organisations that provide this component
 	 *
+     * @Assert\Valid
 	 * @maxDepth(1)
 	 * @Groups({"read"})
      * @ORM\ManyToMany(targetEntity="App\Entity\Organisation", mappedBy="components",cascade={"persist"})
