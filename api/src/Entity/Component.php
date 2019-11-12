@@ -10,6 +10,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
@@ -25,13 +26,13 @@ use App\Controller\Add;
  * @category   	Entity
  *
  * @author     	Ruben van der Linde <ruben@conduction.nl>
- * @license    	EUPL 1.2 https://opensource.org/licenses/EUPL-1.2 
+ * @license    	EUPL 1.2 https://opensource.org/licenses/EUPL-1.2
  * @version    	1.0
  *
  * @link   		http//:www.conduction.nl
  * @package		Common Ground Component
  * @subpackage  Commonground Registratie Component (CGRC)
- *  
+ *
  * @ApiResource(
  *  normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
  *  denormalizationContext={"groups"={"write"}, "enable_max_depth"=true},
@@ -39,7 +40,7 @@ use App\Controller\Add;
  *  	"get",
  *      "add" ={
  *         "method"="POST",
- *         "path"="/add",    
+ *         "path"="/add",
  *         "controller"=Add::class,
  *         "read"=false,
  *         "output"=false
@@ -48,7 +49,7 @@ use App\Controller\Add;
  * 	itemOperations={
  *     "refresh" ={
  *         "method"="POST",
- *         "path"="/components/{id}/refresh",    
+ *         "path"="/components/{id}/refresh",
  *         "controller"=ComponentRefresh::class
  *     },
  *     "get"
@@ -59,7 +60,7 @@ use App\Controller\Add;
 class Component
 {
     /**
-     * @var \Ramsey\Uuid\UuidInterface $id The UUID identifier of this object
+     * @var UuidInterface $id The UUID identifier of this object
      * @example e2984465-190a-4562-829e-a8cca81aa35d
      *
      * @ApiProperty(
@@ -99,7 +100,7 @@ class Component
 	 *         }
 	 *     }
 	 * )
-	 * 
+	 *
      * @Assert\NotNull
      * @Assert\Length(
      *      max = 255
@@ -124,7 +125,7 @@ class Component
 	 *         }
 	 *     }
 	 * )
-	 * 
+	 *
      * @Assert\Length(
      *      max = 2550
      * )
@@ -149,7 +150,7 @@ class Component
 	 *         }
 	 *     }
 	 * )
-	 * 
+	 *
      * @Assert\Url
      * @Assert\Length(
      *      max = 255
@@ -174,7 +175,7 @@ class Component
 	 *         }
 	 *     }
 	 * )
-	 * 
+	 *
      * @Assert\Length(
      *      max = 255
      * )
@@ -197,7 +198,7 @@ class Component
 	 *         }
 	 *     }
 	 * )
-	 * 
+	 *
      * @Gedmo\Slug(fields={"name"})
      * @Assert\Length(
      *      max = 255
@@ -224,7 +225,7 @@ class Component
 	 *         }
 	 *     }
 	 * )
-	 * 
+	 *
      * @Assert\NotNull
      * @Assert\Url
      * @Assert\Length(
@@ -249,7 +250,7 @@ class Component
 	 *         }
 	 *     }
 	 * )
-	 * 
+	 *
      * @Assert\Length(
      *      max = 255
      * )
@@ -273,7 +274,7 @@ class Component
 	 *         }
 	 *     }
 	 * )
-	 * 
+	 *
      * @Assert\Length(
      *      max = 255
      * )
@@ -281,17 +282,17 @@ class Component
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $gitType;
-    
+
     /**
-     * @var Organisation $owner The organisation that ownes this component (or better said it's repository) 
+     * @var Organisation $owner The organisation that ownes this component (or better said it's repository)
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Organisation",cascade={"persist"})
      */
     private $owner;
 
-    /**     
+    /**
 	 * @var ArrayCollection $apis The APIs provided by this component
-	 * 
+	 *
 	 * @maxDepth(1)
 	 * @Groups({"read"})
      * @ORM\OneToMany(targetEntity="App\Entity\API", mappedBy="component",cascade={"persist"})
@@ -300,7 +301,7 @@ class Component
 
     /**
 	 * @var ArrayCollection $organisations The organisations that provide this component
-	 * 
+	 *
 	 * @maxDepth(1)
 	 * @Groups({"read"})
      * @ORM\ManyToMany(targetEntity="App\Entity\Organisation", mappedBy="components",cascade={"persist"})
@@ -413,16 +414,16 @@ class Component
 
         return $this;
     }
-    
+
     public function getOwner(): ?Organisation
     {
         return $this->owner;
     }
-    
+
     public function setOwner(?Organisation $owner): self
     {
         $this->owner = $owner;
-        
+
         return $this;
     }
 
