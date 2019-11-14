@@ -10,6 +10,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
@@ -21,13 +22,13 @@ use App\Controller\OrganisationController;
  * @category   	Entity
  *
  * @author     	Ruben van der Linde <ruben@conduction.nl>
- * @license    	EUPL 1.2 https://opensource.org/licenses/EUPL-1.2 
+ * @license    	EUPL 1.2 https://opensource.org/licenses/EUPL-1.2
  * @version    	1.0
  *
  * @link   		http//:www.conduction.nl
  * @package		Common Ground Component
  * @subpackage  Commonground Registratie Component (CGRC)
- * 
+ *
  * @ApiResource(
  *  normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
  *  denormalizationContext={"groups"={"write"}, "enable_max_depth"=true},
@@ -37,7 +38,7 @@ use App\Controller\OrganisationController;
  * 	itemOperations={
  *     "refresh" ={
  *          "method"="POST",
- *          "path"="/organisation/{id}/refresh",    
+ *          "path"="/organisation/{id}/refresh",
  *          "controller"=OrganisationRefresh::class
  *     },
  *     "get"
@@ -47,8 +48,8 @@ use App\Controller\OrganisationController;
  */
 class Organisation
 {
-    /**  
-     * @var \Ramsey\Uuid\UuidInterface $id The UUID identifier of this object
+    /**
+     * @var UuidInterface $id The UUID identifier of this object
      * @example e2984465-190a-4562-829e-a8cca81aa35d
      *
      * @ApiProperty(
@@ -113,7 +114,7 @@ class Organisation
 	 *         }
 	 *     }
 	 * )
-	 * 
+	 *
      * @Assert\Length(
      *      max = 2550
      * )
@@ -138,7 +139,7 @@ class Organisation
 	 *         }
 	 *     }
 	 * )
-	 *	 
+	 *
      * @Assert\Url
      * @Assert\Length(
      *      max = 255
@@ -162,13 +163,13 @@ class Organisation
 	 *         }
 	 *     }
 	 * )
-	 * 
+	 *
      * @Gedmo\Slug(fields={"name"})
      * @Groups({"read"})
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
-    
+
     /**
      * @var string $git The link to the git repository for this component
      * @example https://www.github.com/my-organisation/my-component.git
@@ -196,7 +197,7 @@ class Organisation
      * @ORM\Column(type="string", length=255)
      */
     private $git;
-    
+
     /**
      * @var string $gitId The git id for the repository for this component
      * @example my-component
@@ -222,7 +223,7 @@ class Organisation
 
     /**
 	 * @var ArrayCollection $components  The apis provided by this organisation
-	 * 
+	 *
 	 * @maxDepth(1)
      * @Groups({"read"})
      * @ORM\ManyToMany(targetEntity="App\Entity\Component", inversedBy="organisations")
@@ -231,7 +232,7 @@ class Organisation
 
     /**
 	 * @var ArrayCollection $apis The components provided by this organisation
-	 * 
+	 *
 	 * @maxDepth(1)
      * @Groups({"read"})
      * @ORM\ManyToMany(targetEntity="App\Entity\API", inversedBy="organisations")
@@ -296,28 +297,28 @@ class Organisation
 
         return $this;
     }
-    
+
     public function getGit(): ?string
     {
         return $this->git;
     }
-    
+
     public function setGit(string $git): self
     {
         $this->git = $git;
-        
+
         return $this;
     }
-    
+
     public function getGitId(): ?string
     {
         return $this->gitId;
     }
-    
+
     public function setGitId(?string $gitId): self
     {
         $this->gitId = $gitId;
-        
+
         return $this;
     }
 

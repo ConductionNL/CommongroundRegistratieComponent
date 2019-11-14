@@ -10,6 +10,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
@@ -22,13 +23,13 @@ use App\Controller\ApiController;
  * @category   	Entity
  *
  * @author     	Ruben van der Linde <ruben@conduction.nl>
- * @license    	EUPL 1.2 https://opensource.org/licenses/EUPL-1.2 
+ * @license    	EUPL 1.2 https://opensource.org/licenses/EUPL-1.2
  * @version    	1.0
  *
  * @link   		http//:www.common-ground.dev
  * @package		Common Ground Component
  * @subpackage  Commonground Registratie Component (CGRC)
- * 
+ *
  * @ApiResource(
  *  normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
  *  denormalizationContext={"groups"={"write"}, "enable_max_depth"=true},
@@ -38,7 +39,7 @@ use App\Controller\ApiController;
  * 	itemOperations={
  *     "refresh" ={
  *         "method"="POST",
- *          "path"="/apis/{id}/refresh",    
+ *          "path"="/apis/{id}/refresh",
  *          "controller"=ApiRefresh::class
  *     },
  *     "get"
@@ -49,7 +50,7 @@ use App\Controller\ApiController;
 class API
 {
     /**
-     * @var \Ramsey\Uuid\UuidInterface $id The UUID identifier of this object
+     * @var UuidInterface $id The UUID identifier of this object
      * @example e2984465-190a-4562-829e-a8cca81aa35d
      *
      * @ApiProperty(
@@ -86,8 +87,8 @@ class API
 	 *              "maxLength"=255
 	 *         }
 	 *     }
-	 * )	  
-	 * 
+	 * )
+	 *
      * @Assert\NotNull
      * @Assert\Length(
      *      max = 255
@@ -112,7 +113,7 @@ class API
 	 *         }
 	 *     }
 	 * )
-	 * 
+	 *
      * @Assert\Length(
      *      max = 2550
      * )
@@ -161,7 +162,7 @@ class API
 	 *         }
 	 *     }
 	 * )
-	 * 
+	 *
      * @Assert\Url
      * @Assert\Length(
      *      max = 255
@@ -185,7 +186,7 @@ class API
 	 *         }
 	 *     }
 	 * )
-	 * 
+	 *
      * @Gedmo\Slug(fields={"name"})
      * @Assert\Length(
      *      max = 255
@@ -210,7 +211,7 @@ class API
 	 *         }
 	 *     }
 	 * )
-	 * 
+	 *
      * @Assert\NotNull
      * @Assert\Url
      * @Assert\Length(
@@ -236,7 +237,7 @@ class API
 	 *         }
 	 *     }
 	 * )
-	 * 
+	 *
      * @Assert\Url
      * @Assert\Length(
      *      max = 255
@@ -246,9 +247,9 @@ class API
      */
     private $documentation;
 
-    /**     
+    /**
 	 * @var ArrayCollection $component The common ground component that this api provides
-	 * 
+	 *
 	 * @maxDepth(1)
      * @Groups({"read"})
      * @ORM\ManyToOne(targetEntity="App\Entity\Component", inversedBy="apis")
@@ -257,7 +258,7 @@ class API
 
     /**
 	 * @var ArrayCollection $organisations The organisations that provide this api
-	 * 
+	 *
 	 * @maxDepth(1)
      * @Groups({"read"})
      * @ORM\ManyToMany(targetEntity="App\Entity\Organisation", mappedBy="apis")
