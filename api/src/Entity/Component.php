@@ -2,26 +2,19 @@
 
 namespace App\Entity;
 
-use Gedmo\Mapping\Annotation as Gedmo;
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiProperty;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\Add;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
-
-
-use App\Controller\ComponentController;
-use App\Controller\Add;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * A Component
+ * A Component.
  *
  * @category   	Entity
  *
@@ -85,10 +78,11 @@ class Component
     private $id;
 
     /**
-	 * @var string $name The name of this component
+     * @var string The name of this component
+     *
      * @example My component
-	 *
-	 * @ApiProperty(
+     *
+     * @ApiProperty(
      * 	   iri="http://schema.org/name",
 	 *     attributes={
 	 *         "swagger_context"={
@@ -105,16 +99,17 @@ class Component
      * @Assert\Length(
      *      max = 255
      * )
-	 * @Groups({"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
-	 * @var string $description An short description of this component
+     * @var string An short description of this component
+     *
      * @example This is the best component ever
-	 *
-	 * @ApiProperty(
+     *
+     * @ApiProperty(
      * 	   iri="https://schema.org/description",
 	 *     attributes={
 	 *         "swagger_context"={
@@ -129,21 +124,22 @@ class Component
      * @Assert\Length(
      *      max = 2550
      * )
-	 * @Groups({"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
 
     /**
-	 * @var string $logo The logo for this component
+     * @var string The logo for this component
+     *
      * @example https://www.my-organisation.com/logo.png
-	 *
-	 * @ApiProperty(
+     *
+     * @ApiProperty(
      * 	   iri="https://schema.org/logo",
-	 *     attributes={
-	 *         "swagger_context"={
-	 *         	   "description" = "The logo for this component",
-	 *             "type"="string",
+     *     attributes={
+     *         "swagger_context"={
+     *         	   "description" = "The logo for this component",
+     *             "type"="string",
      *             "format"="url",
 	 *             "example"="https://www.my-organisation.com/logo.png",
 	 *             "maxLength"=255
@@ -155,20 +151,21 @@ class Component
      * @Assert\Length(
      *      max = 255
      * )
-	 * @Groups({"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $logo;
 
     /**
-	 * @var string $version The current production version of this component
+     * @var string The current production version of this component
+     *
      * @example v0.1.2.3-beta
-	 *
-	 * @ApiProperty(
-	 *     attributes={
-	 *         "swagger_context"={
-	 *         	   "description" = "The current production version of this component",
-	 *             "type"="string",
+     *
+     * @ApiProperty(
+     *     attributes={
+     *         "swagger_context"={
+     *         	   "description" = "The current production version of this component",
+     *             "type"="string",
      *             "format"="url",
 	 *             "example"="v0.1.2.3-beta",
 	 *             "maxLength"=255
@@ -179,13 +176,14 @@ class Component
      * @Assert\Length(
      *      max = 255
      * )
-	 * @Groups({"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $version;
 
     /**
-	 * @var string $slug The slug for this component
+     * @var string The slug for this component
+     *
      * @example my-organisation
 	 *
 	 * @ApiProperty(
@@ -203,21 +201,22 @@ class Component
      * @Assert\Length(
      *      max = 255
      * )
-	 * @Groups({"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
 
     /**
-	 * @var string $git The link to the git repository for this component
+     * @var string The link to the git repository for this component
+     *
      * @example https://www.github.com/my-organisation/my-component.git
-	 *
-	 * @ApiProperty(
+     *
+     * @ApiProperty(
      * 	   iri="https://schema.org/url",
-	 *     attributes={
-	 *         "swagger_context"={
-	 *         	   "description" = "The link to the git repository for this component",
-	 *             "type"="string",
+     *     attributes={
+     *         "swagger_context"={
+     *         	   "description" = "The link to the git repository for this component",
+     *             "type"="string",
      *             "format"="url",
 	 *             "example"="https://www.github.com/my-organisation/my-component.git",
 	 *             "maxLength"=255,
@@ -231,13 +230,14 @@ class Component
      * @Assert\Length(
      *      max = 255
      * )
-	 * @Groups({"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="string", length=255)
      */
     private $git;
 
     /**
-	 * @var string $gitId The git id for the repository for this component
+     * @var string The git id for the repository for this component
+     *
      * @example my-component
 	 *
 	 * @ApiProperty(
@@ -254,13 +254,13 @@ class Component
      * @Assert\Length(
      *      max = 255
      * )
-	 * @Groups({"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $gitId;
 
     /**
-	 * @var string $gitType The git type for the repository for this component
+     * @var string The git type for the repository for this component
      * @example({"Github", "Gitlab", "Bitbucket"})
 	 *
 	 * @ApiProperty(
@@ -278,7 +278,7 @@ class Component
      * @Assert\Length(
      *      max = 255
      * )
-	 * @Groups({"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $gitType;

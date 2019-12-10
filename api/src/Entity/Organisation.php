@@ -2,22 +2,18 @@
 
 namespace App\Entity;
 
-use Gedmo\Mapping\Annotation as Gedmo;
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiProperty;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
+use Symfony\Component\Validator\Constraints as Assert;
 
-use App\Controller\OrganisationController;
 /**
- * An Organisation
+ * An Organisation.
  *
  * @category   	Entity
  *
@@ -74,36 +70,38 @@ class Organisation
     private $id;
 
     /**
-	 * @var string $name The name of this organisation
+     * @var string The name of this organisation
+     *
      * @example My Organisation
-	 *
-	 * @ApiProperty(
+     *
+     * @ApiProperty(
      * 	   iri="https://schema.org/name",
-	 *     attributes={
-	 *         "openapi_context"={
-	 *         	   "description" = "The name of this organisation",
-	 *             "type"="string",
-	 *             "example"="My Organisation",
-	 *             "maxLength"=255,
-	 *             "required" = true
-	 *         }
-	 *     }
-	 * )
-	 *
+     *     attributes={
+     *         "openapi_context"={
+     *         	   "description" = "The name of this organisation",
+     *             "type"="string",
+     *             "example"="My Organisation",
+     *             "maxLength"=255,
+     *             "required" = true
+     *         }
+     *     }
+     * )
+     *
      * @Assert\NotNull
      * @Assert\Length(
      *      max = 255
      * )
-	 * @Groups({"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
-	 * @var string $description An short description of this organisation
+     * @var string An short description of this organisation
+     *
      * @example This is the best organisation ever
-	 *
-	 * @ApiProperty(
+     *
+     * @ApiProperty(
      * 	   iri="https://schema.org/description",
 	 *     attributes={
 	 *         "openapi_context"={
@@ -124,10 +122,11 @@ class Organisation
     private $description;
 
     /**
-	 * @var string $logo The logo for this organisation
+     * @var string The logo for this organisation
+     *
      * @example https://www.my-organisation.com/logo.png
-	 *
-	 * @ApiProperty(
+     *
+     * @ApiProperty(
      * 	   iri="https://schema.org/logo",
 	 *     attributes={
 	 *         "openapi_context"={
@@ -150,7 +149,8 @@ class Organisation
     private $logo;
 
     /**
-	 * @var string $slug The slug for this organisation
+     * @var string The slug for this organisation
+     *
      * @example my-organisation
 	 *
 	 * @ApiProperty(
@@ -171,7 +171,8 @@ class Organisation
     private $slug;
 
     /**
-     * @var string $git The link to the git repository for this component
+     * @var string The link to the git repository for this component
+     *
      * @example https://www.github.com/my-organisation/my-component.git
      *
      * @ApiProperty(
@@ -199,7 +200,8 @@ class Organisation
     private $git;
 
     /**
-     * @var string $gitId The git id for the repository for this component
+     * @var string The git id for the repository for this component
+     *
      * @example my-component
      *
      * @ApiProperty(

@@ -17,4 +17,5 @@ return [
     Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle::class => ['all' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class             => ['all' => true],
     Tbbc\MoneyBundle\TbbcMoneyBundle::class                                  => ['all' => true],
+    Knp\Bundle\MarkdownBundle\KnpMarkdownBundle::class                       => ['all' => true],
 ];

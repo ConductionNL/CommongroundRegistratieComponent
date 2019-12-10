@@ -1,11 +1,11 @@
 openapi: 3.0.2
 info:
-  title: 'Proto Component'
+  title: 'Common Ground Registratie Component'
   version: V.0.1
   description: |
     API Details
-    - Component: Proto Component
-    - Reference: pc
+    - Component: Common Ground Registratie Component
+    - Reference: cg
     - Enviroment: dev
     - Version: V.0.1
     - Repository: [online](https://github.com/ConductionNL/Proto-component-commonground) / [zip](https://github.com/ConductionNL/Proto-component-commonground/archive/master.zip)
@@ -15,6 +15,772 @@ info:
     'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         
     
 paths:
+  /a_p_is:
+    get:
+      tags:
+        - API
+      operationId: getAPICollection
+      summary: 'Retrieves the collection of API resources.'
+      responses:
+        200:
+          description: 'API collection response'
+          content:
+            application/hal+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/API-read'
+            application/ld+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/API-read'
+            application/vnd.api+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/API-read'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/API-read'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/API-read'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/API-read'
+            text/csv:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/API-read'
+            text/html:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/API-read'
+      parameters:
+        -
+          name: page
+          in: query
+          required: false
+          description: 'The collection page number'
+          schema:
+            type: integer
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+      produces:
+        - application/health+json
+  '/a_p_is/{id}':
+    get:
+      tags:
+        - API
+      operationId: getAPIItem
+      summary: 'Retrieves a API resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+      responses:
+        200:
+          description: 'API resource response'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/API-read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/API-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/API-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/API-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/API-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/API-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/API-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/API-read'
+        404:
+          description: 'Resource not found'
+      produces:
+        - application/health+json
+  /add:
+    post:
+      tags:
+        - Component
+      operationId: addComponentCollection
+      summary: 'Creates a Component resource.'
+      responses:
+        204:
+          description: 'Component resource created'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Component-write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Component-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Component-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Component-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Component-write'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Component-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Component-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Component-write'
+        description: 'The new Component resource'
+      parameters:
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+  '/apis/{id}/refresh':
+    post:
+      tags:
+        - API
+      operationId: refreshAPIItem
+      summary: 'Creates a API resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+      responses:
+        201:
+          description: 'API resource created'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/API-read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/API-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/API-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/API-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/API-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/API-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/API-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/API-read'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/API-write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/API-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/API-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/API-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/API-write'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/API-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/API-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/API-write'
+        description: 'The new API resource'
+  /components:
+    get:
+      tags:
+        - Component
+      operationId: getComponentCollection
+      summary: 'Retrieves the collection of Component resources.'
+      responses:
+        200:
+          description: 'Component collection response'
+          content:
+            application/hal+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Component-read'
+            application/ld+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Component-read'
+            application/vnd.api+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Component-read'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Component-read'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Component-read'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Component-read'
+            text/csv:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Component-read'
+            text/html:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Component-read'
+      parameters:
+        -
+          name: page
+          in: query
+          required: false
+          description: 'The collection page number'
+          schema:
+            type: integer
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+      produces:
+        - application/health+json
+  '/components/{id}':
+    get:
+      tags:
+        - Component
+      operationId: getComponentItem
+      summary: 'Retrieves a Component resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+      responses:
+        200:
+          description: 'Component resource response'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Component-read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Component-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Component-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Component-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Component-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Component-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Component-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Component-read'
+        404:
+          description: 'Resource not found'
+      produces:
+        - application/health+json
+  '/components/{id}/refresh':
+    post:
+      tags:
+        - Component
+      operationId: refreshComponentItem
+      summary: 'Creates a Component resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+      responses:
+        201:
+          description: 'Component resource created'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Component-read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Component-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Component-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Component-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Component-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Component-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Component-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Component-read'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Component-write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Component-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Component-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Component-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Component-write'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Component-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Component-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Component-write'
+        description: 'The new Component resource'
   /example_entities:
     get:
       tags:
@@ -520,8 +1286,456 @@ paths:
           name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
+  '/organisation/{id}/refresh':
+    post:
+      tags:
+        - Organisation
+      operationId: refreshOrganisationItem
+      summary: 'Creates a Organisation resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+      responses:
+        201:
+          description: 'Organisation resource created'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Organisation-read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Organisation-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Organisation-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organisation-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Organisation-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Organisation-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Organisation-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Organisation-read'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Organisation-write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Organisation-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Organisation-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Organisation-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Organisation-write'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Organisation-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Organisation-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Organisation-write'
+        description: 'The new Organisation resource'
+  /organisations:
+    get:
+      tags:
+        - Organisation
+      operationId: getOrganisationCollection
+      summary: 'Retrieves the collection of Organisation resources.'
+      responses:
+        200:
+          description: 'Organisation collection response'
+          content:
+            application/hal+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organisation-read'
+            application/ld+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organisation-read'
+            application/vnd.api+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organisation-read'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organisation-read'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organisation-read'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organisation-read'
+            text/csv:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organisation-read'
+            text/html:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organisation-read'
+      parameters:
+        -
+          name: page
+          in: query
+          required: false
+          description: 'The collection page number'
+          schema:
+            type: integer
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+      produces:
+        - application/health+json
+  '/organisations/{id}':
+    get:
+      tags:
+        - Organisation
+      operationId: getOrganisationItem
+      summary: 'Retrieves a Organisation resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+      responses:
+        200:
+          description: 'Organisation resource response'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Organisation-read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Organisation-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Organisation-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organisation-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Organisation-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Organisation-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Organisation-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Organisation-read'
+        404:
+          description: 'Resource not found'
+      produces:
+        - application/health+json
 components:
   schemas:
+    API-read:
+      type: object
+      description: 'An API'
+      properties:
+        id:
+          readOnly: true
+          description: 'The UUID identifier of this object'
+          type: string
+        name:
+          readOnly: true
+          type: string
+        description:
+          readOnly: true
+          description: 'An short description of this API'
+          type: string
+        version:
+          readOnly: true
+          description: 'The current production version of this component'
+          type: string
+        logo:
+          readOnly: true
+          description: 'The logo for this component'
+          type: string
+        slug:
+          readOnly: true
+          type: string
+        endpoint:
+          readOnly: true
+          type: string
+        documentation:
+          readOnly: true
+          type: string
+        component:
+          readOnly: true
+          description: 'The common ground component that this api provides'
+          $ref: '#/components/schemas/Component-read'
+        organisations:
+          readOnly: true
+          description: 'The organisations that provide this api'
+          type: array
+          items:
+            $ref: '#/components/schemas/Organisation-read'
+    API-write:
+      type: object
+      description: 'An API'
+    Component-read:
+      type: object
+      description: 'A Component'
+      properties:
+        id:
+          readOnly: true
+          description: 'The UUID identifier of this object'
+          type: string
+        name:
+          readOnly: true
+          description: 'The name of this component'
+          type: string
+        description:
+          readOnly: true
+          description: 'An short description of this component'
+          type: string
+        logo:
+          readOnly: true
+          description: 'The logo for this component'
+          type: string
+        version:
+          readOnly: true
+          description: 'The current production version of this component'
+          type: string
+        slug:
+          readOnly: true
+          description: 'The slug for this component'
+          type: string
+        git:
+          readOnly: true
+          description: 'The link to the git repository for this component'
+          type: string
+        gitId:
+          readOnly: true
+          description: 'The git id for the repository for this component'
+          type: string
+        gitType:
+          readOnly: true
+          description: 'The git type for the repository for this component'
+          type: string
+        apis:
+          readOnly: true
+          description: 'The APIs provided by this component'
+          type: array
+          items:
+            $ref: '#/components/schemas/API-read'
+        organisations:
+          readOnly: true
+          description: 'The organisations that provide this component'
+          type: array
+          items:
+            $ref: '#/components/schemas/Organisation-read'
+    Component-write:
+      type: object
+      description: 'A Component'
     ExampleEntity-read:
       type: object
       description: 'This is an example entity.'
@@ -555,7 +1769,135 @@ components:
         camelCase:
           description: 'Proof that we camel case our api'
           type: string
+    Organisation-read:
+      type: object
+      description: 'An Organisation'
+      properties:
+        id:
+          description: 'The UUID identifier of this object'
+          type: string
+          format: uuid
+          example: e2984465-190a-4562-829e-a8cca81aa35d
+          readOnly: true
+        name:
+          description: 'The name of this organisation'
+          type: string
+          example: 'My Organisation'
+          maxLength: 255
+          required: true
+          readOnly: true
+        description:
+          description: 'An short description of this organisation'
+          type: string
+          example: 'This is the best organisation ever'
+          maxLength: 2550
+          readOnly: true
+        logo:
+          description: 'The logo for this organisation'
+          type: string
+          format: url
+          example: 'https://www.my-organisation.com/logo.png'
+          maxLength: 255
+          readOnly: true
+        slug:
+          description: 'The slug for this organisation'
+          type: string
+          example: my-organisation
+          maxLength: 255
+          readOnly: true
+        git:
+          readOnly: true
+          description: 'The link to the git repository for this component'
+          type: string
+        gitId:
+          readOnly: true
+          description: 'The git id for the repository for this component'
+          type: string
+        components:
+          readOnly: true
+          description: 'The apis provided by this organisation'
+          type: array
+          items:
+            $ref: '#/components/schemas/Component-read'
+        apis:
+          readOnly: true
+          description: 'The components provided by this organisation'
+          type: array
+          items:
+            $ref: '#/components/schemas/API-read'
+    Organisation-write:
+      type: object
+      description: 'An Organisation'
 definitions:
+  API-read:
+    properties:
+      id:
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      name:
+        maxLength: 255
+      description:
+        example: 'This is the best API ever'
+        maxLength: 2550
+      version:
+        example: v0.1.2.3-beta
+        maxLength: 255
+      logo:
+        example: 'https://www.my-organisation.com/logo.png'
+        format: url
+        maxLength: 255
+      slug:
+        example: my-organisation
+        maxLength: 255
+      endpoint:
+        example: 'https://api.my-organisation.com'
+        format: url
+        maxLength: 255
+      documentation:
+        example: 'https://api.my-organisation.com/docs'
+        format: url
+        maxLength: 255
+      component: []
+      organisations: []
+    required:
+      - name
+      - endpoint
+  Component-read:
+    properties:
+      id:
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      name:
+        example: 'My component'
+        maxLength: 255
+      description:
+        example: 'This is the best component ever'
+        maxLength: 2550
+      logo:
+        example: 'https://www.my-organisation.com/logo.png'
+        format: url
+        maxLength: 255
+      version:
+        example: v0.1.2.3-beta
+        maxLength: 255
+      slug:
+        example: my-organisation
+        maxLength: 255
+      git:
+        example: 'https://www.github.com/my-organisation/my-component.git'
+        format: url
+        maxLength: 255
+      gitId:
+        example: my-component
+        maxLength: 255
+      gitType:
+        example: '({"Github", "Gitlab", "Bitbucket"})'
+        maxLength: 255
+      apis: []
+      organisations: []
+    required:
+      - name
+      - git
   ExampleEntity-read:
     properties:
       id:
@@ -585,27 +1927,74 @@ definitions:
         maxLength: 255
     required:
       - name
+  Organisation-read:
+    properties:
+      id:
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      name:
+        example: 'My Organisation'
+        maxLength: 255
+      description:
+        example: 'This is the best organisation ever'
+        maxLength: 2550
+      logo:
+        example: 'https://www.my-organisation.com/logo.png'
+        format: url
+        maxLength: 255
+      slug:
+        example: my-organisation
+      git:
+        example: 'https://www.github.com/my-organisation/my-component.git'
+        format: url
+        maxLength: 255
+      gitId:
+        example: my-component
+        maxLength: 255
+      components: []
+      apis: []
+    required:
+      - name
+      - git
 tags:
+  -
+    name: API
+    description: |
+      An API
+      
+      
+  -
+    name: Component
+    description: |
+      A Component
+      
+      
   -
     name: ExampleEntity
     description: |
       This is an example entity.
       
       With an adtional description, all in all its pritty nice [url](www.google.nl)
+  -
+    name: Organisation
+    description: |
+      An Organisation
+      
+      
 securityDefinitions:
   JWT-Oauth:
     type: oauth2
     authorizationUrl: 'http://petstore.swagger.io/api/oauth/dialog'
     flow: implicit
     scopes:
-      read: 'read right to the ExampleEntity resource'
+      read: 'read right to the Organisation resource'
       write: 'write right to the ExampleEntity resource'
   JWT-Token:
     type: apiKey
     in: header
     name: Authorization
     scopes:
-      read: 'read right to the ExampleEntity resource'
+      read: 'read right to the Organisation resource'
       write: 'write right to the ExampleEntity resource'
 host: irc.zaakonline.nl
 servers:

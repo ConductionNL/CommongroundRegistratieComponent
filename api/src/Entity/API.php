@@ -2,23 +2,18 @@
 
 namespace App\Entity;
 
-use Gedmo\Mapping\Annotation as Gedmo;
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiProperty;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
-
-use App\Controller\ApiController;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * An API
+ * An API.
  *
  * @category   	Entity
  *
@@ -75,9 +70,9 @@ class API
     private $id;
 
     /**
-	 * @param string The name of this API
-	 *
-	 * @ApiProperty(
+     * @param string The name of this API
+     *
+     * @ApiProperty(
      * 	   iri="http://schema.org/name",
 	 *     attributes={
 	 *         "swagger_context"={
@@ -99,10 +94,11 @@ class API
     private $name;
 
     /**
-	 * @var string An short description of this API
+     * @var string An short description of this API
+     *
      * @example This is the best API ever
-	 *
-	 * @ApiProperty(
+     *
+     * @ApiProperty(
      * 	   iri="https://schema.org/description",
 	 *     attributes={
 	 *         "swagger_context"={
@@ -124,6 +120,7 @@ class API
 
     /**
      * @var string The current production version of this component
+     *
      * @example v0.1.2.3-beta
      *
      * @ApiProperty(
@@ -147,15 +144,16 @@ class API
     private $version;
 
     /**
-	 * @var string The logo for this component
+     * @var string The logo for this component
+     *
      * @example https://www.my-organisation.com/logo.png
-	 *
-	 * @ApiProperty(
+     *
+     * @ApiProperty(
      * 	   iri="https://schema.org/logo",
-	 *     attributes={
-	 *         "swagger_context"={
-	 *         	   "description" = "The logo for this component",
-	 *             "type"="string",
+     *     attributes={
+     *         "swagger_context"={
+     *         	   "description" = "The logo for this component",
+     *             "type"="string",
      *             "format"="url",
 	 *             "example"="https://www.my-organisation.com/logo.png",
 	 *             "maxLength"=255
@@ -173,7 +171,8 @@ class API
     private $logo;
 
     /**
-	 * @param string The slug for this api
+     * @param string The slug for this api
+     *
      * @example my-organisation
 	 *
 	 * @ApiProperty(
@@ -197,10 +196,11 @@ class API
     private $slug;
 
     /**
-	 * @param string $endpoint The location where api calls should be directed to
+     * @param string $endpoint The location where api calls should be directed to
+     *
      * @example https://api.my-organisation.com
-	 *
-	 * @ApiProperty(
+     *
+     * @ApiProperty(
      * 	   iri="https://schema.org/url",
 	 *     attributes={
 	 *         "swagger_context"={
@@ -223,10 +223,11 @@ class API
     private $endpoint;
 
     /**
-	 * @param string The location of the open api documentation of this api
+     * @param string The location of the open api documentation of this api
+     *
      * @example https://api.my-organisation.com/docs
-	 *
-	 * @ApiProperty(
+     *
+     * @ApiProperty(
      * 	   iri="https://schema.org/url",
 	 *     attributes={
 	 *         "swagger_context"={
@@ -349,12 +350,12 @@ class API
 
     public function getDocumentation(): ?string
     {
-    	return $this->documentation;
+        return $this->documentation;
     }
 
     public function setDocumentation(?string $documentation): self
     {
-    	$this->documentation = $documentation;
+        $this->documentation = $documentation;
 
         return $this;
     }
