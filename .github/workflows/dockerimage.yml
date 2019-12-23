@@ -19,8 +19,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Pulling old images, if any
-        run: docker-compose pull --ignore-pull-failures
       - name: Setting APP_NAME
         run: | 
             export NAME=$(grep APP_NAME= .env | cut -d '=' -f2)
@@ -56,17 +54,18 @@ jobs:
       - name: Run the docker image
         run: docker-compose up -d
       - name: Taking some sleep
-        run: sleep 100
+        run: sleep 200
       - name: Check if all containers are running
         run: docker ps
       - name: Dumping the logs
         run: docker-compose logs
-      - name: Security Checks
-        run: docker-compose exec -T php composer req sensiolabs/security-checker
       - name: Database Update
         run: docker-compose exec -T php bin/console doctrine:schema:update --force
       - name: Database Check
         run: docker-compose exec -T php bin/console doctrine:schema:validate
+      - name: Security Checks
+        run: docker-compose exec -T php composer req sensiolabs/security-checker
+
       - name: Chores
         run: docker-compose down
       - name: Login to DockerHub Registry
@@ -99,7 +98,7 @@ jobs:
         if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true'
         run: helm upgrade $APP_NAME-$APP_ENV ./api/helm  --kubeconfig="kubeconfig.yaml" --namespace=$APP_ENV  --set settings.env=$APP_ENV,settings.debug=1
       - name: Install through helm
-        if: failure()
+        if: failure() && (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true'
         run: helm install --name $APP_NAME-$APP_ENV ./api/helm  --kubeconfig="kubeconfig.yaml" --namespace=$APP_ENV  --set settings.env=$APP_ENV,settings.debug=1 
       - name: Rollout new containers
         if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true' && success()
