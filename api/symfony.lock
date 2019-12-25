@@ -106,6 +106,9 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
+    "doctrine/rst-parser": {
+        "version": "0.1.0"
+    },
     "easyrdf/easyrdf": {
         "version": "0.9.1"
     },
