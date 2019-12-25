@@ -242,4 +242,11 @@ class GithubService
 
         return false;
     }
+    
+    
+    // Finds all the repositories that mention a keyphrase
+    public function findRepositories($file)
+    {
+    
+    }
 }
