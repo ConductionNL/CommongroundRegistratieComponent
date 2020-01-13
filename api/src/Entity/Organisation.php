@@ -2,32 +2,28 @@
 
 namespace App\Entity;
 
-use Gedmo\Mapping\Annotation as Gedmo;
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiProperty;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
+use Symfony\Component\Validator\Constraints as Assert;
 
-use App\Controller\OrganisationController;
 /**
- * An Organisation
+ * An Organisation.
  *
  * @category   	Entity
  *
  * @author     	Ruben van der Linde <ruben@conduction.nl>
- * @license    	EUPL 1.2 https://opensource.org/licenses/EUPL-1.2 
+ * @license    	EUPL 1.2 https://opensource.org/licenses/EUPL-1.2
+ *
  * @version    	1.0
  *
  * @link   		http//:www.conduction.nl
- * @package		Common Ground Component
- * @subpackage  Commonground Registratie Component (CGRC)
- * 
+ *
  * @ApiResource(
  *  normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
  *  denormalizationContext={"groups"={"write"}, "enable_max_depth"=true},
@@ -37,7 +33,7 @@ use App\Controller\OrganisationController;
  * 	itemOperations={
  *     "refresh" ={
  *          "method"="POST",
- *          "path"="/organisation/{id}/refresh",    
+ *          "path"="/organisation/{id}/refresh",
  *          "controller"=OrganisationRefresh::class
  *     },
  *     "get"
@@ -47,8 +43,9 @@ use App\Controller\OrganisationController;
  */
 class Organisation
 {
-    /**  
-     * @var \Ramsey\Uuid\UuidInterface $id The UUID identifier of this object
+    /**
+     * @var \Ramsey\Uuid\UuidInterface The UUID identifier of this object
+     *
      * @example e2984465-190a-4562-829e-a8cca81aa35d
      *
      * @ApiProperty(
@@ -73,47 +70,49 @@ class Organisation
     private $id;
 
     /**
-	 * @var string $name The name of this organisation
+     * @var string The name of this organisation
+     *
      * @example My Organisation
-	 *
-	 * @ApiProperty(
+     *
+     * @ApiProperty(
      * 	   iri="https://schema.org/name",
-	 *     attributes={
-	 *         "openapi_context"={
-	 *         	   "description" = "The name of this organisation",
-	 *             "type"="string",
-	 *             "example"="My Organisation",
-	 *             "maxLength"=255,
-	 *             "required" = true
-	 *         }
-	 *     }
-	 * )
-	 *
+     *     attributes={
+     *         "openapi_context"={
+     *         	   "description" = "The name of this organisation",
+     *             "type"="string",
+     *             "example"="My Organisation",
+     *             "maxLength"=255,
+     *             "required" = true
+     *         }
+     *     }
+     * )
+     *
      * @Assert\NotNull
      * @Assert\Length(
      *      max = 255
      * )
-	 * @Groups({"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
-	 * @var string $description An short description of this organisation
+     * @var string An short description of this organisation
+     *
      * @example This is the best organisation ever
-	 *
-	 * @ApiProperty(
+     *
+     * @ApiProperty(
      * 	   iri="https://schema.org/description",
-	 *     attributes={
-	 *         "openapi_context"={
-	 *         	   "description" = "An short description of this organisation",
-	 *             "type"="string",
-	 *             "example"="This is the best organisation ever",
-	 *             "maxLength"=2550
-	 *         }
-	 *     }
-	 * )
-	 * 
+     *     attributes={
+     *         "openapi_context"={
+     *         	   "description" = "An short description of this organisation",
+     *             "type"="string",
+     *             "example"="This is the best organisation ever",
+     *             "maxLength"=2550
+     *         }
+     *     }
+     * )
+     *
      * @Assert\Length(
      *      max = 2550
      * )
@@ -123,22 +122,23 @@ class Organisation
     private $description;
 
     /**
-	 * @var string $logo The logo for this organisation
+     * @var string The logo for this organisation
+     *
      * @example https://www.my-organisation.com/logo.png
-	 *
-	 * @ApiProperty(
+     *
+     * @ApiProperty(
      * 	   iri="https://schema.org/logo",
-	 *     attributes={
-	 *         "openapi_context"={
-	 *         	   "description" = "The logo for this organisation",
-	 *             "type"="string",
-	 *             "format"="url",
-	 *             "example"="https://www.my-organisation.com/logo.png",
-	 *             "maxLength"=255
-	 *         }
-	 *     }
-	 * )
-	 *	 
+     *     attributes={
+     *         "openapi_context"={
+     *         	   "description" = "The logo for this organisation",
+     *             "type"="string",
+     *             "format"="url",
+     *             "example"="https://www.my-organisation.com/logo.png",
+     *             "maxLength"=255
+     *         }
+     *     }
+     * )
+     *
      * @Assert\Url
      * @Assert\Length(
      *      max = 255
@@ -149,28 +149,30 @@ class Organisation
     private $logo;
 
     /**
-	 * @var string $slug The slug for this organisation
+     * @var string The slug for this organisation
+     *
      * @example my-organisation
-	 *
-	 * @ApiProperty(
-	 *     attributes={
-	 *         "openapi_context"={
-	 *         	   "description" = "The slug for this organisation",
-	 *             "type"="string",
-	 *             "example"="my-organisation",
-	 *             "maxLength"=255
-	 *         }
-	 *     }
-	 * )
-	 * 
+     *
+     * @ApiProperty(
+     *     attributes={
+     *         "openapi_context"={
+     *         	   "description" = "The slug for this organisation",
+     *             "type"="string",
+     *             "example"="my-organisation",
+     *             "maxLength"=255
+     *         }
+     *     }
+     * )
+     *
      * @Gedmo\Slug(fields={"name"})
      * @Groups({"read"})
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
-    
+
     /**
-     * @var string $git The link to the git repository for this component
+     * @var string The link to the git repository for this component
+     *
      * @example https://www.github.com/my-organisation/my-component.git
      *
      * @ApiProperty(
@@ -196,9 +198,10 @@ class Organisation
      * @ORM\Column(type="string", length=255)
      */
     private $git;
-    
+
     /**
-     * @var string $gitId The git id for the repository for this component
+     * @var string The git id for the repository for this component
+     *
      * @example my-component
      *
      * @ApiProperty(
@@ -221,18 +224,18 @@ class Organisation
     private $gitId;
 
     /**
-	 * @var ArrayCollection $components  The apis provided by this organisation
-	 * 
-	 * @maxDepth(1)
+     * @var ArrayCollection The apis provided by this organisation
+     *
+     * @maxDepth(1)
      * @Groups({"read"})
      * @ORM\ManyToMany(targetEntity="App\Entity\Component", inversedBy="organisations")
      */
     private $components;
 
     /**
-	 * @var ArrayCollection $apis The components provided by this organisation
-	 * 
-	 * @maxDepth(1)
+     * @var ArrayCollection The components provided by this organisation
+     *
+     * @maxDepth(1)
      * @Groups({"read"})
      * @ORM\ManyToMany(targetEntity="App\Entity\API", inversedBy="organisations")
      */
@@ -296,28 +299,28 @@ class Organisation
 
         return $this;
     }
-    
+
     public function getGit(): ?string
     {
         return $this->git;
     }
-    
+
     public function setGit(string $git): self
     {
         $this->git = $git;
-        
+
         return $this;
     }
-    
+
     public function getGitId(): ?string
     {
         return $this->gitId;
     }
-    
+
     public function setGitId(?string $gitId): self
     {
         $this->gitId = $gitId;
-        
+
         return $this;
     }
 
