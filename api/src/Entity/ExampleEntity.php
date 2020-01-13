@@ -3,14 +3,10 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiProperty;
+use App\Filter\LikeFilter;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-
-
-use App\Filter\LikeFilter;
 
 /**
  * @ApiResource()
@@ -67,5 +63,4 @@ class ExampleEntity
 
         return $this;
     }
-
 }
