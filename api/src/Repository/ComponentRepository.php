@@ -47,4 +47,15 @@ class ComponentRepository extends ServiceEntityRepository
         ;
     }
     */
+        
+    // When updating components we want to update a max of 10 components that have not yet been updated today
+    public function findUpdatable(): ?Component
+    {
+    	return $this->createQueryBuilder('c')
+    	->andWhere('DATE(c.updatedAt) < DATE(NOW())')
+    	->orderBy('c.id', 'ASC')
+    	->setMaxResults(10)
+    	->getQuery()
+    	->getResult();
+    }
 }

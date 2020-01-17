@@ -7,6 +7,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\Add;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Ramsey\Uuid\UuidInterface;
@@ -312,10 +313,72 @@ class Component
      */
     private $organisations;
 
+    /**
+	 * @var Array $oas The OAS (formely swagger) documentation for this component
+	 * 
+	 * @maxDepth(1)
+	 * @Groups({"read"})
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $oas = [];
+
+    /**
+	 * @var Array $publiccode The publiccode documentation for this component
+	 * 
+	 * @maxDepth(1)
+	 * @Groups({"read"})
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $publiccode = [];
+
+    /**
+	 * @var ArrayCollection v The organisations that provide this component
+	 * 
+	 * @maxDepth(1)
+	 * @Groups({"read"})
+     * @ORM\OneToMany(targetEntity="App\Entity\ComponentFile", mappedBy="component", orphanRemoval=true,cascade={"persist"})
+     */
+    private $files;
+
+    /**
+     * @var boolean $commonground Whether tis component is intended for commonground
+     * 
+	 * @Groups({"read"})
+     * @ORM\Column(type="boolean")
+     */
+    private $commonground;
+
+    /**
+     * @var Datetime $checked The moment this component was last checked for commonground compliance
+     * 
+	 * @Groups({"read"})
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $checked;
+    
+    /**
+     * @var Datetime $createdAt The moment this component was found by the crawler
+     *
+     * @Groups({"read"})
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $createdAt;
+    
+    /**
+     * @var Datetime $updateAt The last time this component was changed
+     *
+     * @Groups({"read"})
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
+
     public function __construct()
     {
         $this->apis = new ArrayCollection();
         $this->organisations = new ArrayCollection();
+        $this->files = new ArrayCollection();
     }
 
     public function getId()
@@ -488,5 +551,114 @@ class Component
         }
 
         return $this;
+    }
+
+    public function getOas(): ?array
+    {
+        return $this->oas;
+    }
+
+    public function setOas(?array $oas): self
+    {
+        $this->oas = $oas;
+
+        return $this;
+    }
+
+    public function getPubliccode(): ?array
+    {
+        return $this->publiccode;
+    }
+
+    public function setPubliccode(?array $publiccode): self
+    {
+        $this->publiccode = $publiccode;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ComponentFile[]
+     */
+    public function getFiles(): Collection
+    {
+        return $this->files;
+    }
+
+    public function addFile(ComponentFile $file): self
+    {
+        if (!$this->files->contains($file)) {
+            $this->files[] = $file;
+            $file->setComponent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFile(ComponentFile $file): self
+    {
+        if ($this->files->contains($file)) {
+            $this->files->removeElement($file);
+            // set the owning side to null (unless already changed)
+            if ($file->getComponent() === $this) {
+                $file->setComponent(null);
+            }
+        }
+
+        return $this;
+    }
+    
+    public function getFilesOnType($type)
+    {
+    	$criteria = Criteria::create()
+    	->andWhere(Criteria::expr()->gt('type', $type));
+    	
+    	return $this->getFiles()->matching($criteria);
+    }
+    	
+    public function getCommonground(): ?bool
+    {
+        return $this->commonground;
+    }
+
+    public function setCommonground(bool $commonground): self
+    {
+        $this->commonground = $commonground;
+
+        return $this;
+    }
+
+    public function getChecked(): ?\DateTimeInterface
+    {
+        return $this->checked;
+    }
+
+    public function setChecked(?\DateTimeInterface $checked): self
+    {
+        $this->checked = $checked;
+
+        return $this;
+    }
+    
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+    	return $this->createdAt;
+    }
+    
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+    	$this->createdAt = $createdAt;
+    	return $this;
+    }
+    
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+    	return $this->updatedAt;
+    }
+    
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+    	$this->updatedAt = $updatedAt;
+    	return $this;
     }
 }

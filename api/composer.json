@@ -23,6 +23,7 @@
 		"symfony/flex": "^1.1",
 		"symfony/framework-bundle": "4.3.*",
 		"symfony/mercure-bundle": "*",
+		"symfony/process": "4.4.*",
 		"symfony/property-access": "4.4.*",
 		"symfony/yaml": "4.3.*",
 		"tbbc/money-bundle": "^3.1",
