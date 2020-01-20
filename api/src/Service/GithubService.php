@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Doctrine\RST\Parser as ReStructuredText;
-use Symfony\Component\Yaml\Yaml; 
+use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Cache\Adapter\AdapterInterface as CacheInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
@@ -94,9 +94,12 @@ class GithubService
 
     public function getRepositoryFromGitHubOnId($id)
     {
-        $response = $this->client->get('repositories/'.$id);
+        $response = $this->client->get('repositories/'.$id, ['connect_timeout' => 10]);
+        if($response->getStatusCode() != 200){
+            die;
+        }
         $response = json_decode($response->getBody(), true);
-
+//        print_r("Received repository $id");
         return $response;
     }
 
@@ -243,35 +246,35 @@ class GithubService
         if ($response->getStatusCode() == 200) {
             return strval($response->getBody());
         }
-        
+
         return false;
     }
-    
-    public function checkFile(Component $component,?string $file, $extentions, $locations = null){
-    	
+
+    public function checkFile(Component $component,?string $file, $extentions, ?array $locations){
+
     	// $extentions arnt't recuired so lets default to all
     	if(!$extentions || $extentions == null){
     		$extentions = [''];
     	}
-    	
+
     	// Locations arnt't recuired so lets default to root
     	if(!$locations|| $locations== null){
     		$locations= [''];
-    	}	
-    	
-    	foreach($extentions as $extention){    		
+    	}
+
+    	foreach($extentions as $extention){
     		foreach($locations as $location){
     			// Only return on true
     			if($responce = $this->getFileContent($component, $location.$file.'.'.$extention)){
-    				return ['extention'=>$extention,'content'=>$responce,'location'=>$location];    				
+    				return ['extention'=>$extention,'content'=>$responce,'location'=>$location];
     			}
-    		}    	
-    	}    	
-    	
+    		}
+    	}
+
     	// If nothing isfound
         return false;
     }
-    
+
     public function checkForArrayFile(Component $component, $file)
     {
     	$locations = [
@@ -285,7 +288,7 @@ class GithubService
     			'api/public/',
     			'api/public/schema/',
     	];
-    	
+
     	$extentions = [
     			'yaml',
     			'json',
@@ -293,10 +296,10 @@ class GithubService
     	//		'csv',
     	//		'xls'
     	];
-    	
-    	return $this->checkFile($component, $file, $extentions);
+
+    	return $this->checkFile($component, $file, $extentions, $locations);
     }
-    
+
     public function checkForTextFile(Component $component, $file)
     {
     	$locations = [
@@ -310,18 +313,18 @@ class GithubService
     			'api/public/',
     			'api/public/schema/',
     	];
-    	
+
     	$extentions = [
     			'md',
     			'rts',
     	//		'twig',
     	//		'doc',
-    	//		'txt'    			
+    	//		'txt'
     	];
-    	
-    	return $this->checkFile($component, $file, $extentions);
+
+    	return $this->checkFile($component, $file, $extentions, $locations);
     }
-    
+
     public function fileToHTML($file)
     {
     	$extention= $file['extention'];
@@ -343,14 +346,15 @@ class GithubService
     			return false;
     	}
     }
-        
+
     // Finds all the repositories that mention a keyphrase
     public function updateComponent($component)
-    {    	
+    {
+        //print_r("Getting data for component ".$component->getName());
     	$repository =  $this->getRepositoryFromGitHubOnId($component->getGitId());
-    	$repository["updated_at"] = New \Datetime($repository["updated_at"] );
-    	$now = New \Datetime();
-    	
+    	$repository["updated_at"] = new \DateTime($repository["updated_at"] );
+    	$now = new \DateTime();
+
     	if( $component->getUpdatedAt() == null ||
     		$component->getUpdatedAt() < $repository["updated_at"] ||
     		$component->getChecked() == null
@@ -359,11 +363,10 @@ class GithubService
 	   		$component->setName($repository['name']);
 	   		$component->setDescription($repository['description']);
 	   		$component->setGit($repository['html_url']);
-	   		
-	   		// Lets get the documantations as array
+
+	   		// Lets get the documentations as array
 	   		$oas = $this->checkForArrayFile($component,'openapi');
 	   		$publicCode= $this->checkForArrayFile($component,'publiccode');
-	   		
 	   		// We can save those results as array's in our component entity
 	   		if($oas){
 	   			$component->setOas($this->fileToHTML($oas));
@@ -371,26 +374,26 @@ class GithubService
 	   		if($publicCode){
 	   			$component->setPubliccode($this->fileToHTML($oas));
 	   		}
-	   		
+
 	   		// Lets get the other files
 	   		$fileTypes = ['README','LICENSE','CHANGELOG','CONTRIBUTING','INSTALLATION','ROADMAP','CODE_OF_CONDUCT','AUTHORS','DESIGN','SECURITY','TUTORIAL'];
-	   		
+
 	   		foreach($fileTypes as $type){
-	   			
-	   			// If the repro dosn't have a file of this type we should continu and do nothing
+
+	   			// If the repro dosn't have a file of this type we should continue and do nothing
 	   			$fileData = $this->checkForTextFile($component, $type);
 	   			if(!$fileData){
 	   				continue;
 	   			}
-	   			
+
 	   			// lets first check if we already have an file of this type for this component
 	   			$files = $component->getFilesOnType($type);
-	   			
+
 	   			// create a file if we dont have one
 	   			if(!$file = $files->first()){
 	   				$file = New ComponentFile;
 	   			}
-	   			
+
 	   			// Since the repro has been updated we want to overwrite files
 	   			$file->setComponent($component);
 	   			$file->setName($type);
@@ -399,24 +402,26 @@ class GithubService
 	   			$file->setLocation($fileData['location']);
 	   			$file->setContent($fileData['content']);
 	   			$file->setHtml(null);
-	   			
-	   			$component->addFile($file);
+
+	   			//$component->addFile($file);
 	   		}
-	   		
+
 	   		if(!$oas){
 	   			$component->setCommonground(false);
-	   		}
-    	}    	
+	   		}else{
+	   		    $component->setCommonground(true);
+            }
+    	}
     	return $component;
     }
-    
+
     // Finds all the repositories that mention a keyphrase
     public function findRepositories($search)
     {
     	$repositories = [];
     	$items = [1,2,3];
     	$page = 1;
-    	
+
     	while(count($items) > 0){
 	    	$response = $this->client->get('search/repositories?q='.$search.'&sort=stars&order=des&per_page=100&page='.$page);
 	    	$response = json_decode($response->getBody(), true);
@@ -424,7 +429,7 @@ class GithubService
 	    	$page++;
 	    	$repositories = array_merge($repositories, $items);
     	}
-    	
+
     	return $repositories;
     }
 }

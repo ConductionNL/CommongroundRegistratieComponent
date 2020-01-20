@@ -17,7 +17,7 @@ use App\Entity\Component;
 
 class GithubGetCommand extends Command
 {
-	private $githubService; 
+	private $githubService;
 	private $em;
 
 	public function __construct(GithubService $githubService, EntityManagerInterface $em)
@@ -53,19 +53,19 @@ class GithubGetCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-        
+
         $repositories = array_merge($this->githubService->findRepositories('Common%20Ground'), $this->githubService->findRepositories('commonground'));
-			
+
 		$io->success(sprintf('Found %s repositories mentioning commonground.', count($repositories)));
-		
-		foreach($repositories as $repository){ 
+
+		foreach($repositories as $repository){
 			// Lets see if we already have this repro
 			if($this->em->getRepository('App:Component')->findBy(["gitId"=>$repository['id']])){
 				$io->warning(sprintf('Repository %s already in use', $repository['name']));
 				continue;
 			}
 			else{
-				// We dont use the $this->githubService->getComponentFromGitHubOnId() service becouse that would envoke another api call, but we already have all our data
+				// We dont use the $this->githubService->getComponentFromGitHubOnId() service because that would invoke another api call, but we already have all our data
 				$component = new Component();
 				$component->setName($repository['name']);
 				$component->setDescription($repository['description']);
@@ -75,11 +75,11 @@ class GithubGetCommand extends Command
 				$component->setCommonGround(false);
 				$this->em->persist($component);
 				$this->em->flush();
-				
+
 				$io->success(sprintf('Added repository %s', $repository['name']));
-			}			
+			}
 		}
-		
-		
+
+
     }
 }

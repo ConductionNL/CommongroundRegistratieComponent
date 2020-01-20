@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\Add;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
@@ -288,6 +289,7 @@ class Component
     /**
      * @var Organisation $owner The organisation that ownes this component (or better said it's repository)
      *
+     * @maxDepth(1)
      * @Assert\Valid
      * @ORM\ManyToOne(targetEntity="App\Entity\Organisation",cascade={"persist"})
      */
@@ -314,8 +316,8 @@ class Component
     private $organisations;
 
     /**
-	 * @var Array $oas The OAS (formely swagger) documentation for this component
-	 * 
+	 * @var array $oas The OAS (formely swagger) documentation for this component
+	 *
 	 * @maxDepth(1)
 	 * @Groups({"read"})
      * @ORM\Column(type="array", nullable=true)
@@ -323,8 +325,8 @@ class Component
     private $oas = [];
 
     /**
-	 * @var Array $publiccode The publiccode documentation for this component
-	 * 
+	 * @var array $publiccode The publiccode documentation for this component
+	 *
 	 * @maxDepth(1)
 	 * @Groups({"read"})
      * @ORM\Column(type="array", nullable=true)
@@ -333,7 +335,7 @@ class Component
 
     /**
 	 * @var ArrayCollection v The organisations that provide this component
-	 * 
+	 *
 	 * @maxDepth(1)
 	 * @Groups({"read"})
      * @ORM\OneToMany(targetEntity="App\Entity\ComponentFile", mappedBy="component", orphanRemoval=true,cascade={"persist"})
@@ -342,7 +344,7 @@ class Component
 
     /**
      * @var boolean $commonground Whether tis component is intended for commonground
-     * 
+     *
 	 * @Groups({"read"})
      * @ORM\Column(type="boolean")
      */
@@ -350,12 +352,12 @@ class Component
 
     /**
      * @var Datetime $checked The moment this component was last checked for commonground compliance
-     * 
+     *
 	 * @Groups({"read"})
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $checked;
-    
+
     /**
      * @var Datetime $createdAt The moment this component was found by the crawler
      *
@@ -364,7 +366,7 @@ class Component
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $createdAt;
-    
+
     /**
      * @var Datetime $updateAt The last time this component was changed
      *
@@ -607,15 +609,15 @@ class Component
 
         return $this;
     }
-    
+
     public function getFilesOnType($type)
     {
     	$criteria = Criteria::create()
     	->andWhere(Criteria::expr()->gt('type', $type));
-    	
+
     	return $this->getFiles()->matching($criteria);
     }
-    	
+
     public function getCommonground(): ?bool
     {
         return $this->commonground;
@@ -639,23 +641,23 @@ class Component
 
         return $this;
     }
-    
+
     public function getCreatedAt(): ?\DateTimeInterface
     {
     	return $this->createdAt;
     }
-    
+
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
     	$this->createdAt = $createdAt;
     	return $this;
     }
-    
+
     public function getUpdatedAt(): ?\DateTimeInterface
     {
     	return $this->updatedAt;
     }
-    
+
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
     	$this->updatedAt = $updatedAt;
