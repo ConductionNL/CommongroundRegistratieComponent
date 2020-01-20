@@ -65,7 +65,7 @@ class GithubUpdateCommand extends Command
         	$component =  $this->githubService->updateComponent($component);
 
         	$io->text(sprintf('Component %s has been updated.', $component->getName()));
-            $io->text(var_dump($component->getCommonground()));
+            //$io->text(var_dump($component->getCommonground()));
         	$this->em->persist($component);
         	$this->em->flush();
 
