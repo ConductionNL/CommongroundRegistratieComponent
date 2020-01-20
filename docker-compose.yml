@@ -187,8 +187,8 @@ services:
       - MYSQL_PASSWORD=!ChangeMe!
     volumes:
       - db-mysql:/var/lib/mysql:rw 
-    #ports:
-    # - "3366:3306"
+    ports:
+      - "3366:3306"
 
   mercure:
     # In production, you may want to use the managed version of Mercure, https://mercure.rocks
