@@ -378,7 +378,7 @@ class GithubService
 	   		// Lets get the other files
 	   		$fileTypes = ['README','LICENSE','CHANGELOG','CONTRIBUTING','INSTALLATION','ROADMAP','CODE_OF_CONDUCT','AUTHORS','DESIGN','SECURITY','TUTORIAL'];
 
-	   		foreach($fileTypes as $type){
+/*	   		foreach($fileTypes as $type){
 
 	   			// If the repro dosn't have a file of this type we should continue and do nothing
 	   			$fileData = $this->checkForTextFile($component, $type);
@@ -403,8 +403,8 @@ class GithubService
 	   			$file->setContent($fileData['content']);
 	   			$file->setHtml(null);
 
-	   			//$component->addFile($file);
-	   		}
+	   			$component->addFile($file);
+	   		}*/
 
 	   		if(!$oas){
 	   			$component->setCommonground(false);
