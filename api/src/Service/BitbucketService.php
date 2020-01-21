@@ -96,12 +96,12 @@ class BitbucketService
 
         foreach ($responses['values'] as $repository) {
             $repositories[] = [
-                'type'       => 'bitbucket',
-                'link'       => $repository['links']['html']['href'],
-                'id'         => $repository['full_name'],
-                'name'       => $repository['name'],
-                'description'=> $repository['description'],
-                'avatar'     => $repository['owner']['avatar']['href'],
+                    'type'       => 'bitbucket',
+                    'link'       => $repository['links']['html']['href'],
+                    'id'         => $repository['full_name'],
+                    'name'       => $repository['name'],
+                    'description'=> $repository['description'],
+                    'avatar'     => $repository['owner']['avatar']['href'],
             ];
         }
 
@@ -126,12 +126,12 @@ class BitbucketService
 
         foreach ($responses['values'] as $repository) {
             $repositories[] = [
-                'type'       => 'bitbucket',
-                'link'       => $repository['links']['html']['href'],
-                'id'         => $repository['full_name'],
-                'name'       => $repository['name'],
-                'description'=> $repository['description'],
-                'avatar'     => $repository['owner']['avatar']['href'],
+                    'type'       => 'bitbucket',
+                    'link'       => $repository['links']['html']['href'],
+                    'id'         => $repository['full_name'],
+                    'name'       => $repository['name'],
+                    'description'=> $repository['description'],
+                    'avatar'     => $repository['owner']['avatar']['href'],
             ];
         }
 

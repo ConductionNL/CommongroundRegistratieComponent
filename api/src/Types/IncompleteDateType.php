@@ -24,7 +24,7 @@ class IncompleteDateType extends Type
     {
         // Lets make this nullable
         if (!$value) {
-            return null;
+            return;
         }
         // We save incomplete date's as YYYYMMDD integer values so that we can easily index and order on them
         list($year, $month, $day) = sscanf($value, '%04u%02u%02u');
@@ -36,7 +36,7 @@ class IncompleteDateType extends Type
     {
         // Lets make this nullable
         if (!$value) {
-            return null;
+            return;
         }
         // We save incomplete date's as YYYYMMDD integer values so that we can easily index and order on them
         if ($value instanceof IncompleteDate) {

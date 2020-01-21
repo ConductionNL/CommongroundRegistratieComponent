@@ -24,7 +24,7 @@ class UnderInvestigationType extends Type
     {
         // Lets make this nullable
         if (!$value) {
-            return null;
+            return;
         }
         //list($longitude, $latitude) = sscanf($value, 'JSON(%s)');
         $value = json_decode($value, true);
@@ -39,7 +39,7 @@ class UnderInvestigationType extends Type
     {
         // Lets make this nullable
         if (!$value) {
-            return null;
+            return;
         }
         if ($value instanceof UnderInvestigation) {
             /* @todo throw an error ir the property isn't a boolean*/

@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -19,10 +20,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @author     	Ruben van der Linde <ruben@conduction.nl>
  * @license    	EUPL 1.2 https://opensource.org/licenses/EUPL-1.2
- *
  * @version    	1.0
  *
  * @link   		http//:www.common-ground.dev
+ * @package		Common Ground Component
+ * @subpackage  Commonground Registratie Component (CGRC)
  *
  * @ApiResource(
  *  normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
@@ -44,8 +46,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class API
 {
     /**
-     * @var \Ramsey\Uuid\UuidInterface The UUID identifier of this object
-     *
+     * @var UuidInterface $id The UUID identifier of this object
      * @example e2984465-190a-4562-829e-a8cca81aa35d
      *
      * @ApiProperty(
@@ -74,16 +75,16 @@ class API
      *
      * @ApiProperty(
      * 	   iri="http://schema.org/name",
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The name of this API",
-     *             "type"="string",
-     *             "example"="My component",
-     *              "maxLength"=255
-     *         }
-     *     }
-     * )
-     *
+	 *     attributes={
+	 *         "swagger_context"={
+	 *         	   "description" = "The name of this API",
+	 *             "type"="string",
+	 *             "example"="My component",
+	 *              "maxLength"=255
+	 *         }
+	 *     }
+	 * )
+	 *
      * @Assert\NotNull
      * @Assert\Length(
      *      max = 255
@@ -100,16 +101,16 @@ class API
      *
      * @ApiProperty(
      * 	   iri="https://schema.org/description",
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "An short description of this API",
-     *             "type"="string",
-     *             "example"="This is the best API ever",
-     *              "maxLength"=2550
-     *         }
-     *     }
-     * )
-     *
+	 *     attributes={
+	 *         "swagger_context"={
+	 *         	   "description" = "An short description of this API",
+	 *             "type"="string",
+	 *             "example"="This is the best API ever",
+	 *              "maxLength"=2550
+	 *         }
+	 *     }
+	 * )
+	 *
      * @Assert\Length(
      *      max = 2550
      * )
@@ -155,12 +156,12 @@ class API
      *         	   "description" = "The logo for this component",
      *             "type"="string",
      *             "format"="url",
-     *             "example"="https://www.my-organisation.com/logo.png",
-     *             "maxLength"=255
-     *         }
-     *     }
-     * )
-     *
+	 *             "example"="https://www.my-organisation.com/logo.png",
+	 *             "maxLength"=255
+	 *         }
+	 *     }
+	 * )
+	 *
      * @Assert\Url
      * @Assert\Length(
      *      max = 255
@@ -174,18 +175,18 @@ class API
      * @param string The slug for this api
      *
      * @example my-organisation
-     *
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The slug for this api",
-     *             "type"="string",
-     *             "example"="my-organisation",
-     *             "maxLength"=255
-     *         }
-     *     }
-     * )
-     *
+	 *
+	 * @ApiProperty(
+	 *     attributes={
+	 *         "swagger_context"={
+	 *         	   "description" = "The slug for this api",
+	 *             "type"="string",
+	 *             "example"="my-organisation",
+	 *             "maxLength"=255
+	 *         }
+	 *     }
+	 * )
+	 *
      * @Gedmo\Slug(fields={"name"})
      * @Assert\Length(
      *      max = 255
@@ -202,16 +203,16 @@ class API
      *
      * @ApiProperty(
      * 	   iri="https://schema.org/url",
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The location where api calls should be directed to",
-     *             "type"="string",
-     *             "example"="https://api.my-organisation.com",
-     *             "maxLength"=255
-     *         }
-     *     }
-     * )
-     *
+	 *     attributes={
+	 *         "swagger_context"={
+	 *         	   "description" = "The location where api calls should be directed to",
+	 *             "type"="string",
+	 *             "example"="https://api.my-organisation.com",
+	 *             "maxLength"=255
+	 *         }
+	 *     }
+	 * )
+	 *
      * @Assert\NotNull
      * @Assert\Url
      * @Assert\Length(
@@ -229,16 +230,16 @@ class API
      *
      * @ApiProperty(
      * 	   iri="https://schema.org/url",
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The location of the open api documentation of this api",
-     *             "type"="string",
-     *             "example"="https://api.my-organisation.com/docs",
-     *             "maxLength"=255
-     *         }
-     *     }
-     * )
-     *
+	 *     attributes={
+	 *         "swagger_context"={
+	 *         	   "description" = "The location of the open api documentation of this api",
+	 *             "type"="string",
+	 *             "example"="https://api.my-organisation.com/docs",
+	 *             "maxLength"=255
+	 *         }
+	 *     }
+	 * )
+	 *
      * @Assert\Url
      * @Assert\Length(
      *      max = 255
@@ -249,18 +250,18 @@ class API
     private $documentation;
 
     /**
-     * @var ArrayCollection The common ground component that this api provides
-     *
-     * @maxDepth(1)
+	 * @var ArrayCollection $component The common ground component that this api provides
+	 *
+	 * @maxDepth(1)
      * @Groups({"read"})
      * @ORM\ManyToOne(targetEntity="App\Entity\Component", inversedBy="apis")
      */
     private $component;
 
     /**
-     * @var ArrayCollection The organisations that provide this api
-     *
-     * @maxDepth(1)
+	 * @var ArrayCollection $organisations The organisations that provide this api
+	 *
+	 * @maxDepth(1)
      * @Groups({"read"})
      * @ORM\ManyToMany(targetEntity="App\Entity\Organisation", mappedBy="apis")
      */

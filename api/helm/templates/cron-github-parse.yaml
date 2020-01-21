@@ -1,0 +1,24 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ include "name" . }}-cron-github-parse
+  labels:
+    app.kubernetes.io/name: {{ include "name" . }}-cron-github-parse
+    app.kubernetes.io/part-of: {{ include "name" . }}
+    helm.sh/chart: {{ include "chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  # this cronjob runs every minute https://crontab.guru/#*_*_*_*_*
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: {{ include "name" . }}-php
+            image: "{{ .Values.settings.registryBase }}/{{ .Values.settings.projectName }}-php:{{ .Values.settings.env }}"
+            args:
+            - bin/console 
+            - app:github:parse
+          restartPolicy: OnFailure

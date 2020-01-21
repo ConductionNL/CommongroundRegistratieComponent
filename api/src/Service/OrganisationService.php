@@ -87,11 +87,11 @@ class OrganisationService
 
             foreach ($response as $organisation) {
                 $organisations[] = [
-                    'type'  => 'github',
-                    'link'  => $organisation['url'],
-                    'id'    => strtolower($organisation['login']),
-                    'name'  => $organisation['login'],
-                    'avatar'=> $organisation['avatar_url'],
+                        'type'  => 'github',
+                        'link'  => $organisation['url'],
+                        'id'    => strtolower($organisation['login']),
+                        'name'  => $organisation['login'],
+                        'avatar'=> $organisation['avatar_url'],
                 ];
             }
 
@@ -120,11 +120,11 @@ class OrganisationService
 
             foreach ($response as $organisation) {
                 $organisations[] = [
-                    'type'  => 'gitlab',
-                    'link'  => $organisation['web_url'],
-                    'id'    => strtolower($organisation['path']),
-                    'name'  => $organisation['name'],
-                    'avatar'=> $organisation['avatar_url'],
+                        'type'  => 'gitlab',
+                        'link'  => $organisation['web_url'],
+                        'id'    => strtolower($organisation['path']),
+                        'name'  => $organisation['name'],
+                        'avatar'=> $organisation['avatar_url'],
                 ];
             }
 

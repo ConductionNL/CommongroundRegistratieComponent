@@ -30,10 +30,10 @@ class SchemaService
         }
 
         $client = new Client([
-            // Base URI is used with relative requests
-            'base_uri' => $schema,
-            // You can set any number of default request options.
-            'timeout'  => 4000.0,
+                // Base URI is used with relative requests
+                'base_uri' => $schema,
+                // You can set any number of default request options.
+                'timeout'  => 4000.0,
         ]);
 
         $response = $client->request('GET', '/schema/openapi.yaml');

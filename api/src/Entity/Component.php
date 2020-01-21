@@ -4,11 +4,17 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use App\Controller\Add;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -20,10 +26,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @author     	Ruben van der Linde <ruben@conduction.nl>
  * @license    	EUPL 1.2 https://opensource.org/licenses/EUPL-1.2
- *
  * @version    	1.0
  *
  * @link   		http//:www.conduction.nl
+ * @package		Common Ground Component
+ * @subpackage  Commonground Registratie Component (CGRC)
  *
  * @ApiResource(
  *  normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
@@ -48,12 +55,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  *  }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ComponentRepository")
+ * @ApiFilter(SearchFilter::class, properties={"name": "exact","description": "partial"})
+ * @ApiFilter(BooleanFilter::class, properties={"commonground"})
  */
 class Component
 {
     /**
-     * @var \Ramsey\Uuid\UuidInterface The UUID identifier of this object
-     *
+     * @var UuidInterface $id The UUID identifier of this object
      * @example e2984465-190a-4562-829e-a8cca81aa35d
      *
      * @ApiProperty(
@@ -84,17 +92,17 @@ class Component
      *
      * @ApiProperty(
      * 	   iri="http://schema.org/name",
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The name of this component",
-     *             "type"="string",
-     *             "example"="My component",
-     *             "maxLength"=255,
-     *             "required" = true
-     *         }
-     *     }
-     * )
-     *
+	 *     attributes={
+	 *         "swagger_context"={
+	 *         	   "description" = "The name of this component",
+	 *             "type"="string",
+	 *             "example"="My component",
+	 *             "maxLength"=255,
+	 *             "required" = true
+	 *         }
+	 *     }
+	 * )
+	 *
      * @Assert\NotNull
      * @Assert\Length(
      *      max = 255
@@ -111,16 +119,16 @@ class Component
      *
      * @ApiProperty(
      * 	   iri="https://schema.org/description",
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "An short description of this component",
-     *             "type"="string",
-     *             "example"="This is the best component ever",
-     *             "maxLength"=2550
-     *         }
-     *     }
-     * )
-     *
+	 *     attributes={
+	 *         "swagger_context"={
+	 *         	   "description" = "An short description of this component",
+	 *             "type"="string",
+	 *             "example"="This is the best component ever",
+	 *             "maxLength"=2550
+	 *         }
+	 *     }
+	 * )
+	 *
      * @Assert\Length(
      *      max = 2550
      * )
@@ -141,12 +149,12 @@ class Component
      *         	   "description" = "The logo for this component",
      *             "type"="string",
      *             "format"="url",
-     *             "example"="https://www.my-organisation.com/logo.png",
-     *             "maxLength"=255
-     *         }
-     *     }
-     * )
-     *
+	 *             "example"="https://www.my-organisation.com/logo.png",
+	 *             "maxLength"=255
+	 *         }
+	 *     }
+	 * )
+	 *
      * @Assert\Url
      * @Assert\Length(
      *      max = 255
@@ -167,12 +175,12 @@ class Component
      *         	   "description" = "The current production version of this component",
      *             "type"="string",
      *             "format"="url",
-     *             "example"="v0.1.2.3-beta",
-     *             "maxLength"=255
-     *         }
-     *     }
-     * )
-     *
+	 *             "example"="v0.1.2.3-beta",
+	 *             "maxLength"=255
+	 *         }
+	 *     }
+	 * )
+	 *
      * @Assert\Length(
      *      max = 255
      * )
@@ -185,18 +193,18 @@ class Component
      * @var string The slug for this component
      *
      * @example my-organisation
-     *
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The slug for this component",
-     *             "type"="string",
-     *             "example"="my-organisation",
-     *             "maxLength"=255
-     *         }
-     *     }
-     * )
-     *
+	 *
+	 * @ApiProperty(
+	 *     attributes={
+	 *         "swagger_context"={
+	 *         	   "description" = "The slug for this component",
+	 *             "type"="string",
+	 *             "example"="my-organisation",
+	 *             "maxLength"=255
+	 *         }
+	 *     }
+	 * )
+	 *
      * @Gedmo\Slug(fields={"name"})
      * @Assert\Length(
      *      max = 255
@@ -218,13 +226,13 @@ class Component
      *         	   "description" = "The link to the git repository for this component",
      *             "type"="string",
      *             "format"="url",
-     *             "example"="https://www.github.com/my-organisation/my-component.git",
-     *             "maxLength"=255,
-     *             "required" = true
-     *         }
-     *     }
-     * )
-     *
+	 *             "example"="https://www.github.com/my-organisation/my-component.git",
+	 *             "maxLength"=255,
+	 *             "required" = true
+	 *         }
+	 *     }
+	 * )
+	 *
      * @Assert\NotNull
      * @Assert\Url
      * @Assert\Length(
@@ -239,18 +247,18 @@ class Component
      * @var string The git id for the repository for this component
      *
      * @example my-component
-     *
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The git id for the repository for this component",
-     *             "type"="string",
-     *             "example"="my-component",
-     *             "maxLength"=255
-     *         }
-     *     }
-     * )
-     *
+	 *
+	 * @ApiProperty(
+	 *     attributes={
+	 *         "swagger_context"={
+	 *         	   "description" = "The git id for the repository for this component",
+	 *             "type"="string",
+	 *             "example"="my-component",
+	 *             "maxLength"=255
+	 *         }
+	 *     }
+	 * )
+	 *
      * @Assert\Length(
      *      max = 255
      * )
@@ -262,19 +270,19 @@ class Component
     /**
      * @var string The git type for the repository for this component
      * @example({"Github", "Gitlab", "Bitbucket"})
-     *
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The git type for the repository for this component",
-     *             "type"="string",
-     *             "example"="github",
-     *             "maxLength"=255,
-     *             "enum"={"Github", "Gitlab", "Bitbucket"}
-     *         }
-     *     }
-     * )
-     *
+	 *
+	 * @ApiProperty(
+	 *     attributes={
+	 *         "swagger_context"={
+	 *         	   "description" = "The git type for the repository for this component",
+	 *             "type"="string",
+	 *             "example"="github",
+	 *             "maxLength"=255,
+	 *             "enum"={"Github", "Gitlab", "Bitbucket"}
+	 *         }
+	 *     }
+	 * )
+	 *
      * @Assert\Length(
      *      max = 255
      * )
@@ -284,34 +292,116 @@ class Component
     private $gitType;
 
     /**
-     * @var Organisation The organisation that ownes this component (or better said it's repository)
+     * @var Organisation $owner The organisation that ownes this component (or better said it's repository)
      *
+     * @maxDepth(1)
+     * @Assert\Valid
      * @ORM\ManyToOne(targetEntity="App\Entity\Organisation",cascade={"persist"})
      */
     private $owner;
 
     /**
-     * @var ArrayCollection The APIs provided by this component
-     *
-     * @maxDepth(1)
-     * @Groups({"read"})
+	 * @var ArrayCollection $apis The APIs provided by this component
+	 *
+     * @Assert\Valid
+	 * @maxDepth(1)
+	 * @Groups({"read"})
      * @ORM\OneToMany(targetEntity="App\Entity\API", mappedBy="component",cascade={"persist"})
      */
     private $apis;
 
     /**
-     * @var ArrayCollection The organisations that provide this component
-     *
-     * @maxDepth(1)
-     * @Groups({"read"})
+	 * @var ArrayCollection $organisations The organisations that provide this component
+	 *
+     * @Assert\Valid
+	 * @maxDepth(1)
+	 * @Groups({"read"})
      * @ORM\ManyToMany(targetEntity="App\Entity\Organisation", mappedBy="components",cascade={"persist"})
      */
     private $organisations;
+
+    /**
+	 * @var array $oas The OAS (formely swagger) documentation for this component
+	 *
+	 * @maxDepth(1)
+	 * @Groups({"read"})
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $oas = [];
+
+    /**
+	 * @var array $publiccode The publiccode documentation for this component
+	 *
+	 * @maxDepth(1)
+	 * @Groups({"read"})
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $publiccode = [];
+
+    /**
+	 * @var ArrayCollection v The organisations that provide this component
+	 *
+	 * @maxDepth(1)
+	 * @Groups({"read"})
+     * @ORM\OneToMany(targetEntity="App\Entity\ComponentFile", mappedBy="component", orphanRemoval=true,cascade={"persist"})
+     */
+    private $files;
+
+    /**
+     * @var boolean $commonground Whether tis component is intended for commonground
+     *
+	 * @Groups({"read"})
+     * @ORM\Column(type="boolean")
+     */
+    private $commonground;
+
+    /**
+     * @var Datetime $checked The moment this component was last checked for commonground compliance
+     *
+	 * @Groups({"read"})
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $checked;
+    
+    /**
+     * @var Datetime $parsed  The moment this component was last parsed for file
+     *
+     * @Groups({"read"})
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $parsed;
+
+    /**
+     * @var Datetime $createdAt The moment this component was found by the crawler
+     *
+     * @Groups({"read"})
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $createdAt;
+
+    /**
+     * @var Datetime $updateAt The last time this component was changed
+     *
+     * @Groups({"read"})
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
+    
+    /**
+     * @var Datetime $updatedExternal The last time this components git was changed on the git provider
+     *
+     * @Groups({"read"})
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedExternal;
 
     public function __construct()
     {
         $this->apis = new ArrayCollection();
         $this->organisations = new ArrayCollection();
+        $this->files = new ArrayCollection();
     }
 
     public function getId()
@@ -484,5 +574,137 @@ class Component
         }
 
         return $this;
+    }
+
+    public function getOas(): ?array
+    {
+        return $this->oas;
+    }
+
+    public function setOas(?array $oas): self
+    {
+        $this->oas = $oas;
+
+        return $this;
+    }
+
+    public function getPubliccode(): ?array
+    {
+        return $this->publiccode;
+    }
+
+    public function setPubliccode(?array $publiccode): self
+    {
+        $this->publiccode = $publiccode;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ComponentFile[]
+     */
+    public function getFiles(): Collection
+    {
+        return $this->files;
+    }
+
+    public function addFile(ComponentFile $file): self
+    {
+        if (!$this->files->contains($file)) {
+            $this->files[] = $file;
+            $file->setComponent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFile(ComponentFile $file): self
+    {
+        if ($this->files->contains($file)) {
+            $this->files->removeElement($file);
+            // set the owning side to null (unless already changed)
+            if ($file->getComponent() === $this) {
+                $file->setComponent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getFilesOnType($type)
+    {
+    	$criteria = Criteria::create()
+    	->andWhere(Criteria::expr()->gt('type', $type));
+
+    	return $this->getFiles()->matching($criteria);
+    }
+
+    public function getCommonground(): ?bool
+    {
+        return $this->commonground;
+    }
+
+    public function setCommonground(bool $commonground): self
+    {
+        $this->commonground = $commonground;
+
+        return $this;
+    }
+
+    public function getChecked(): ?\DateTimeInterface
+    {
+        return $this->checked;
+    }
+
+    public function setChecked(?\DateTimeInterface $checked): self
+    {
+        $this->checked = $checked;
+
+        return $this;
+    } 
+    
+    public function getParsed(): ?\DateTimeInterface
+    {
+    	return $this->parsed;
+    }
+    
+    public function setParsed(?\DateTimeInterface $parsed): self
+    {
+    	$this->parsed = $parsed;
+    	
+    	return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+    	return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+    	$this->createdAt = $createdAt;
+    	return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+    	return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+    	$this->updatedAt = $updatedAt;
+    	return $this;
+    }
+    
+    public function getUpdatedExternal(): ?\DateTimeInterface
+    {
+    	return $this->updatedExternal;
+    }
+    
+    public function setUpdatedExternal(\DateTimeInterface $updatedExternal): self
+    {
+    	$this->updatedExternal= $updatedExternal;
+    	return $this;
     }
 }
