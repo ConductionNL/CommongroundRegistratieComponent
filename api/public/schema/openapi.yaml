@@ -9,7 +9,7 @@ info:
     - Enviroment: dev
     - Version: V.0.1
     - Repository: [online](https://github.com/ConductionNL/Proto-component-commonground) / [zip](https://github.com/ConductionNL/Proto-component-commonground/archive/master.zip)
-    - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pc-php) 
+    - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/cgrc-php) 
     - Datamodel: [postman](/schema/cgrc.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
     
     'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         
@@ -2485,6 +2485,9 @@ components:
         name:
           description: 'The name of this component'
           type: string
+        summary:
+          description: 'An short description of this component'
+          type: string
         description:
           description: 'An short description of this component'
           type: string
@@ -2570,6 +2573,9 @@ components:
       properties:
         name:
           description: 'The name of this component'
+          type: string
+        summary:
+          description: 'An short description of this component'
           type: string
         description:
           description: 'An short description of this component'
@@ -2666,6 +2672,9 @@ components:
         name:
           description: 'The name of this component'
           type: string
+        summary:
+          description: 'An short description of this component'
+          type: string
         description:
           description: 'An short description of this component'
           type: string
@@ -2760,6 +2769,9 @@ components:
           type: string
         name:
           description: 'The name of this component'
+          type: string
+        summary:
+          description: 'An short description of this component'
           type: string
         description:
           description: 'An short description of this component'
@@ -3350,6 +3362,9 @@ definitions:
       name:
         example: 'My component'
         maxLength: 255
+      summary:
+        example: 'This is the best component ever'
+        maxLength: 2550
       description:
         example: 'This is the best component ever'
         maxLength: 2550
@@ -3392,6 +3407,9 @@ definitions:
       name:
         example: 'My component'
         maxLength: 255
+      summary:
+        example: 'This is the best component ever'
+        maxLength: 2550
       description:
         example: 'This is the best component ever'
         maxLength: 2550

@@ -57,26 +57,32 @@ class GithubGetCommand extends Command
         $io->success(sprintf('Found %s repositories mentioning commonground.', count($repositories)));
 
         foreach ($repositories as $repository) {
-            // Lets see if we already have this repro
-            if ($this->em->getRepository('App:Component')->findBy(['gitId'=>$repository['id']])) {
-                $io->warning(sprintf('Repository %s already in use', $repository['name']));
-                continue;
-            } else {
-                // We dont use the $this->githubService->getComponentFromGitHubOnId() service because that would invoke another api call, but we already have all our data
-                $component = new Component();
-                $component->setName($repository['name']);  
-                $component->setSummary($repository['description']);
-                $component->setDescription($repository['description']);
-                $component->setGit($repository['html_url']);
-                $component->setGitType('github');
-                $component->setGitId($repository['id']);
-                $component->setCommonGround(false);
-                $component->setUpdatedExternal(new \Datetime());
-                $this->em->persist($component);
-                $this->em->flush();
-
-                $io->success(sprintf('Added repository %s', $repository['name']));
-            }
+        	// Lets see if we already have this repository
+        	$components = $this->em->getRepository('App:Component')->findBy(['gitId'=>$repository['id']]);
+        	
+        	// If we dont lets create one
+        	if(!$components) {
+        		$component = new Component();
+        		$component->setCommonGround(false);
+        		$feedback = 'Updated';
+        	}	
+        	else{        		
+        		$component = $components[0];
+        		$feedback = 'Created';
+        	}
+        	
+        	// And then we can update it      	
+            $component->setName($repository['name']);  
+            $component->setSummary($repository['description']);
+            $component->setGit($repository['html_url']);
+            $component->setGitType('github');
+            $component->setGitId($repository['id']);
+            $component->setUpdatedExternal(new \Datetime($repository['updated_at'])); 
+            $this->em->persist($component);
+            $this->em->flush();
+            
+            $io->success(sprintf($feedback.' repository %s', $repository['name']));
         }
+        
     }
 }
