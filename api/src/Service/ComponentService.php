@@ -44,8 +44,8 @@ class ComponentService
     public function getHelm(Component $component)
     {
         $lookIn = [
-                'helm/',
-                'api/helm/',
+            'helm/',
+            'api/helm/',
         ];
 
         foreach ($lookIn as $location) {
