@@ -87,7 +87,21 @@ class Component
      * @ORM\Column(type="string", length=255)
      */
     private $name;
-
+    
+    /**
+     * @var string An short description of this component
+     *
+     * @example This is the best component ever
+     *
+     *
+     * @Assert\Length(
+     *      max = 2550
+     * )
+     * @Groups({"read", "write"})
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $summary;
+    
     /**
      * @var string An short description of this component
      *
@@ -313,6 +327,18 @@ class Component
         $this->name = $name;
 
         return $this;
+    } 
+    
+    public function getSummary(): ?string
+    {
+    	return $this->summary;
+    }
+    
+    public function setSummary(?string $summary): self
+    {
+    	$this->summary = $summary;
+    	
+    	return $this;
     }
 
     public function getDescription(): ?string

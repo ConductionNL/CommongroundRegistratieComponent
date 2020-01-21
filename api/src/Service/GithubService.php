@@ -507,6 +507,11 @@ class GithubService
             $file->setHtml($html->getBody());
             $file->setHtmlUpdated(new \Datetime());
         }
+        
+        // We want the readme content to replace the description of a component
+        if( $file->getType() == 'readme' && $file->getHtml()){
+        	$file->getComponent()->setDescription($file->getHtml());
+        }
 
         return $file;
     }

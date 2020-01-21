@@ -64,7 +64,8 @@ class GithubGetCommand extends Command
             } else {
                 // We dont use the $this->githubService->getComponentFromGitHubOnId() service because that would invoke another api call, but we already have all our data
                 $component = new Component();
-                $component->setName($repository['name']);
+                $component->setName($repository['name']);  
+                $component->setSummary($repository['description']);
                 $component->setDescription($repository['description']);
                 $component->setGit($repository['html_url']);
                 $component->setGitType('github');
