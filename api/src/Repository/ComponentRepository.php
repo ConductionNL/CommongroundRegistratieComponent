@@ -51,24 +51,24 @@ class ComponentRepository extends ServiceEntityRepository
     // When updating components we want to update a max of 10 components that have not yet been updated today
     public function findUpdatable()
     {
-    	return $this->createQueryBuilder('c')
-    	->where('c.updatedAt < :now')
-    	->setParameter(':now', new \DateTime())
-    	->orderBy('c.updatedAt', 'ASC')
-    	->setMaxResults(10)
-    	->getQuery()
-    	->getResult();
+        return $this->createQueryBuilder('c')
+        ->where('c.updatedAt < :now')
+        ->setParameter(':now', new \DateTime())
+        ->orderBy('c.updatedAt', 'ASC')
+        ->setMaxResults(10)
+        ->getQuery()
+        ->getResult();
     }
-    
+
     // When updating components we want to update a max of 10 components that have not yet been updated today
     public function findCheckable()
     {
-    	return $this->createQueryBuilder('c')
-    	->where('c.checked < c.updatedExternal')
-    	->orWhere('c.checked is null')
-    	->orderBy('c.updatedExternal', 'ASC')
-    	->setMaxResults(10)
-    	->getQuery()
-    	->getResult();
+        return $this->createQueryBuilder('c')
+        ->where('c.checked < c.updatedExternal')
+        ->orWhere('c.checked is null')
+        ->orderBy('c.updatedExternal', 'ASC')
+        ->setMaxResults(10)
+        ->getQuery()
+        ->getResult();
     }
 }

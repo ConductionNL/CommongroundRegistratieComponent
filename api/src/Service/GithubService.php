@@ -8,13 +8,12 @@ use App\Entity\Component;
 use App\Entity\ComponentFile;
 use App\Entity\Organisation;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\RST\Parser as ReStructuredText;
 use GuzzleHttp\Client;
 use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
-use Doctrine\RST\Parser as ReStructuredText;
-use Symfony\Component\Validator\Constraints\DateTime;
-use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Cache\Adapter\AdapterInterface as CacheInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Yaml\Yaml;
 
 class GithubService
 {
@@ -34,7 +33,7 @@ class GithubService
         //$this->githubToken = $githubToken;
         $this->githubToken = '46838735d76f0377f0d85a65c03d96a20d0cc6fc';
         if ($this->githubToken) {
-        	$this->client = new Client(['base_uri' => 'https://api.github.com/', 'headers'=>['Authorization'=>'Bearer '.$this->githubToken]]);
+            $this->client = new Client(['base_uri' => 'https://api.github.com/', 'headers'=>['Authorization'=>'Bearer '.$this->githubToken]]);
         } else {
             $this->client = new Client(['base_uri' => 'https://api.github.com/']);
         }
@@ -65,11 +64,11 @@ class GithubService
 
         foreach ($response as $organisation) {
             $organisations[] = [
-                    'type'  => 'gitlab',
-                    'link'  => $organisation['web_url'],
-                    'id'    => $organisation['id'],
-                    'name'  => $organisation['name'],
-                    'avatar'=> $organisation['avatar_url'],
+                'type'  => 'gitlab',
+                'link'  => $organisation['web_url'],
+                'id'    => $organisation['id'],
+                'name'  => $organisation['name'],
+                'avatar'=> $organisation['avatar_url'],
             ];
         }
 
@@ -96,8 +95,8 @@ class GithubService
     public function getRepositoryFromGitHubOnId($id)
     {
         $response = $this->client->get('repositories/'.$id, ['connect_timeout' => 10]);
-        if($response->getStatusCode() != 200){
-        	//@todo er kan gee die mee voorbij development
+        if ($response->getStatusCode() != 200) {
+            //@todo er kan gee die mee voorbij development
             die;
         }
         $response = json_decode($response->getBody(), true);
@@ -194,12 +193,12 @@ class GithubService
 
         foreach ($responses as $repository) {
             $repositories[] = [
-                    'type'       => 'github',
-                    'link'       => $repository['html_url'],
-                    'id'         => $repository['id'],
-                    'name'       => $repository['name'],
-                    'description'=> $repository['description'],
-                    'avatar'     => $repository['owner']['avatar_url'],
+                'type'       => 'github',
+                'link'       => $repository['html_url'],
+                'id'         => $repository['id'],
+                'name'       => $repository['name'],
+                'description'=> $repository['description'],
+                'avatar'     => $repository['owner']['avatar_url'],
             ];
         }
 
@@ -224,44 +223,42 @@ class GithubService
 
         foreach ($responses as $repository) {
             $repositories[] = [
-                    'type'       => 'github',
-                    'link'       => $repository['html_url'],
-                    'id'         => $repository['id'],
-                    'name'       => $repository['name'],
-                    'description'=> $repository['description'],
-                    'avatar'     => $repository['owner']['avatar_url'],
+                'type'       => 'github',
+                'link'       => $repository['html_url'],
+                'id'         => $repository['id'],
+                'name'       => $repository['name'],
+                'description'=> $repository['description'],
+                'avatar'     => $repository['owner']['avatar_url'],
             ];
         }
 
         return $repositories;
     }
 
-
     // Lets get the content of a public github file
     public function getFiles(Component $component)
     {
-    	// Lets get the :owner/:repro
-    	$git = str_replace(["https://github.com/"],"",$component->getGit());
+        // Lets get the :owner/:repro
+        $git = str_replace(['https://github.com/'], '', $component->getGit());
 
-    	// Example: https://api.github.com/repos/ConductionNL/agendaservice/contents
-    	$client = new Client();
+        // Example: https://api.github.com/repos/ConductionNL/agendaservice/contents
+        $client = new Client();
 
-    	$response = $this->client->get('repos/'.$git.'/contents',['http_errors' => false]);
+        $response = $this->client->get('repos/'.$git.'/contents', ['http_errors' => false]);
 
-    	// Lets see if we can get the file
-    	if ($response->getStatusCode() == 200) {
-    		return json_decode($response->getBody(), true);
-    	}
+        // Lets see if we can get the file
+        if ($response->getStatusCode() == 200) {
+            return json_decode($response->getBody(), true);
+        }
 
-    	return false;
+        return false;
     }
-
 
     // Lets get the content of a public github file
     public function getFileContent(Component $component, $file)
     {
         $git = str_replace('https://github.com/', '', $component->getGit());
-    	$client = new Client(['base_uri' => 'https://raw.githubusercontent.com/'.$git.'/master/', 'http_errors' => false]);
+        $client = new Client(['base_uri' => 'https://raw.githubusercontent.com/'.$git.'/master/', 'http_errors' => false]);
 
         $response = $client->get($file);
 
@@ -273,261 +270,262 @@ class GithubService
         return false;
     }
 
-    public function checkFile(Component $component,?string $file, $extentions, ?array $locations){
+    public function checkFile(Component $component, ?string $file, $extentions, ?array $locations)
+    {
 
-    	// $extentions arnt't recuired so lets default to all
-    	if(!$extentions || $extentions == null){
-    		$extentions = [''];
-    	}
+        // $extentions arnt't recuired so lets default to all
+        if (!$extentions || $extentions == null) {
+            $extentions = [''];
+        }
 
-    	// Locations arnt't recuired so lets default to root
-    	if(!$locations|| $locations== null){
-    		$locations= [''];
-    	}
+        // Locations arnt't recuired so lets default to root
+        if (!$locations || $locations == null) {
+            $locations = [''];
+        }
 
-    	foreach($extentions as $extention){
-    		foreach($locations as $location){
-    			// Only return on true
-    			if($responce = $this->getFileContent($component, $location.$file.'.'.$extention)){
-    				return ['extention'=>$extention,'content'=>$responce,'location'=>$location];
-    			}
-    		}
-    	}
+        foreach ($extentions as $extention) {
+            foreach ($locations as $location) {
+                // Only return on true
+                if ($responce = $this->getFileContent($component, $location.$file.'.'.$extention)) {
+                    return ['extention'=>$extention, 'content'=>$responce, 'location'=>$location];
+                }
+            }
+        }
 
-    	// If nothing isfound
+        // If nothing isfound
         return false;
     }
 
     public function checkForArrayFile(Component $component, $file)
     {
-    	$locations = [
-    			'',
-    	//		'src/',
-    	//		'schema/',
-    	//		'public/',
-    	//		'public/schema/',
-    	//		'api/',
-    	//		'api/schema/',
-    	//		'api/public/',
-    	//		'api/public/schema/',
-    	];
+        $locations = [
+            '',
+            //		'src/',
+            //		'schema/',
+            //		'public/',
+            //		'public/schema/',
+            //		'api/',
+            //		'api/schema/',
+            //		'api/public/',
+            //		'api/public/schema/',
+        ];
 
-    	$extentions = [
-    			'yaml',
-    	//		'json',
-    	//		'xml',
-    	//		'csv',
-    	//		'xls'
-    	];
+        $extentions = [
+            'yaml',
+            //		'json',
+            //		'xml',
+            //		'csv',
+            //		'xls'
+        ];
 
-    	return $this->checkFile($component, $file, $extentions, $locations);
+        return $this->checkFile($component, $file, $extentions, $locations);
     }
 
     public function checkForTextFile(Component $component, $file)
     {
-    	$locations = [
-    			'',
-    	//		'src/',
-    	//		'schema/',
-    	//		'public/',
-    	//		'public/schema/',
-    	//		'api/',
-    	//		'api/schema/',
-    	//		'api/public/',
-    	//		'api/public/schema/',
-    	];
+        $locations = [
+            '',
+            //		'src/',
+            //		'schema/',
+            //		'public/',
+            //		'public/schema/',
+            //		'api/',
+            //		'api/schema/',
+            //		'api/public/',
+            //		'api/public/schema/',
+        ];
 
-    	$extentions = [
-    			'md',
-    	//		'rts',
-    	//		'twig',
-    	//		'doc',
-    	//		'txt'
-    	];
+        $extentions = [
+            'md',
+            //		'rts',
+            //		'twig',
+            //		'doc',
+            //		'txt'
+        ];
 
-    	return $this->checkFile($component, $file, $extentions, $locations);
+        return $this->checkFile($component, $file, $extentions, $locations);
     }
 
     public function fileToHTML($file)
     {
-    	$extention= $file['extention'];
-    	switch ($extention) {
-    		case 'yaml':
-    			return Yaml::parse($file['content']);
-    			break;
-    		case 'json':
-    			return json_decode($file['content']);
-    			break;
-    		case 'md':
-    			return $this->markdown->transformMarkdown($file['content']);
-    			break;
-    		case 'rst':
-    			$reStructuredText = new ReStructuredText();
-    			return $reStructuredText->parse($file['content'])->render();
-    			break;
-    		default:
-    			return false;
-    	}
+        $extention = $file['extention'];
+        switch ($extention) {
+            case 'yaml':
+                return Yaml::parse($file['content']);
+                break;
+            case 'json':
+                return json_decode($file['content']);
+                break;
+            case 'md':
+                return $this->markdown->transformMarkdown($file['content']);
+                break;
+            case 'rst':
+                $reStructuredText = new ReStructuredText();
+
+                return $reStructuredText->parse($file['content'])->render();
+                break;
+            default:
+                return false;
+        }
     }
 
     // Finds all the repositories that mention a keyphrase
     public function updateComponent($component)
     {
         //print_r("Getting data for component ".$component->getName());
-    	$repository =  $this->getRepositoryFromGitHubOnId($component->getGitId());
-    	$repository["updated_at"] = new \DateTime($repository["updated_at"] );
-    	$now = new \DateTime();
+        $repository = $this->getRepositoryFromGitHubOnId($component->getGitId());
+        $repository['updated_at'] = new \DateTime($repository['updated_at']);
+        $now = new \DateTime();
 
-    	if( $component->getUpdatedAt() == null ||
-    		$component->getUpdatedAt() < $repository["updated_at"] ||
-    		$component->getChecked() == null
-   		){
-	   		//$component->setChecked($now);
-	   		$component->setName($repository['name']);
-	   		$component->setDescription($repository['description']);
-	   		$component->setGit($repository['html_url']);
-	   		$component->setUpdatedExternal($repository['updated_at']);
+        if ($component->getUpdatedAt() == null ||
+            $component->getUpdatedAt() < $repository['updated_at'] ||
+            $component->getChecked() == null
+        ) {
+            //$component->setChecked($now);
+            $component->setName($repository['name']);
+            $component->setDescription($repository['description']);
+            $component->setGit($repository['html_url']);
+            $component->setUpdatedExternal($repository['updated_at']);
 
-	   		/*
+            /*
 
-	   		// Lets get the other files
-	   		$fileTypes = ['README','LICENSE','CHANGELOG','CONTRIBUTING','INSTALLATION','ROADMAP','CODE_OF_CONDUCT','AUTHORS','DESIGN','SECURITY','TUTORIAL'];
- 		  foreach($fileTypes as $type){
+               // Lets get the other files
+               $fileTypes = ['README','LICENSE','CHANGELOG','CONTRIBUTING','INSTALLATION','ROADMAP','CODE_OF_CONDUCT','AUTHORS','DESIGN','SECURITY','TUTORIAL'];
+          foreach($fileTypes as $type){
 
-	   			// If the repro dosn't have a file of this type we should continue and do nothing
-	   			$fileData = $this->checkForTextFile($component, $type);
-	   			if(!$fileData){
-	   				continue;
-	   			}
+                   // If the repro dosn't have a file of this type we should continue and do nothing
+                   $fileData = $this->checkForTextFile($component, $type);
+                   if(!$fileData){
+                       continue;
+                   }
 
-	   			// lets first check if we already have an file of this type for this component
-	   			$files = $component->getFilesOnType($type);
+                   // lets first check if we already have an file of this type for this component
+                   $files = $component->getFilesOnType($type);
 
-	   			// create a file if we dont have one
-	   			if(!$file = $files->first()){
-	   				$file = New ComponentFile;
-	   			}
+                   // create a file if we dont have one
+                   if(!$file = $files->first()){
+                       $file = New ComponentFile;
+                   }
 
-	   			// Since the repro has been updated we want to overwrite files
-	   			$file->setComponent($component);
-	   			$file->setName($type);
-	   			$file->setType($type);
-	   			$file->setExtention($fileData['extention']);
-	   			$file->setLocation($fileData['location']);
-	   			$file->setContent($fileData['content']);
-	   			$file->setHtml(null);
+                   // Since the repro has been updated we want to overwrite files
+                   $file->setComponent($component);
+                   $file->setName($type);
+                   $file->setType($type);
+                   $file->setExtention($fileData['extention']);
+                   $file->setLocation($fileData['location']);
+                   $file->setContent($fileData['content']);
+                   $file->setHtml(null);
 
-	   			$component->addFile($file);
-	   		}
+                   $component->addFile($file);
+               }
             */
-    	}
-    	return $component;
+        }
+
+        return $component;
     }
 
     // Finds all the repositories that mention a keyphrase
     public function checkComponent($component)
     {
-    	// Lets get the documentations as array
-    	$files = $this->getFiles($component);
+        // Lets get the documentations as array
+        $files = $this->getFiles($component);
 
-    	//Skip checks when the repository is empty
-    	if(!$files){
-    	    $component->setChecked(new \DateTime);
-    	    return $component;
+        //Skip checks when the repository is empty
+        if (!$files) {
+            $component->setChecked(new \DateTime());
+
+            return $component;
         }
 
-    	// Filese to parse
-    	$parasble = ['README','LICENSE','CHANGELOG','CONTRIBUTING','INSTALLATION','ROADMAP','CODE_OF_CONDUCT','AUTHORS','DESIGN','SECURITY','TUTORIAL','OPENAPI','PUBLICCODE'];
+        // Filese to parse
+        $parasble = ['README', 'LICENSE', 'CHANGELOG', 'CONTRIBUTING', 'INSTALLATION', 'ROADMAP', 'CODE_OF_CONDUCT', 'AUTHORS', 'DESIGN', 'SECURITY', 'TUTORIAL', 'OPENAPI', 'PUBLICCODE'];
 
-    	foreach ($files as $file){
+        foreach ($files as $file) {
+            $path_parts = pathinfo($file['path']);
 
-    		$path_parts = pathinfo($file['path']);
+            // Lets check if this file is parsable
+            if (!in_array(strtoupper($path_parts['filename']), $parasble)) {
+                continue;
+            }
 
-    		// Lets check if this file is parsable
-    		if(!in_array(strtoupper($path_parts['filename']),$parasble)){
-    			continue;
-    		}
+            // Lets see if we already have this file in the db
+            $componentFiles = $component->getFilesOnType($path_parts['filename']);
+            if (count($componentFiles) > 0) {
+                $componentFile = $componentFiles->first();
+            } else {
+                $componentFile = new ComponentFile();
+                $componentFile->setComponent($component);
+                $componentFile->setType(strtolower($path_parts['filename']));
+                if (array_key_exists('extension', $path_parts)) {
+                    $componentFile->setExtention($path_parts['extension']);
+                }
+                $componentFile->setName($path_parts['filename']);
+                $component->addFile($componentFile);
+            }
 
-    		// Lets see if we already have this file in the db
-    		$componentFiles= $component->getFilesOnType($path_parts['filename']);
-    		if(count($componentFiles)>0){
-    			$componentFile = $componentFiles->first();
-    		}
-    		else{
-    			$componentFile = New ComponentFile;
-    			$componentFile->setComponent($component);
-    			$componentFile->setType(strtolower($path_parts['filename']));
-    			if(array_key_exists ('extension', $path_parts)){
-    				$componentFile->setExtention($path_parts['extension']);
-    			}
-    			$componentFile->setName($path_parts['filename']);
-    			$component->addFile($componentFile);
-    		}
+            // We only want to continu changing the file if the exteren sha divers from the current sha
+            if ($componentFile->getSha() == $file['sha']) {
+                continue;
+            }
 
-    		// We only want to continu changing the file if the exteren sha divers from the current sha
-    		if($componentFile->getSha() == $file['sha']){
-    			continue;
-    		}
+            // The file has changed so we want it reparsed
+            $componentFile->setName($path_parts['filename']);
+            $componentFile->setLocation($file['url']);
+            $componentFile->setSha($file['sha']);
+            $componentFile->setHtmlUpdated(null);
+            $componentFile->setContentUpdated(null);
 
-    		// The file has changed so we want it reparsed
-    		$componentFile->setName($path_parts['filename']);
-    		$componentFile->setLocation($file['url']);
-    		$componentFile->setSha($file['sha']);
-    		$componentFile->setHtmlUpdated(null);
-    		$componentFile->setContentUpdated(null);
+            // BAD WAY! determine if the component is commonground
+            if ($componentFile->getType() == 'openapi') {
+                $component->setCommonground(true);
+            }
+        }
 
-    		// BAD WAY! determine if the component is commonground
-    		if($componentFile->getType() == 'openapi'){
-    			$component->setCommonground(true);
-    		}
-    	}
+        $component->setChecked(new \Datetime());
 
-    	$component->setChecked(New \Datetime);
-
-    	return $component;
-
+        return $component;
     }
 
     // Finds all the repositories that mention a keyphrase
     public function parseFile($file)
     {
-    	// Example: https://api.github.com/repos/ConductionNL/agendaservice/contents
-    	$client = new Client();
+        // Example: https://api.github.com/repos/ConductionNL/agendaservice/contents
+        $client = new Client();
 
-    	$content = $this->client->get($file->getLocation(),['http_errors' => false, 'headers'=>['Accept' => 'application/vnd.github.VERSION.raw']]);
+        $content = $this->client->get($file->getLocation(), ['http_errors' => false, 'headers'=>['Accept' => 'application/vnd.github.VERSION.raw']]);
 
-    	// Lets see if we can get the file
-    	if ($content->getStatusCode() == 200) {
-    		$file->setContent($content->getBody());
-    		$file->setContentUpdated(New \Datetime);
-    	}
+        // Lets see if we can get the file
+        if ($content->getStatusCode() == 200) {
+            $file->setContent($content->getBody());
+            $file->setContentUpdated(new \Datetime());
+        }
 
-    	$html = $this->client->get($file->getLocation(),['http_errors' => false, 'headers' => ['Accept' => 'application/vnd.github.VERSION.html']]);
+        $html = $this->client->get($file->getLocation(), ['http_errors' => false, 'headers' => ['Accept' => 'application/vnd.github.VERSION.html']]);
 
-    	// Lets see if we can get the file
-    	if ($html->getStatusCode() == 200) {
-    		$file->setHtml($html->getBody());
-    		$file->setHtmlUpdated(New \Datetime);
-    	}
+        // Lets see if we can get the file
+        if ($html->getStatusCode() == 200) {
+            $file->setHtml($html->getBody());
+            $file->setHtmlUpdated(new \Datetime());
+        }
 
-    	return $file;
+        return $file;
     }
 
     // Finds all the repositories that mention a keyphrase
     public function findRepositories($search)
     {
-    	$repositories = [];
-    	$items = [1,2,3];
-    	$page = 1;
+        $repositories = [];
+        $items = [1, 2, 3];
+        $page = 1;
 
-    	while(count($items) > 0){
-	    	$response = $this->client->get('search/repositories?q='.$search.'&sort=stars&order=des&per_page=100&page='.$page);
-	    	$response = json_decode($response->getBody(), true);
-	    	$items = $response['items'];
-	    	$page++;
-	    	$repositories = array_merge($repositories, $items);
-    	}
+        while (count($items) > 0) {
+            $response = $this->client->get('search/repositories?q='.$search.'&sort=stars&order=des&per_page=100&page='.$page);
+            $response = json_decode($response->getBody(), true);
+            $items = $response['items'];
+            $page++;
+            $repositories = array_merge($repositories, $items);
+        }
 
-    	return $repositories;
+        return $repositories;
     }
 }
