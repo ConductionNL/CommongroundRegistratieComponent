@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="92089c82-d91e-45b0-a4eb-32fdfd03bfef" name="Default Changelist" comment="(semi) definitive fix for rollout issue">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/test.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/test.yml" afterDir="false" />
+    <list default="true" id="92089c82-d91e-45b0-a4eb-32fdfd03bfef" name="Default Changelist" comment="Working updates (for now)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/public/schema/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/openapi.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/Command/GithubParseCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/Command/GithubParseCommand.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/Entity/ComponentFile.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/Entity/ComponentFile.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

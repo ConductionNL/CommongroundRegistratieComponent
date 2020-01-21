@@ -21,7 +21,7 @@ use App\Entity\Component;
 
 class GithubParseCommand extends Command
 {
-	private $githubService; 
+	private $githubService;
 	private $em;
 
 	public function __construct(GithubService $githubService, EntityManagerInterface $em)
@@ -41,7 +41,7 @@ class GithubParseCommand extends Command
         ->setName('app:github:parse')
         // the short description shown while running "php bin/console list"
         ->setDescription('Checks all not het checked github repositories')
-        
+
         // the full command description shown when running the command with
         // the "--help" option
         ->setHelp('This command checks all not het checked github repositories. And determines if they are commonground components')
@@ -55,7 +55,7 @@ class GithubParseCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-    	
+
     	$io = new SymfonyStyle($input, $output);
     	
     	$file= $input->getOption('file');
@@ -68,18 +68,18 @@ class GithubParseCommand extends Command
     		//$io->text(var_dump($component->getCommonground()));
     		$this->em->persist($file);
     		$this->em->flush();
-    		
+
     		// @todo die mag nooit naar prod
     		die;
     	}
-    	
+
     	// Lets find the components to be updated
     	$files = $this->em->getRepository('App:ComponentFile')->findParsable();
     	//$components = $this->em->getRepository('App:Component')->findAll();
     	
     	$io->success(sprintf('Found %s files to be parsed.', count($files)));
     	$now = New \Datetime;
-    	
+
     	$processes = [];
     	
     	foreach($files as $file){
@@ -91,13 +91,13 @@ class GithubParseCommand extends Command
     		// start() doesn't wait until the process is finished, oppose to run()
     		$process->start();
     		//echo $process->getOutput();
-    		
-    		
+
+
     		//$io->success(sprintf('Component %s (%s) has been updated.', $component->getName(),$component->getId()));
     		// store process for later, so we evaluate it's finished
     		$processes[] = $process;
     	}
-    	
+
     	// Lets wait until everything finishes
     	while (count($processes)) {
     		
@@ -107,7 +107,7 @@ class GithubParseCommand extends Command
     			// specific process is finished, so we remove it
     			if (! $runningProcess->isRunning()) {
     				unset($processes[$i]);
-    				
+
     				if (!$runningProcess->isSuccessful()) {
     					$io->error($runningProcess->getErrorOutput());
     				}
@@ -115,7 +115,7 @@ class GithubParseCommand extends Command
     					$io->success($runningProcess->getOutput());
     				}
     			}
-    			
+
     			// check every second
     			sleep(1);
     		}
