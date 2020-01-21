@@ -79,12 +79,12 @@ class GitlabService
 
         foreach ($responses as $repository) {
             $repositories[] = [
-                    'type'       => 'gitlab',
-                    'link'       => $repository['web_url'],
-                    'id'         => $repository['id'],
-                    'name'       => $repository['name'],
-                    'description'=> $repository['description'],
-                    'logo'       => $repository['avatar_url'],
+                'type'       => 'gitlab',
+                'link'       => $repository['web_url'],
+                'id'         => $repository['id'],
+                'name'       => $repository['name'],
+                'description'=> $repository['description'],
+                'logo'       => $repository['avatar_url'],
             ];
         }
 
@@ -100,12 +100,12 @@ class GitlabService
 
         foreach ($responses as $repository) {
             $repositories[] = [
-                    'type'       => 'gitlab',
-                    'link'       => $repository['web_url'],
-                    'id'         => $repository['id'],
-                    'name'       => $repository['name'],
-                    'description'=> $repository['description'],
-                    'logo'       => $repository['avatar_url'],
+                'type'       => 'gitlab',
+                'link'       => $repository['web_url'],
+                'id'         => $repository['id'],
+                'name'       => $repository['name'],
+                'description'=> $repository['description'],
+                'logo'       => $repository['avatar_url'],
             ];
         }
 
