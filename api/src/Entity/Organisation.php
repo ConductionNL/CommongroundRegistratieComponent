@@ -49,18 +49,6 @@ class Organisation
      *
      * @example e2984465-190a-4562-829e-a8cca81aa35d
      *
-     * @ApiProperty(
-     * 	   identifier=true,
-     *     attributes={
-     *         "openapi_context"={
-     *         	   "description" = "The UUID identifier of this object",
-     *             "type"="string",
-     *             "format"="uuid",
-     *             "example"="e2984465-190a-4562-829e-a8cca81aa35d"
-     *         }
-     *     }
-     * )
-     *
      * @Assert\Uuid
      * @Groups({"read"})
      * @ORM\Id
@@ -75,24 +63,11 @@ class Organisation
      *
      * @example My Organisation
      *
-     * @ApiProperty(
-     * 	   iri="https://schema.org/name",
-     *     attributes={
-     *         "openapi_context"={
-     *         	   "description" = "The name of this organisation",
-     *             "type"="string",
-     *             "example"="My Organisation",
-     *             "maxLength"=255,
-     *             "required" = true
-     *         }
-     *     }
-     * )
-     *
      * @Assert\NotNull
      * @Assert\Length(
      *      max = 255
      * )
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
     private $name;
@@ -102,22 +77,10 @@ class Organisation
      *
      * @example This is the best organisation ever
      *
-     * @ApiProperty(
-     * 	   iri="https://schema.org/description",
-     *     attributes={
-     *         "openapi_context"={
-     *         	   "description" = "An short description of this organisation",
-     *             "type"="string",
-     *             "example"="This is the best organisation ever",
-     *             "maxLength"=2550
-     *         }
-     *     }
-     * )
-     *
      * @Assert\Length(
      *      max = 2550
      * )
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
@@ -127,24 +90,11 @@ class Organisation
      *
      * @example https://www.my-organisation.com/logo.png
      *
-     * @ApiProperty(
-     * 	   iri="https://schema.org/logo",
-     *     attributes={
-     *         "openapi_context"={
-     *         	   "description" = "The logo for this organisation",
-     *             "type"="string",
-     *             "format"="url",
-     *             "example"="https://www.my-organisation.com/logo.png",
-     *             "maxLength"=255
-     *         }
-     *     }
-     * )
-     *
      * @Assert\Url
      * @Assert\Length(
      *      max = 255
      * )
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $logo;
@@ -154,19 +104,8 @@ class Organisation
      *
      * @example my-organisation
      *
-     * @ApiProperty(
-     *     attributes={
-     *         "openapi_context"={
-     *         	   "description" = "The slug for this organisation",
-     *             "type"="string",
-     *             "example"="my-organisation",
-     *             "maxLength"=255
-     *         }
-     *     }
-     * )
-     *
      * @Gedmo\Slug(fields={"name"})
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
@@ -176,26 +115,12 @@ class Organisation
      *
      * @example https://www.github.com/my-organisation/my-component.git
      *
-     * @ApiProperty(
-     * 	   iri="https://schema.org/url",
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The link to the git repository for this component",
-     *             "type"="string",
-     *             "format"="url",
-     *             "example"="https://www.github.com/my-organisation/my-component.git",
-     *             "maxLength"=255,
-     *             "required" = true
-     *         }
-     *     }
-     * )
-     *
      * @Assert\NotNull
      * @Assert\Url
      * @Assert\Length(
      *      max = 255
      * )
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
     private $git;
@@ -205,21 +130,10 @@ class Organisation
      *
      * @example my-component
      *
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The git id for the repository for this component",
-     *             "type"="string",
-     *             "example"="my-component",
-     *             "maxLength"=255
-     *         }
-     *     }
-     * )
-     *
      * @Assert\Length(
      *      max = 255
      * )
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $gitId;
@@ -228,7 +142,7 @@ class Organisation
      * @var ArrayCollection The apis provided by this organisation
      *
      * @maxDepth(1)
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\ManyToMany(targetEntity="App\Entity\Component", inversedBy="organisations")
      */
     private $components;
@@ -237,7 +151,7 @@ class Organisation
      * @var ArrayCollection The components provided by this organisation
      *
      * @maxDepth(1)
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\ManyToMany(targetEntity="App\Entity\API", inversedBy="organisations")
      */
     private $apis;

@@ -64,17 +64,6 @@ class Component
      *
      * @example e2984465-190a-4562-829e-a8cca81aa35d
      *
-     * @ApiProperty(
-     * 	   identifier=true,
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The UUID identifier of this object",
-     *             "type"="string",
-     *             "format"="uuid",
-     *             "example"="e2984465-190a-4562-829e-a8cca81aa35d"
-     *         }
-     *     }
-     * )
      *
      * @Assert\Uuid
      * @Groups({"read"})
@@ -89,25 +78,12 @@ class Component
      * @var string The name of this component
      *
      * @example My component
-     *
-     * @ApiProperty(
-     * 	   iri="http://schema.org/name",
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The name of this component",
-     *             "type"="string",
-     *             "example"="My component",
-     *             "maxLength"=255,
-     *             "required" = true
-     *         }
-     *     }
-     * )
-     *
+	 *
      * @Assert\NotNull
      * @Assert\Length(
      *      max = 255
      * )
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
     private $name;
@@ -117,22 +93,11 @@ class Component
      *
      * @example This is the best component ever
      *
-     * @ApiProperty(
-     * 	   iri="https://schema.org/description",
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "An short description of this component",
-     *             "type"="string",
-     *             "example"="This is the best component ever",
-     *             "maxLength"=2550
-     *         }
-     *     }
-     * )
-     *
+	 *
      * @Assert\Length(
      *      max = 2550
      * )
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
@@ -142,24 +107,12 @@ class Component
      *
      * @example https://www.my-organisation.com/logo.png
      *
-     * @ApiProperty(
-     * 	   iri="https://schema.org/logo",
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The logo for this component",
-     *             "type"="string",
-     *             "format"="url",
-     *             "example"="https://www.my-organisation.com/logo.png",
-     *             "maxLength"=255
-     *         }
-     *     }
-     * )
-     *
+	 *
      * @Assert\Url
      * @Assert\Length(
      *      max = 255
      * )
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $logo;
@@ -169,22 +122,11 @@ class Component
      *
      * @example v0.1.2.3-beta
      *
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The current production version of this component",
-     *             "type"="string",
-     *             "format"="url",
-     *             "example"="v0.1.2.3-beta",
-     *             "maxLength"=255
-     *         }
-     *     }
-     * )
-     *
+	 *
      * @Assert\Length(
      *      max = 255
      * )
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $version;
@@ -193,23 +135,12 @@ class Component
      * @var string The slug for this component
      *
      * @example my-organisation
-     *
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The slug for this component",
-     *             "type"="string",
-     *             "example"="my-organisation",
-     *             "maxLength"=255
-     *         }
-     *     }
-     * )
-     *
+	 *
      * @Gedmo\Slug(fields={"name"})
      * @Assert\Length(
      *      max = 255
      * )
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
@@ -218,27 +149,13 @@ class Component
      * @var string The link to the git repository for this component
      *
      * @example https://www.github.com/my-organisation/my-component.git
-     *
-     * @ApiProperty(
-     * 	   iri="https://schema.org/url",
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The link to the git repository for this component",
-     *             "type"="string",
-     *             "format"="url",
-     *             "example"="https://www.github.com/my-organisation/my-component.git",
-     *             "maxLength"=255,
-     *             "required" = true
-     *         }
-     *     }
-     * )
-     *
+	 *
      * @Assert\NotNull
      * @Assert\Url
      * @Assert\Length(
      *      max = 255
      * )
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
     private $git;
@@ -247,22 +164,11 @@ class Component
      * @var string The git id for the repository for this component
      *
      * @example my-component
-     *
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The git id for the repository for this component",
-     *             "type"="string",
-     *             "example"="my-component",
-     *             "maxLength"=255
-     *         }
-     *     }
-     * )
-     *
+	 *
      * @Assert\Length(
      *      max = 255
      * )
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $gitId;
@@ -270,23 +176,11 @@ class Component
     /**
      * @var string The git type for the repository for this component
      * @example({"Github", "Gitlab", "Bitbucket"})
-     *
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The git type for the repository for this component",
-     *             "type"="string",
-     *             "example"="github",
-     *             "maxLength"=255,
-     *             "enum"={"Github", "Gitlab", "Bitbucket"}
-     *         }
-     *     }
-     * )
-     *
+	 *
      * @Assert\Length(
      *      max = 255
      * )
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $gitType;
@@ -304,8 +198,8 @@ class Component
      * @var ArrayCollection The APIs provided by this component
      *
      * @Assert\Valid
-     * @maxDepth(1)
-     * @Groups({"read"})
+	 * @maxDepth(1)
+	 * @Groups({"read", "write"})
      * @ORM\OneToMany(targetEntity="App\Entity\API", mappedBy="component",cascade={"persist"})
      */
     private $apis;
@@ -314,35 +208,35 @@ class Component
      * @var ArrayCollection The organisations that provide this component
      *
      * @Assert\Valid
-     * @maxDepth(1)
-     * @Groups({"read"})
+	 * @maxDepth(1)
+	 * @Groups({"read", "write"})
      * @ORM\ManyToMany(targetEntity="App\Entity\Organisation", mappedBy="components",cascade={"persist"})
      */
     private $organisations;
 
     /**
-     * @var array The OAS (formely swagger) documentation for this component
-     *
-     * @maxDepth(1)
-     * @Groups({"read"})
+	 * @var array $oas The OAS (formely swagger) documentation for this component
+	 *
+	 * @maxDepth(1)
+	 * @Groups({"read", "write"})
      * @ORM\Column(type="array", nullable=true)
      */
     private $oas = [];
 
     /**
-     * @var array The publiccode documentation for this component
-     *
-     * @maxDepth(1)
-     * @Groups({"read"})
+	 * @var array $publiccode The publiccode documentation for this component
+	 *
+	 * @maxDepth(1)
+	 * @Groups({"read", "write"})
      * @ORM\Column(type="array", nullable=true)
      */
     private $publiccode = [];
 
     /**
-     * @var ArrayCollection v The organisations that provide this component
-     *
-     * @maxDepth(1)
-     * @Groups({"read"})
+	 * @var ArrayCollection v The organisations that provide this component
+	 *
+	 * @maxDepth(1)
+	 * @Groups({"read", "write"})
      * @ORM\OneToMany(targetEntity="App\Entity\ComponentFile", mappedBy="component", orphanRemoval=true,cascade={"persist"})
      */
     private $files;
@@ -350,7 +244,7 @@ class Component
     /**
      * @var bool Whether tis component is intended for commonground
      *
-     * @Groups({"read"})
+	 * @Groups({"read", "write"})
      * @ORM\Column(type="boolean")
      */
     private $commonground;
@@ -358,7 +252,7 @@ class Component
     /**
      * @var Datetime The moment this component was last checked for commonground compliance
      *
-     * @Groups({"read"})
+	 * @Groups({"read", "write"})
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $checked;
@@ -366,7 +260,7 @@ class Component
     /**
      * @var Datetime The moment this component was last parsed for file
      *
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $parsed;
@@ -374,7 +268,7 @@ class Component
     /**
      * @var Datetime The moment this component was found by the crawler
      *
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -383,7 +277,7 @@ class Component
     /**
      * @var Datetime The last time this component was changed
      *
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -392,7 +286,7 @@ class Component
     /**
      * @var Datetime The last time this components git was changed on the git provider
      *
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedExternal;
