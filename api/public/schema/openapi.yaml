@@ -453,12 +453,12 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ComponentFile'
+                  $ref: '#/components/schemas/ComponentFile-read'
             application/ld+json:
               schema:
                 type: object
                 properties:
-                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/ComponentFile:jsonld' } }
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/ComponentFile:jsonld-read' } }
                   'hydra:totalItems': { type: integer, minimum: 0 }
                   'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } } }
                   'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
@@ -468,32 +468,32 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ComponentFile'
+                  $ref: '#/components/schemas/ComponentFile-read'
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ComponentFile'
+                  $ref: '#/components/schemas/ComponentFile-read'
             application/xml:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ComponentFile'
+                  $ref: '#/components/schemas/ComponentFile-read'
             application/x-yaml:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ComponentFile'
+                  $ref: '#/components/schemas/ComponentFile-read'
             text/csv:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ComponentFile'
+                  $ref: '#/components/schemas/ComponentFile-read'
             text/html:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ComponentFile'
+                  $ref: '#/components/schemas/ComponentFile-read'
       parameters:
         -
           name: page
@@ -587,28 +587,28 @@ paths:
           content:
             application/hal+json:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/ComponentFile:jsonld'
+                $ref: '#/components/schemas/ComponentFile:jsonld-read'
             application/vnd.api+json:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
             application/json:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
             application/xml:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
             text/csv:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
             text/html:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
           links:
             GetComponentFileItem:
               parameters:
@@ -623,28 +623,28 @@ paths:
         content:
           application/hal+json:
             schema:
-              $ref: '#/components/schemas/ComponentFile'
+              $ref: '#/components/schemas/ComponentFile-write'
           application/ld+json:
             schema:
-              $ref: '#/components/schemas/ComponentFile:jsonld'
+              $ref: '#/components/schemas/ComponentFile:jsonld-write'
           application/vnd.api+json:
             schema:
-              $ref: '#/components/schemas/ComponentFile'
+              $ref: '#/components/schemas/ComponentFile-write'
           application/json:
             schema:
-              $ref: '#/components/schemas/ComponentFile'
+              $ref: '#/components/schemas/ComponentFile-write'
           application/xml:
             schema:
-              $ref: '#/components/schemas/ComponentFile'
+              $ref: '#/components/schemas/ComponentFile-write'
           application/x-yaml:
             schema:
-              $ref: '#/components/schemas/ComponentFile'
+              $ref: '#/components/schemas/ComponentFile-write'
           text/csv:
             schema:
-              $ref: '#/components/schemas/ComponentFile'
+              $ref: '#/components/schemas/ComponentFile-write'
           text/html:
             schema:
-              $ref: '#/components/schemas/ComponentFile'
+              $ref: '#/components/schemas/ComponentFile-write'
         description: 'The new ComponentFile resource'
       parameters:
         -
@@ -766,28 +766,28 @@ paths:
           content:
             application/hal+json:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/ComponentFile:jsonld'
+                $ref: '#/components/schemas/ComponentFile:jsonld-read'
             application/vnd.api+json:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
             application/json:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
             application/xml:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
             text/csv:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
             text/html:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
         404:
           description: 'Resource not found'
       produces:
@@ -885,28 +885,28 @@ paths:
           content:
             application/hal+json:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/ComponentFile:jsonld'
+                $ref: '#/components/schemas/ComponentFile:jsonld-read'
             application/vnd.api+json:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
             application/json:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
             application/xml:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
             text/csv:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
             text/html:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
         400:
           description: 'Invalid input'
         404:
@@ -915,28 +915,28 @@ paths:
         content:
           application/hal+json:
             schema:
-              $ref: '#/components/schemas/ComponentFile'
+              $ref: '#/components/schemas/ComponentFile-write'
           application/ld+json:
             schema:
-              $ref: '#/components/schemas/ComponentFile:jsonld'
+              $ref: '#/components/schemas/ComponentFile:jsonld-write'
           application/vnd.api+json:
             schema:
-              $ref: '#/components/schemas/ComponentFile'
+              $ref: '#/components/schemas/ComponentFile-write'
           application/json:
             schema:
-              $ref: '#/components/schemas/ComponentFile'
+              $ref: '#/components/schemas/ComponentFile-write'
           application/xml:
             schema:
-              $ref: '#/components/schemas/ComponentFile'
+              $ref: '#/components/schemas/ComponentFile-write'
           application/x-yaml:
             schema:
-              $ref: '#/components/schemas/ComponentFile'
+              $ref: '#/components/schemas/ComponentFile-write'
           text/csv:
             schema:
-              $ref: '#/components/schemas/ComponentFile'
+              $ref: '#/components/schemas/ComponentFile-write'
           text/html:
             schema:
-              $ref: '#/components/schemas/ComponentFile'
+              $ref: '#/components/schemas/ComponentFile-write'
         description: 'The updated ComponentFile resource'
     patch:
       tags:
@@ -985,28 +985,28 @@ paths:
           content:
             application/hal+json:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/ComponentFile:jsonld'
+                $ref: '#/components/schemas/ComponentFile:jsonld-read'
             application/vnd.api+json:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
             application/json:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
             application/xml:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
             text/csv:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
             text/html:
               schema:
-                $ref: '#/components/schemas/ComponentFile'
+                $ref: '#/components/schemas/ComponentFile-read'
         400:
           description: 'Invalid input'
         404:
@@ -1015,7 +1015,7 @@ paths:
         content:
           application/vnd.api+json:
             schema:
-              $ref: '#/components/schemas/ComponentFile'
+              $ref: '#/components/schemas/ComponentFile-write'
         description: 'The updated ComponentFile resource'
   /components:
     get:
@@ -1073,6 +1073,34 @@ paths:
                 items:
                   $ref: '#/components/schemas/Component-read'
       parameters:
+        -
+          name: name
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'name[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: description
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: commonground
+          in: query
+          required: false
+          schema:
+            type: boolean
         -
           name: page
           in: query
@@ -2249,52 +2277,89 @@ components:
             url: 'http://schema.org/identifier'
           type: string
         name:
-          readOnly: true
-          externalDocs:
-            url: 'http://schema.org/name'
+          description: 'The name of this API'
           type: string
         description:
-          readOnly: true
           description: 'An short description of this API'
           externalDocs:
             url: 'https://schema.org/description'
           type: string
         version:
-          readOnly: true
           description: 'The current production version of this component'
           type: string
         logo:
-          readOnly: true
           description: 'The logo for this component'
           externalDocs:
             url: 'https://schema.org/logo'
           type: string
         slug:
-          readOnly: true
+          description: 'The slug for this api'
           type: string
         endpoint:
-          readOnly: true
+          description: 'The location where api calls should be directed to'
           externalDocs:
-            url: 'https://schema.org/url'
+            url: 'http://schema.org/url'
           type: string
         documentation:
-          readOnly: true
+          description: 'The location of the open api documentation of this api'
           externalDocs:
-            url: 'https://schema.org/url'
+            url: 'http://schema.org/url'
           type: string
         component:
-          readOnly: true
           description: 'The common ground component that this api provides'
           $ref: '#/components/schemas/Component-read'
         organisations:
-          readOnly: true
           description: 'The organisations that provide this api'
           type: array
           items:
             $ref: '#/components/schemas/Organisation-read'
+      required:
+        - name
+        - endpoint
     API-write:
       type: object
       description: 'An API.'
+      required:
+        - name
+        - endpoint
+      properties:
+        name:
+          description: 'The name of this API'
+          type: string
+        description:
+          description: 'An short description of this API'
+          externalDocs:
+            url: 'https://schema.org/description'
+          type: string
+        version:
+          description: 'The current production version of this component'
+          type: string
+        logo:
+          description: 'The logo for this component'
+          externalDocs:
+            url: 'https://schema.org/logo'
+          type: string
+        slug:
+          description: 'The slug for this api'
+          type: string
+        endpoint:
+          description: 'The location where api calls should be directed to'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+        documentation:
+          description: 'The location of the open api documentation of this api'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+        component:
+          description: 'The common ground component that this api provides'
+          $ref: '#/components/schemas/Component-write'
+        organisations:
+          description: 'The organisations that provide this api'
+          type: array
+          items:
+            $ref: '#/components/schemas/Organisation-write'
     'API:jsonld-read':
       type: object
       description: 'An API.'
@@ -2315,52 +2380,51 @@ components:
             url: 'http://schema.org/identifier'
           type: string
         name:
-          readOnly: true
-          externalDocs:
-            url: 'http://schema.org/name'
+          description: 'The name of this API'
           type: string
         description:
-          readOnly: true
           description: 'An short description of this API'
           externalDocs:
             url: 'https://schema.org/description'
           type: string
         version:
-          readOnly: true
           description: 'The current production version of this component'
           type: string
         logo:
-          readOnly: true
           description: 'The logo for this component'
           externalDocs:
             url: 'https://schema.org/logo'
           type: string
         slug:
-          readOnly: true
+          description: 'The slug for this api'
           type: string
         endpoint:
-          readOnly: true
+          description: 'The location where api calls should be directed to'
           externalDocs:
-            url: 'https://schema.org/url'
+            url: 'http://schema.org/url'
           type: string
         documentation:
-          readOnly: true
+          description: 'The location of the open api documentation of this api'
           externalDocs:
-            url: 'https://schema.org/url'
+            url: 'http://schema.org/url'
           type: string
         component:
-          readOnly: true
           description: 'The common ground component that this api provides'
           $ref: '#/components/schemas/Component:jsonld-read'
         organisations:
-          readOnly: true
           description: 'The organisations that provide this api'
           type: array
           items:
             $ref: '#/components/schemas/Organisation:jsonld-read'
+      required:
+        - name
+        - endpoint
     'API:jsonld-write':
       type: object
       description: 'An API.'
+      required:
+        - name
+        - endpoint
       properties:
         '@context':
           readOnly: true
@@ -2371,6 +2435,43 @@ components:
         '@type':
           readOnly: true
           type: string
+        name:
+          description: 'The name of this API'
+          type: string
+        description:
+          description: 'An short description of this API'
+          externalDocs:
+            url: 'https://schema.org/description'
+          type: string
+        version:
+          description: 'The current production version of this component'
+          type: string
+        logo:
+          description: 'The logo for this component'
+          externalDocs:
+            url: 'https://schema.org/logo'
+          type: string
+        slug:
+          description: 'The slug for this api'
+          type: string
+        endpoint:
+          description: 'The location where api calls should be directed to'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+        documentation:
+          description: 'The location of the open api documentation of this api'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+        component:
+          description: 'The common ground component that this api provides'
+          $ref: '#/components/schemas/Component:jsonld-write'
+        organisations:
+          description: 'The organisations that provide this api'
+          type: array
+          items:
+            $ref: '#/components/schemas/Organisation:jsonld-write'
     Component-read:
       type: object
       description: 'A Component.'
@@ -2382,107 +2483,167 @@ components:
             url: 'http://schema.org/identifier'
           type: string
         name:
-          readOnly: true
           description: 'The name of this component'
-          externalDocs:
-            url: 'http://schema.org/name'
           type: string
         description:
-          readOnly: true
           description: 'An short description of this component'
-          externalDocs:
-            url: 'https://schema.org/description'
           type: string
         logo:
-          readOnly: true
           description: 'The logo for this component'
           externalDocs:
-            url: 'https://schema.org/logo'
+            url: 'http://schema.org/url'
           type: string
         version:
-          readOnly: true
           description: 'The current production version of this component'
           type: string
         slug:
-          readOnly: true
           description: 'The slug for this component'
           type: string
         git:
-          readOnly: true
           description: 'The link to the git repository for this component'
           externalDocs:
-            url: 'https://schema.org/url'
+            url: 'http://schema.org/url'
           type: string
         gitId:
-          readOnly: true
           description: 'The git id for the repository for this component'
           type: string
         gitType:
-          readOnly: true
           description: 'The git type for the repository for this component'
           type: string
         apis:
-          readOnly: true
           description: 'The APIs provided by this component'
           type: array
           items:
             $ref: '#/components/schemas/API-read'
         organisations:
-          readOnly: true
           description: 'The organisations that provide this component'
           type: array
           items:
             $ref: '#/components/schemas/Organisation-read'
         oas:
-          readOnly: true
           description: 'The OAS (formely swagger) documentation for this component'
           type: array
           items:
             type: string
         publiccode:
-          readOnly: true
           description: 'The publiccode documentation for this component'
           type: array
           items:
             type: string
         files:
-          readOnly: true
           description: 'v The organisations that provide this component'
           type: array
           items:
             $ref: '#/components/schemas/ComponentFile-read'
         commonground:
-          readOnly: true
           description: 'Whether tis component is intended for commonground'
           type: boolean
         checked:
-          readOnly: true
           description: 'The moment this component was last checked for commonground compliance'
           type: string
           format: date-time
         parsed:
-          readOnly: true
           description: 'The moment this component was last parsed for file'
           type: string
           format: date-time
         createdAt:
-          readOnly: true
           description: 'The moment this component was found by the crawler'
           type: string
           format: date-time
         updatedAt:
-          readOnly: true
           description: 'The last time this component was changed'
           type: string
           format: date-time
         updatedExternal:
-          readOnly: true
           description: 'The last time this components git was changed on the git provider'
           type: string
           format: date-time
+      required:
+        - name
+        - git
     Component-write:
       type: object
       description: 'A Component.'
+      required:
+        - name
+        - git
+      properties:
+        name:
+          description: 'The name of this component'
+          type: string
+        description:
+          description: 'An short description of this component'
+          type: string
+        logo:
+          description: 'The logo for this component'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+        version:
+          description: 'The current production version of this component'
+          type: string
+        slug:
+          description: 'The slug for this component'
+          type: string
+        git:
+          description: 'The link to the git repository for this component'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+        gitId:
+          description: 'The git id for the repository for this component'
+          type: string
+        gitType:
+          description: 'The git type for the repository for this component'
+          type: string
+        apis:
+          description: 'The APIs provided by this component'
+          type: array
+          items:
+            $ref: '#/components/schemas/API-write'
+        organisations:
+          description: 'The organisations that provide this component'
+          type: array
+          items:
+            $ref: '#/components/schemas/Organisation-write'
+        oas:
+          description: 'The OAS (formely swagger) documentation for this component'
+          type: array
+          items:
+            type: string
+        publiccode:
+          description: 'The publiccode documentation for this component'
+          type: array
+          items:
+            type: string
+        files:
+          description: 'v The organisations that provide this component'
+          type: array
+          items:
+            $ref: '#/components/schemas/ComponentFile-write'
+        commonground:
+          description: 'Whether tis component is intended for commonground'
+          type: boolean
+        checked:
+          description: 'The moment this component was last checked for commonground compliance'
+          type: string
+          format: date-time
+        parsed:
+          description: 'The moment this component was last parsed for file'
+          type: string
+          format: date-time
+        createdAt:
+          description: 'The moment this component was found by the crawler'
+          type: string
+          format: date-time
+        updatedAt:
+          description: 'The last time this component was changed'
+          type: string
+          format: date-time
+        updatedExternal:
+          description: 'The last time this components git was changed on the git provider'
+          type: string
+          format: date-time
     'Component:jsonld-read':
       type: object
       description: 'A Component.'
@@ -2503,107 +2664,90 @@ components:
             url: 'http://schema.org/identifier'
           type: string
         name:
-          readOnly: true
           description: 'The name of this component'
-          externalDocs:
-            url: 'http://schema.org/name'
           type: string
         description:
-          readOnly: true
           description: 'An short description of this component'
-          externalDocs:
-            url: 'https://schema.org/description'
           type: string
         logo:
-          readOnly: true
           description: 'The logo for this component'
           externalDocs:
-            url: 'https://schema.org/logo'
+            url: 'http://schema.org/url'
           type: string
         version:
-          readOnly: true
           description: 'The current production version of this component'
           type: string
         slug:
-          readOnly: true
           description: 'The slug for this component'
           type: string
         git:
-          readOnly: true
           description: 'The link to the git repository for this component'
           externalDocs:
-            url: 'https://schema.org/url'
+            url: 'http://schema.org/url'
           type: string
         gitId:
-          readOnly: true
           description: 'The git id for the repository for this component'
           type: string
         gitType:
-          readOnly: true
           description: 'The git type for the repository for this component'
           type: string
         apis:
-          readOnly: true
           description: 'The APIs provided by this component'
           type: array
           items:
             $ref: '#/components/schemas/API:jsonld-read'
         organisations:
-          readOnly: true
           description: 'The organisations that provide this component'
           type: array
           items:
             $ref: '#/components/schemas/Organisation:jsonld-read'
         oas:
-          readOnly: true
           description: 'The OAS (formely swagger) documentation for this component'
           type: array
           items:
             type: string
         publiccode:
-          readOnly: true
           description: 'The publiccode documentation for this component'
           type: array
           items:
             type: string
         files:
-          readOnly: true
           description: 'v The organisations that provide this component'
           type: array
           items:
             $ref: '#/components/schemas/ComponentFile:jsonld-read'
         commonground:
-          readOnly: true
           description: 'Whether tis component is intended for commonground'
           type: boolean
         checked:
-          readOnly: true
           description: 'The moment this component was last checked for commonground compliance'
           type: string
           format: date-time
         parsed:
-          readOnly: true
           description: 'The moment this component was last parsed for file'
           type: string
           format: date-time
         createdAt:
-          readOnly: true
           description: 'The moment this component was found by the crawler'
           type: string
           format: date-time
         updatedAt:
-          readOnly: true
           description: 'The last time this component was changed'
           type: string
           format: date-time
         updatedExternal:
-          readOnly: true
           description: 'The last time this components git was changed on the git provider'
           type: string
           format: date-time
+      required:
+        - name
+        - git
     'Component:jsonld-write':
       type: object
       description: 'A Component.'
+      required:
+        - name
+        - git
       properties:
         '@context':
           readOnly: true
@@ -2614,38 +2758,68 @@ components:
         '@type':
           readOnly: true
           type: string
-    ComponentFile:
-      type: object
-      description: ''
-      properties:
-        id:
-          readOnly: true
-          description: 'The UUID identifier of this object'
-          externalDocs:
-            url: 'http://schema.org/identifier'
-          type: string
-        component:
-          type: string
         name:
+          description: 'The name of this component'
           type: string
-        type:
+        description:
+          description: 'An short description of this component'
           type: string
-        location:
+        logo:
+          description: 'The logo for this component'
+          externalDocs:
+            url: 'http://schema.org/url'
           type: string
-        extention:
+        version:
+          description: 'The current production version of this component'
           type: string
-        sha:
+        slug:
+          description: 'The slug for this component'
           type: string
-        content:
+        git:
+          description: 'The link to the git repository for this component'
+          externalDocs:
+            url: 'http://schema.org/url'
           type: string
-        html:
+        gitId:
+          description: 'The git id for the repository for this component'
           type: string
-        contentUpdated:
-          description: 'The moment the content of this file was last updated by te crawler'
+        gitType:
+          description: 'The git type for the repository for this component'
+          type: string
+        apis:
+          description: 'The APIs provided by this component'
+          type: array
+          items:
+            $ref: '#/components/schemas/API:jsonld-write'
+        organisations:
+          description: 'The organisations that provide this component'
+          type: array
+          items:
+            $ref: '#/components/schemas/Organisation:jsonld-write'
+        oas:
+          description: 'The OAS (formely swagger) documentation for this component'
+          type: array
+          items:
+            type: string
+        publiccode:
+          description: 'The publiccode documentation for this component'
+          type: array
+          items:
+            type: string
+        files:
+          description: 'v The organisations that provide this component'
+          type: array
+          items:
+            $ref: '#/components/schemas/ComponentFile:jsonld-write'
+        commonground:
+          description: 'Whether tis component is intended for commonground'
+          type: boolean
+        checked:
+          description: 'The moment this component was last checked for commonground compliance'
           type: string
           format: date-time
-        htmlUpdated:
-          description: 'The moment the html of this file was last updated by te crawler'
+        parsed:
+          description: 'The moment this component was last parsed for file'
           type: string
           format: date-time
         createdAt:
@@ -2654,88 +2828,91 @@ components:
           format: date-time
         updatedAt:
           description: 'The last time this component was changed'
+          type: string
+          format: date-time
+        updatedExternal:
+          description: 'The last time this components git was changed on the git provider'
           type: string
           format: date-time
     ComponentFile-read:
       type: object
-      description: ''
+      description: 'A Component file.'
       properties:
         id:
           readOnly: true
           description: 'The UUID identifier of this object'
           externalDocs:
             url: 'http://schema.org/identifier'
-          type: string
-        contentUpdated:
-          description: 'The moment the content of this file was last updated by te crawler'
-          type: string
-          format: date-time
-        htmlUpdated:
-          description: 'The moment the html of this file was last updated by te crawler'
-          type: string
-          format: date-time
-        createdAt:
-          description: 'The moment this component was found by the crawler'
-          type: string
-          format: date-time
-        updatedAt:
-          description: 'The last time this component was changed'
-          type: string
-          format: date-time
-    'ComponentFile:jsonld':
-      type: object
-      description: ''
-      properties:
-        '@context':
-          readOnly: true
-          type: string
-        '@id':
-          readOnly: true
-          type: string
-        '@type':
-          readOnly: true
-          type: string
-        id:
-          readOnly: true
-          description: 'The UUID identifier of this object'
-          externalDocs:
-            url: 'http://schema.org/identifier'
-          type: string
-        component:
           type: string
         name:
+          description: 'The name of this resource'
           type: string
         type:
+          description: 'The type of this resource'
           type: string
         location:
-          type: string
-        extention:
+          description: 'The location of this resource'
           type: string
         sha:
+          description: 'The sha of this resource'
+          type: string
+        extention:
+          description: 'The extension of this resource'
           type: string
         content:
+          description: 'The raw content of this resource'
           type: string
         html:
+          description: 'The html content of this resource'
           type: string
         contentUpdated:
+          readOnly: true
           description: 'The moment the content of this file was last updated by te crawler'
           type: string
           format: date-time
         htmlUpdated:
+          readOnly: true
           description: 'The moment the html of this file was last updated by te crawler'
           type: string
           format: date-time
         createdAt:
+          readOnly: true
           description: 'The moment this component was found by the crawler'
           type: string
           format: date-time
         updatedAt:
+          readOnly: true
           description: 'The last time this component was changed'
           type: string
           format: date-time
+    ComponentFile-write:
+      type: object
+      description: 'A Component file.'
+      properties:
+        name:
+          description: 'The name of this resource'
+          type: string
+        type:
+          description: 'The type of this resource'
+          type: string
+        location:
+          description: 'The location of this resource'
+          type: string
+        sha:
+          description: 'The sha of this resource'
+          type: string
+        extention:
+          description: 'The extension of this resource'
+          type: string
+        content:
+          description: 'The raw content of this resource'
+          type: string
+        html:
+          description: 'The html content of this resource'
+          type: string
     'ComponentFile:jsonld-read':
       type: object
-      description: ''
+      description: 'A Component file.'
       properties:
         '@context':
           readOnly: true
@@ -2752,22 +2929,81 @@ components:
           externalDocs:
             url: 'http://schema.org/identifier'
           type: string
+        name:
+          description: 'The name of this resource'
+          type: string
+        type:
+          description: 'The type of this resource'
+          type: string
+        location:
+          description: 'The location of this resource'
+          type: string
+        sha:
+          description: 'The sha of this resource'
+          type: string
+        extention:
+          description: 'The extension of this resource'
+          type: string
+        content:
+          description: 'The raw content of this resource'
+          type: string
+        html:
+          description: 'The html content of this resource'
+          type: string
         contentUpdated:
+          readOnly: true
           description: 'The moment the content of this file was last updated by te crawler'
           type: string
           format: date-time
         htmlUpdated:
+          readOnly: true
           description: 'The moment the html of this file was last updated by te crawler'
           type: string
           format: date-time
         createdAt:
+          readOnly: true
           description: 'The moment this component was found by the crawler'
           type: string
           format: date-time
         updatedAt:
+          readOnly: true
           description: 'The last time this component was changed'
           type: string
           format: date-time
+    'ComponentFile:jsonld-write':
+      type: object
+      description: 'A Component file.'
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        name:
+          description: 'The name of this resource'
+          type: string
+        type:
+          description: 'The type of this resource'
+          type: string
+        location:
+          description: 'The location of this resource'
+          type: string
+        sha:
+          description: 'The sha of this resource'
+          type: string
+        extention:
+          description: 'The extension of this resource'
+          type: string
+        content:
+          description: 'The raw content of this resource'
+          type: string
+        html:
+          description: 'The html content of this resource'
+          type: string
     ExampleEntity-read:
       type: object
       description: 'This is an example entity.'
@@ -2861,70 +3097,85 @@ components:
       description: 'An Organisation.'
       properties:
         id:
-          description: 'The UUID identifier of this object'
-          type: string
-          format: uuid
-          example: e2984465-190a-4562-829e-a8cca81aa35d
           readOnly: true
+          description: 'The UUID identifier of this object'
           externalDocs:
             url: 'http://schema.org/identifier'
+          type: string
         name:
           description: 'The name of this organisation'
           type: string
-          example: 'My Organisation'
-          maxLength: 255
-          required: true
-          readOnly: true
-          externalDocs:
-            url: 'https://schema.org/name'
         description:
           description: 'An short description of this organisation'
           type: string
-          example: 'This is the best organisation ever'
-          maxLength: 2550
-          readOnly: true
-          externalDocs:
-            url: 'https://schema.org/description'
         logo:
           description: 'The logo for this organisation'
-          type: string
-          format: url
-          example: 'https://www.my-organisation.com/logo.png'
-          maxLength: 255
-          readOnly: true
           externalDocs:
-            url: 'https://schema.org/logo'
+            url: 'http://schema.org/url'
+          type: string
         slug:
           description: 'The slug for this organisation'
           type: string
-          example: my-organisation
-          maxLength: 255
-          readOnly: true
         git:
-          readOnly: true
           description: 'The link to the git repository for this component'
           externalDocs:
-            url: 'https://schema.org/url'
+            url: 'http://schema.org/url'
           type: string
         gitId:
-          readOnly: true
           description: 'The git id for the repository for this component'
           type: string
         components:
-          readOnly: true
           description: 'The apis provided by this organisation'
           type: array
           items:
             $ref: '#/components/schemas/Component-read'
         apis:
-          readOnly: true
           description: 'The components provided by this organisation'
           type: array
           items:
             $ref: '#/components/schemas/API-read'
+      required:
+        - name
+        - git
     Organisation-write:
       type: object
       description: 'An Organisation.'
+      required:
+        - name
+        - git
+      properties:
+        name:
+          description: 'The name of this organisation'
+          type: string
+        description:
+          description: 'An short description of this organisation'
+          type: string
+        logo:
+          description: 'The logo for this organisation'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+        slug:
+          description: 'The slug for this organisation'
+          type: string
+        git:
+          description: 'The link to the git repository for this component'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+        gitId:
+          description: 'The git id for the repository for this component'
+          type: string
+        components:
+          description: 'The apis provided by this organisation'
+          type: array
+          items:
+            $ref: '#/components/schemas/Component-write'
+        apis:
+          description: 'The components provided by this organisation'
+          type: array
+          items:
+            $ref: '#/components/schemas/API-write'
     'Organisation:jsonld-read':
       type: object
       description: 'An Organisation.'
@@ -2939,70 +3190,52 @@ components:
           readOnly: true
           type: string
         id:
-          description: 'The UUID identifier of this object'
-          type: string
-          format: uuid
-          example: e2984465-190a-4562-829e-a8cca81aa35d
           readOnly: true
+          description: 'The UUID identifier of this object'
           externalDocs:
             url: 'http://schema.org/identifier'
+          type: string
         name:
           description: 'The name of this organisation'
           type: string
-          example: 'My Organisation'
-          maxLength: 255
-          required: true
-          readOnly: true
-          externalDocs:
-            url: 'https://schema.org/name'
         description:
           description: 'An short description of this organisation'
           type: string
-          example: 'This is the best organisation ever'
-          maxLength: 2550
-          readOnly: true
-          externalDocs:
-            url: 'https://schema.org/description'
         logo:
           description: 'The logo for this organisation'
-          type: string
-          format: url
-          example: 'https://www.my-organisation.com/logo.png'
-          maxLength: 255
-          readOnly: true
           externalDocs:
-            url: 'https://schema.org/logo'
+            url: 'http://schema.org/url'
+          type: string
         slug:
           description: 'The slug for this organisation'
           type: string
-          example: my-organisation
-          maxLength: 255
-          readOnly: true
         git:
-          readOnly: true
           description: 'The link to the git repository for this component'
           externalDocs:
-            url: 'https://schema.org/url'
+            url: 'http://schema.org/url'
           type: string
         gitId:
-          readOnly: true
           description: 'The git id for the repository for this component'
           type: string
         components:
-          readOnly: true
           description: 'The apis provided by this organisation'
           type: array
           items:
             $ref: '#/components/schemas/Component:jsonld-read'
         apis:
-          readOnly: true
           description: 'The components provided by this organisation'
           type: array
           items:
             $ref: '#/components/schemas/API:jsonld-read'
+      required:
+        - name
+        - git
     'Organisation:jsonld-write':
       type: object
       description: 'An Organisation.'
+      required:
+        - name
+        - git
       properties:
         '@context':
           readOnly: true
@@ -3013,12 +3246,74 @@ components:
         '@type':
           readOnly: true
           type: string
+        name:
+          description: 'The name of this organisation'
+          type: string
+        description:
+          description: 'An short description of this organisation'
+          type: string
+        logo:
+          description: 'The logo for this organisation'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+        slug:
+          description: 'The slug for this organisation'
+          type: string
+        git:
+          description: 'The link to the git repository for this component'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+        gitId:
+          description: 'The git id for the repository for this component'
+          type: string
+        components:
+          description: 'The apis provided by this organisation'
+          type: array
+          items:
+            $ref: '#/components/schemas/Component:jsonld-write'
+        apis:
+          description: 'The components provided by this organisation'
+          type: array
+          items:
+            $ref: '#/components/schemas/API:jsonld-write'
 definitions:
   API-read:
     properties:
       id:
         example: e2984465-190a-4562-829e-a8cca81aa35d
         format: uuid
+      name:
+        maxLength: 255
+      description:
+        example: 'This is the best API ever'
+        maxLength: 2550
+      version:
+        example: v0.1.2.3-beta
+        maxLength: 255
+      logo:
+        example: 'https://www.my-organisation.com/logo.png'
+        format: url
+        maxLength: 255
+      slug:
+        example: my-organisation
+        maxLength: 255
+      endpoint:
+        example: 'https://api.my-organisation.com'
+        format: url
+        maxLength: 255
+      documentation:
+        example: 'https://api.my-organisation.com/docs'
+        format: url
+        maxLength: 255
+      component: []
+      organisations: []
+    required:
+      - name
+      - endpoint
+  API-write:
+    properties:
       name:
         maxLength: 255
       description:
@@ -3092,15 +3387,82 @@ definitions:
     required:
       - name
       - git
+  Component-write:
+    properties:
+      name:
+        example: 'My component'
+        maxLength: 255
+      description:
+        example: 'This is the best component ever'
+        maxLength: 2550
+      logo:
+        example: 'https://www.my-organisation.com/logo.png'
+        format: url
+        maxLength: 255
+      version:
+        example: v0.1.2.3-beta
+        maxLength: 255
+      slug:
+        example: my-organisation
+        maxLength: 255
+      git:
+        example: 'https://www.github.com/my-organisation/my-component.git'
+        format: url
+        maxLength: 255
+      gitId:
+        example: my-component
+        maxLength: 255
+      gitType:
+        example: '({"Github", "Gitlab", "Bitbucket"})'
+        maxLength: 255
+      oas: []
+      publiccode: []
+      commonground: []
+      checked: []
+      parsed: []
+      createdAt: []
+      updatedAt: []
+      updatedExternal: []
+      apis: []
+      organisations: []
+      files: []
+    required:
+      - name
+      - git
   ComponentFile-read:
     properties:
       id:
         example: e2984465-190a-4562-829e-a8cca81aa35d
         format: uuid
+      name:
+        example: 'My component file'
+      type:
+        example: 'My type'
+      location:
+        example: 'https://github.com/repos/ConductionNL/Commongrounregistratiecomponent/contents/README.md?ref=master'
+      sha: []
+      extention:
+        example: md
+      content: []
+      html: []
       contentUpdated: []
       htmlUpdated: []
       createdAt: []
       updatedAt: []
+    required: []
+  ComponentFile-write:
+    properties:
+      name:
+        example: 'My component file'
+      type:
+        example: 'My type'
+      location:
+        example: 'https://github.com/repos/ConductionNL/Commongrounregistratiecomponent/contents/README.md?ref=master'
+      sha: []
+      extention:
+        example: md
+      content: []
+      html: []
     required: []
   ExampleEntity-read:
     properties:
@@ -3160,6 +3522,32 @@ definitions:
     required:
       - name
       - git
+  Organisation-write:
+    properties:
+      name:
+        example: 'My Organisation'
+        maxLength: 255
+      description:
+        example: 'This is the best organisation ever'
+        maxLength: 2550
+      logo:
+        example: 'https://www.my-organisation.com/logo.png'
+        format: url
+        maxLength: 255
+      slug:
+        example: my-organisation
+      git:
+        example: 'https://www.github.com/my-organisation/my-component.git'
+        format: url
+        maxLength: 255
+      gitId:
+        example: my-component
+        maxLength: 255
+      components: []
+      apis: []
+    required:
+      - name
+      - git
 tags:
   -
     name: API
@@ -3176,7 +3564,7 @@ tags:
   -
     name: ComponentFile
     description: |
-      
+      A Component file.
       
       
   -
@@ -3198,14 +3586,14 @@ securityDefinitions:
     flow: implicit
     scopes:
       read: 'read right to the Organisation resource'
-      write: 'write right to the ExampleEntity resource'
+      write: 'write right to the Organisation resource'
   JWT-Token:
     type: apiKey
     in: header
     name: Authorization
     scopes:
       read: 'read right to the Organisation resource'
-      write: 'write right to the ExampleEntity resource'
+      write: 'write right to the Organisation resource'
 host: irc.zaakonline.nl
 servers:
   -

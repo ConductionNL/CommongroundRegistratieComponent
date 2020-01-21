@@ -49,18 +49,6 @@ class API
      *
      * @example e2984465-190a-4562-829e-a8cca81aa35d
      *
-     * @ApiProperty(
-     * 	   identifier=true,
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The UUID identifier of this object",
-     *             "type"="string",
-     *             "format"="uuid",
-     *             "example"="e2984465-190a-4562-829e-a8cca81aa35d"
-     *         }
-     *     }
-     * )
-     *
      * @Assert\Uuid
      * @Groups({"read"})
      * @ORM\Id
@@ -71,25 +59,13 @@ class API
     private $id;
 
     /**
-     * @param string The name of this API
-     *
-     * @ApiProperty(
-     * 	   iri="http://schema.org/name",
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The name of this API",
-     *             "type"="string",
-     *             "example"="My component",
-     *              "maxLength"=255
-     *         }
-     *     }
-     * )
+     * @var string The name of this API
      *
      * @Assert\NotNull
      * @Assert\Length(
      *      max = 255
      * )
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
     private $name;
@@ -114,7 +90,7 @@ class API
      * @Assert\Length(
      *      max = 2550
      * )
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
@@ -139,7 +115,7 @@ class API
      * @Assert\Length(
      *      max = 255
      * )
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $version;
@@ -166,85 +142,50 @@ class API
      * @Assert\Length(
      *      max = 255
      * )
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $logo;
 
     /**
-     * @param string The slug for this api
+     * @var string The slug for this api
      *
      * @example my-organisation
-     *
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The slug for this api",
-     *             "type"="string",
-     *             "example"="my-organisation",
-     *             "maxLength"=255
-     *         }
-     *     }
-     * )
      *
      * @Gedmo\Slug(fields={"name"})
      * @Assert\Length(
      *      max = 255
      * )
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $slug;
 
     /**
-     * @param string $endpoint The location where api calls should be directed to
+     * @var string $endpoint The location where api calls should be directed to
      *
      * @example https://api.my-organisation.com
-     *
-     * @ApiProperty(
-     * 	   iri="https://schema.org/url",
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The location where api calls should be directed to",
-     *             "type"="string",
-     *             "example"="https://api.my-organisation.com",
-     *             "maxLength"=255
-     *         }
-     *     }
-     * )
      *
      * @Assert\NotNull
      * @Assert\Url
      * @Assert\Length(
      *      max = 255
      * )
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
     private $endpoint;
 
     /**
-     * @param string The location of the open api documentation of this api
+     * @var string The location of the open api documentation of this api
      *
      * @example https://api.my-organisation.com/docs
-     *
-     * @ApiProperty(
-     * 	   iri="https://schema.org/url",
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The location of the open api documentation of this api",
-     *             "type"="string",
-     *             "example"="https://api.my-organisation.com/docs",
-     *             "maxLength"=255
-     *         }
-     *     }
-     * )
      *
      * @Assert\Url
      * @Assert\Length(
      *      max = 255
      * )
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $documentation;
@@ -253,7 +194,7 @@ class API
      * @var ArrayCollection The common ground component that this api provides
      *
      * @maxDepth(1)
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\ManyToOne(targetEntity="App\Entity\Component", inversedBy="apis")
      */
     private $component;
@@ -262,7 +203,7 @@ class API
      * @var ArrayCollection The organisations that provide this api
      *
      * @maxDepth(1)
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\ManyToMany(targetEntity="App\Entity\Organisation", mappedBy="apis")
      */
     private $organisations;

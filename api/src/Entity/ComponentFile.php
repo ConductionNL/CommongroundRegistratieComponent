@@ -12,7 +12,22 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ApiResource()
+ * A Component file.
+ *
+ * @category   	Entity
+ *
+ * @author     	Ruben van der Linde <ruben@conduction.nl>
+ * @license    	EUPL 1.2 https://opensource.org/licenses/EUPL-1.2
+ * @version    	1.0
+ *
+ * @link   		http//:www.conduction.nl
+ * @package		Common Ground Component
+ * @subpackage  Commonground Registratie Component (CGRC)
+ *
+ * @ApiResource(
+ *  normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
+ *  denormalizationContext={"groups"={"write"}, "enable_max_depth"=true}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\ComponentFileRepository")
  */
 class ComponentFile
@@ -21,18 +36,6 @@ class ComponentFile
      * @var UuidInterface The UUID identifier of this object
      *
      * @example e2984465-190a-4562-829e-a8cca81aa35d
-     *
-     * @ApiProperty(
-     * 	   identifier=true,
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The UUID identifier of this object",
-     *             "type"="string",
-     *             "format"="uuid",
-     *             "example"="e2984465-190a-4562-829e-a8cca81aa35d"
-     *         }
-     *     }
-     * )
      *
      * @Assert\Uuid
      * @Groups({"read"})
@@ -50,36 +53,61 @@ class ComponentFile
     private $component;
 
     /**
+     * @var string The name of this resource
+     * @example My component file
+     *
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
+     * @var string The type of this resource
+     * @example My type
+     *
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
     private $type;
 
     /**
+     * @var string The location of this resource
+     * @example https://github.com/repos/ConductionNL/Commongrounregistratiecomponent/contents/README.md?ref=master
+     *
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
     private $location;
 
     /**
+     * @var string The sha of this resource
+     *
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $sha;
 
     /**
+     * @var string The extension of this resource
+     * @example md
+     *
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $extention;
 
     /**
+     * @var string The raw content of this resource
+     *
+     * @Groups({"read", "write"})
      * @ORM\Column(type="text", nullable=true)
      */
     private $content;
 
     /**
+     * @var string The html content of this resource
+     *
+     * @Groups({"read", "write"})
      * @ORM\Column(type="text", nullable=true)
      */
     private $html;
