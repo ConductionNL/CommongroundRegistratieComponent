@@ -4,6 +4,9 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use App\Controller\Add;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -52,6 +55,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *  }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ComponentRepository")
+ * @ApiFilter(SearchFilter::class, properties={"name": "exact","description": "partial"})
+ * @ApiFilter(BooleanFilter::class, properties={"commonground"})
  */
 class Component
 {
