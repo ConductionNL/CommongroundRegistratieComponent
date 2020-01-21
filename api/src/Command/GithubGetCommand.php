@@ -64,11 +64,11 @@ class GithubGetCommand extends Command
         	if(!$components) {
         		$component = new Component();
         		$component->setCommonGround(false);
-        		$feedback = 'Updated';
+        		$feedback = 'Created';
         	}	
         	else{        		
         		$component = $components[0];
-        		$feedback = 'Created';
+        		$feedback = 'Updated';
         	}
         	
         	// And then we can update it      	
@@ -77,7 +77,7 @@ class GithubGetCommand extends Command
             $component->setGit($repository['html_url']);
             $component->setGitType('github');
             $component->setGitId($repository['id']);
-            $component->setUpdatedExternal(new \Datetime($repository['updated_at'])); 
+            $component->setUpdatedExternal(new \Datetime($repository['pushed_at'])); 
             $this->em->persist($component);
             $this->em->flush();
             
