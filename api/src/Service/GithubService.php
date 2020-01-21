@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Doctrine\RST\Parser as ReStructuredText;
+use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Cache\Adapter\AdapterInterface as CacheInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -235,27 +236,27 @@ class GithubService
         return $repositories;
     }
 
-    
+
     // Lets get the content of a public github file
     public function getFiles(Component $component)
     {
     	// Lets get the :owner/:repro
     	$git = str_replace(["https://github.com/"],"",$component->getGit());
-    	
+
     	// Example: https://api.github.com/repos/ConductionNL/agendaservice/contents
     	$client = new Client();
-    	
+
     	$response = $this->client->get('repos/'.$git.'/contents',['http_errors' => false]);
-    	
+
     	// Lets see if we can get the file
     	if ($response->getStatusCode() == 200) {
     		return json_decode($response->getBody(), true);
     	}
-    	
+
     	return false;
     }
-    
-    
+
+
     // Lets get the content of a public github file
     public function getFileContent(Component $component, $file)
     {
@@ -386,8 +387,8 @@ class GithubService
 	   		$component->setDescription($repository['description']);
 	   		$component->setGit($repository['html_url']);
 	   		$component->setUpdatedExternal($repository['updated_at']);
-	   		
-	   		/*	  
+
+	   		/*
 
 	   		// Lets get the other files
 	   		$fileTypes = ['README','LICENSE','CHANGELOG','CONTRIBUTING','INSTALLATION','ROADMAP','CODE_OF_CONDUCT','AUTHORS','DESIGN','SECURITY','TUTORIAL'];
@@ -422,25 +423,31 @@ class GithubService
     	}
     	return $component;
     }
-    
+
     // Finds all the repositories that mention a keyphrase
     public function checkComponent($component)
     {
     	// Lets get the documentations as array
     	$files = $this->getFiles($component);
-    	
+
+    	//Skip checks when the repository is empty
+    	if(!$files){
+    	    $component->setChecked(new \DateTime);
+    	    return $component;
+        }
+
     	// Filese to parse
     	$parasble = ['README','LICENSE','CHANGELOG','CONTRIBUTING','INSTALLATION','ROADMAP','CODE_OF_CONDUCT','AUTHORS','DESIGN','SECURITY','TUTORIAL','OPENAPI','PUBLICCODE'];
-    	
+
     	foreach ($files as $file){
-    		
+
     		$path_parts = pathinfo($file['path']);
-    		
+
     		// Lets check if this file is parsable
     		if(!in_array(strtoupper($path_parts['filename']),$parasble)){
     			continue;
     		}
-    		
+
     		// Lets see if we already have this file in the db
     		$componentFiles= $component->getFilesOnType($path_parts['filename']);
     		if(count($componentFiles)>0){
@@ -456,53 +463,53 @@ class GithubService
     			$componentFile->setName($path_parts['filename']);
     			$component->addFile($componentFile);
     		}
-    		
+
     		// We only want to continu changing the file if the exteren sha divers from the current sha
     		if($componentFile->getSha() == $file['sha']){
-    			continue;	
+    			continue;
     		}
-    		
+
     		// The file has changed so we want it reparsed
     		$componentFile->setName($path_parts['filename']);
     		$componentFile->setLocation($file['url']);
     		$componentFile->setSha($file['sha']);
     		$componentFile->setHtmlUpdated(null);
     		$componentFile->setContentUpdated(null);
-    		
+
     		// BAD WAY! determine if the component is commonground
-    		if($componentFile->getType() == 'openapi'){    			
+    		if($componentFile->getType() == 'openapi'){
     			$component->setCommonground(true);
-    		}    		
+    		}
     	}
-    	
+
     	$component->setChecked(New \Datetime);
-    	
+
     	return $component;
-    	
-    }    
-    
+
+    }
+
     // Finds all the repositories that mention a keyphrase
     public function parseFile($file)
     {
     	// Example: https://api.github.com/repos/ConductionNL/agendaservice/contents
     	$client = new Client();
-    	
-    	$content = $this->client->get($file->getLocation(),['http_errors' => false,'Accept' => 'application/vnd.github.VERSION.raw']);
-    	
+
+    	$content = $this->client->get($file->getLocation(),['http_errors' => false, 'headers'=>['Accept' => 'application/vnd.github.VERSION.raw']]);
+
     	// Lets see if we can get the file
     	if ($content->getStatusCode() == 200) {
     		$file->setContent($content->getBody());
     		$file->setContentUpdated(New \Datetime);
     	}
-    	
-    	$html = $this->client->get($file->getLocation(),['http_errors' => false, 'Accept' => 'application/vnd.github.VERSION.html']);
-    	
+
+    	$html = $this->client->get($file->getLocation(),['http_errors' => false, 'headers' => ['Accept' => 'application/vnd.github.VERSION.html']]);
+
     	// Lets see if we can get the file
     	if ($html->getStatusCode() == 200) {
     		$file->setHtml($html->getBody());
     		$file->setHtmlUpdated(New \Datetime);
     	}
-    	
+
     	return $file;
     }
 

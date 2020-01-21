@@ -363,7 +363,7 @@ class Component
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $checked;
-    
+
     /**
      * @var Datetime $parsed  The moment this component was last parsed for file
      *
@@ -389,7 +389,7 @@ class Component
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
-    
+
     /**
      * @var Datetime $updatedExternal The last time this components git was changed on the git provider
      *
@@ -662,17 +662,17 @@ class Component
         $this->checked = $checked;
 
         return $this;
-    } 
-    
+    }
+
     public function getParsed(): ?\DateTimeInterface
     {
     	return $this->parsed;
     }
-    
+
     public function setParsed(?\DateTimeInterface $parsed): self
     {
     	$this->parsed = $parsed;
-    	
+
     	return $this;
     }
 
@@ -697,12 +697,12 @@ class Component
     	$this->updatedAt = $updatedAt;
     	return $this;
     }
-    
+
     public function getUpdatedExternal(): ?\DateTimeInterface
     {
     	return $this->updatedExternal;
     }
-    
+
     public function setUpdatedExternal(\DateTimeInterface $updatedExternal): self
     {
     	$this->updatedExternal= $updatedExternal;
