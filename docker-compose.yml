@@ -178,7 +178,7 @@ services:
   #    - db-data:/var/lib/postgresql/data:rw
     
   db:
-    image: mysql:5.6
+    image: mysql:5.7
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=example
@@ -188,7 +188,7 @@ services:
     volumes:
       - db-mysql:/var/lib/mysql:rw 
     ports:
-      - "3366:3306"
+     - "3366:3306"
 
   mercure:
     # In production, you may want to use the managed version of Mercure, https://mercure.rocks
