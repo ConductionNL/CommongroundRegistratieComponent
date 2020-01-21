@@ -47,4 +47,17 @@ class ComponentFileRepository extends ServiceEntityRepository
         ;
     }
     */
+    
+    
+    // When updating components we want to update a max of 10 components that have not yet been updated today
+    public function findParsable()
+    {
+    	return $this->createQueryBuilder('c')
+    	->where('c.htmlUpdated is null') 
+    	->orWhere('c.contentUpdated is null') // My sql doesn't support boolean vallue so we use a tiny int instead
+    	->orderBy('c.id', 'ASC')
+    	->setMaxResults(10)
+    	->getQuery()
+    	->getResult();
+    }
 }

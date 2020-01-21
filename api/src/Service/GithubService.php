@@ -482,38 +482,28 @@ class GithubService
     }    
     
     // Finds all the repositories that mention a keyphrase
-    public function parseComponent($component)
+    public function parseFile($file)
     {
-    	$fileTypes = ['README','LICENSE','CHANGELOG','CONTRIBUTING','INSTALLATION','ROADMAP','CODE_OF_CONDUCT','AUTHORS','DESIGN','SECURITY','TUTORIAL'];
-    	foreach($fileTypes as $type){
-    		
-    		// If the repro dosn't have a file of this type we should continue and do nothing
-    		$fileData = $this->checkForTextFile($component, $type);
-    		if(!$fileData){
-    			continue;
-    		}
-    		
-    		// lets first check if we already have an file of this type for this component
-    		$files = $component->getFilesOnType($type);
-    		
-    		// create a file if we dont have one
-    		if(!$file = $files->first()){
-    			$file = New ComponentFile;
-    		}
-    		
-    		// Since the repro has been updated we want to overwrite files
-    		$file->setComponent($component);
-    		$file->setName($type);
-    		$file->setType($type);
-    		$file->setExtention($fileData['extention']);
-    		$file->setLocation($fileData['location']);
-    		$file->setContent($fileData['content']);
-    		$file->setHtml(null);
-    		
-    		$component->addFile($file);
-    	}    	
+    	// Example: https://api.github.com/repos/ConductionNL/agendaservice/contents
+    	$client = new Client();
     	
-    	return $component;
+    	$content = $this->client->get($file->getLocation(),['http_errors' => false,'Accept' => 'application/vnd.github.VERSION.raw']);
+    	
+    	// Lets see if we can get the file
+    	if ($content->getStatusCode() == 200) {
+    		$file->setContent($content->getBody());
+    		$file->setContentUpdated(New \Datetime);
+    	}
+    	
+    	$html = $this->client->get($file->getLocation(),['http_errors' => false, 'Accept' => 'application/vnd.github.VERSION.html']);
+    	
+    	// Lets see if we can get the file
+    	if ($html->getStatusCode() == 200) {
+    		$file->setHtml($html->getBody());
+    		$file->setHtmlUpdated(New \Datetime);
+    	}
+    	
+    	return $file;
     }
 
     // Finds all the repositories that mention a keyphrase

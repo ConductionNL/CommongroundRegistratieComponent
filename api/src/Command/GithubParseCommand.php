@@ -11,7 +11,10 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Yaml\Yaml; 
+use Symfony\Component\Yaml\Yaml;
+
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 
 use App\Service\GithubService;
 use App\Entity\Component;
@@ -43,7 +46,7 @@ class GithubParseCommand extends Command
         // the "--help" option
         ->setHelp('This command checks all not het checked github repositories. And determines if they are commonground components')
         ->setDescription('This command checks all not het checked github repositories. And determines if they are commonground components')
-        ->addOption('component', null, InputOption::VALUE_OPTIONAL, 'update a specific component');
+        ->addOption('file', null, InputOption::VALUE_OPTIONAL, 'update a specific component');
         //->addOption('spec-version', null, InputOption::VALUE_OPTIONAL, 'Helm version to use ("0.1.0")', '0.1.0');
     }
 
@@ -55,15 +58,15 @@ class GithubParseCommand extends Command
     	
     	$io = new SymfonyStyle($input, $output);
     	
-    	$component= $input->getOption('component');
+    	$file= $input->getOption('file');
     	
     	// Lets see if we have a component id and transform it into a component opbject
-    	if($component && $component = $this->em->getRepository('App:Component')->find($component)){
-    		$component =  $this->githubService->parseComponent($component);
+    	if($file && $file = $this->em->getRepository('App:ComponentFile')->find($file)){
+    		$file=  $this->githubService->parseFile($file);
     		
-    		$io->text(sprintf('Component %s has been parsed.', $component->getName()));
+    		$io->text(sprintf('File %s has been parsed.', $file->getName()));
     		//$io->text(var_dump($component->getCommonground()));
-    		$this->em->persist($component);
+    		$this->em->persist($file);
     		$this->em->flush();
     		
     		// @todo die mag nooit naar prod
@@ -71,19 +74,19 @@ class GithubParseCommand extends Command
     	}
     	
     	// Lets find the components to be updated
-    	$components = $this->em->getRepository('App:Component')->findParsable();
+    	$files = $this->em->getRepository('App:ComponentFile')->findParsable();
     	//$components = $this->em->getRepository('App:Component')->findAll();
     	
-    	$io->success(sprintf('Found %s repositories to be parsed.', count($components)));
+    	$io->success(sprintf('Found %s files to be parsed.', count($files)));
     	$now = New \Datetime;
     	
     	$processes = [];
     	
-    	foreach($components as $component){
+    	foreach($files as $file){
     		
-    		$io->text(sprintf('starting update for component %s (%s).', $component->getName(),$component->getId()));
+    		$io->text(sprintf('starting parse for file %s (%s).', $file->getName(),$file->getId()));
     		
-    		$process = new Process(['bin/console', 'app:github:parse', '--component', $component->getId()]);
+    		$process = new Process(['bin/console', 'app:github:parse', '--file', $file->getId()]);
     		//$process->run();
     		// start() doesn't wait until the process is finished, oppose to run()
     		$process->start();
@@ -98,7 +101,7 @@ class GithubParseCommand extends Command
     	// Lets wait until everything finishes
     	while (count($processes)) {
     		
-    		$io->success(sprintf('Currently running %s repositories parses.', count($processes)));
+    		$io->success(sprintf('Currently running %s file parses.', count($processes)));
     		
     		foreach ($processes as $i => $runningProcess) {
     			// specific process is finished, so we remove it
@@ -119,7 +122,7 @@ class GithubParseCommand extends Command
     	}
     	// here we know that all are finished
     	
-    	$io->success(sprintf('Parsed %s repositories.', count($components)));
+    	$io->success(sprintf('Parsed %s files.', count($files)));
     	
 		
 		

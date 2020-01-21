@@ -2620,7 +2620,10 @@ components:
       properties:
         id:
           readOnly: true
-          type: integer
+          description: 'The UUID identifier of this object'
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
         component:
           type: string
         name:
@@ -2637,9 +2640,6 @@ components:
           type: string
         html:
           type: string
-        parsed:
-          type: string
-          format: date-time
         contentUpdated:
           description: 'The moment the content of this file was last updated by te crawler'
           type: string
@@ -2660,6 +2660,12 @@ components:
       type: object
       description: ''
       properties:
+        id:
+          readOnly: true
+          description: 'The UUID identifier of this object'
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
         contentUpdated:
           description: 'The moment the content of this file was last updated by te crawler'
           type: string
@@ -2691,7 +2697,10 @@ components:
           type: string
         id:
           readOnly: true
-          type: integer
+          description: 'The UUID identifier of this object'
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
         component:
           type: string
         name:
@@ -2708,9 +2717,6 @@ components:
           type: string
         html:
           type: string
-        parsed:
-          type: string
-          format: date-time
         contentUpdated:
           description: 'The moment the content of this file was last updated by te crawler'
           type: string
@@ -2739,6 +2745,12 @@ components:
           type: string
         '@type':
           readOnly: true
+          type: string
+        id:
+          readOnly: true
+          description: 'The UUID identifier of this object'
+          externalDocs:
+            url: 'http://schema.org/identifier'
           type: string
         contentUpdated:
           description: 'The moment the content of this file was last updated by te crawler'
@@ -3082,6 +3094,9 @@ definitions:
       - git
   ComponentFile-read:
     properties:
+      id:
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
       contentUpdated: []
       htmlUpdated: []
       createdAt: []

@@ -71,16 +71,4 @@ class ComponentRepository extends ServiceEntityRepository
     	->getQuery()
     	->getResult();
     }
-    
-    // When updating components we want to update a max of 10 components that have not yet been updated today
-    public function findParsable()
-    {
-    	return $this->createQueryBuilder('c')
-    	->where('c.parsed < c.updatedExternal')
-    	->andWhere('c.commonground = 1') // My sql doesn't support boolean vallue so we use a tiny int instead
-    	->orderBy('c.updatedExternal', 'ASC')
-    	->setMaxResults(10)
-    	->getQuery()
-    	->getResult();
-    }
 }
