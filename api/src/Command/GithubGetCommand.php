@@ -73,6 +73,7 @@ class GithubGetCommand extends Command
 				$component->setGitType('github');
 				$component->setGitId($repository['id']);
 				$component->setCommonGround(false);
+				$component->setUpdatedExternal(New \Datetime);
 				$this->em->persist($component);
 				$this->em->flush();
 

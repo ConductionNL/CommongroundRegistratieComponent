@@ -54,8 +54,32 @@ class ComponentRepository extends ServiceEntityRepository
     	return $this->createQueryBuilder('c')
     	->where('c.updatedAt < :now')
     	->setParameter(':now', new \DateTime())
-    	//->orderBy('c.id', 'ASC')
-    	//->setMaxResults(10)
+    	->orderBy('c.updatedAt', 'ASC')
+    	->setMaxResults(10)
+    	->getQuery()
+    	->getResult();
+    }
+    
+    // When updating components we want to update a max of 10 components that have not yet been updated today
+    public function findCheckable()
+    {
+    	return $this->createQueryBuilder('c')
+    	->where('c.checked < c.updatedExternal')
+    	->orWhere('c.checked is null')
+    	->orderBy('c.updatedExternal', 'ASC')
+    	->setMaxResults(10)
+    	->getQuery()
+    	->getResult();
+    }
+    
+    // When updating components we want to update a max of 10 components that have not yet been updated today
+    public function findParsable()
+    {
+    	return $this->createQueryBuilder('c')
+    	->where('c.parsed < c.updatedExternal')
+    	->andWhere('c.commonground = 1') // My sql doesn't support boolean vallue so we use a tiny int instead
+    	->orderBy('c.updatedExternal', 'ASC')
+    	->setMaxResults(10)
     	->getQuery()
     	->getResult();
     }

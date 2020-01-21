@@ -96,6 +96,7 @@ class GithubService
     {
         $response = $this->client->get('repositories/'.$id, ['connect_timeout' => 10]);
         if($response->getStatusCode() != 200){
+        	//@todo er kan gee die mee voorbij development
             die;
         }
         $response = json_decode($response->getBody(), true);
@@ -234,6 +235,27 @@ class GithubService
         return $repositories;
     }
 
+    
+    // Lets get the content of a public github file
+    public function getFiles(Component $component)
+    {
+    	// Lets get the :owner/:repro
+    	$git = str_replace(["https://github.com/"],"",$component->getGit());
+    	
+    	// Example: https://api.github.com/repos/ConductionNL/agendaservice/contents
+    	$client = new Client();
+    	
+    	$response = $this->client->get('repos/'.$git.'/contents',['http_errors' => false]);
+    	
+    	// Lets see if we can get the file
+    	if ($response->getStatusCode() == 200) {
+    		return json_decode($response->getBody(), true);
+    	}
+    	
+    	return false;
+    }
+    
+    
     // Lets get the content of a public github file
     public function getFileContent(Component $component, $file)
     {
@@ -279,19 +301,19 @@ class GithubService
     {
     	$locations = [
     			'',
-    			'src/',
-    			'schema/',
-    			'public/',
-    			'public/schema/',
-    			'api/',
-    			'api/schema/',
-    			'api/public/',
-    			'api/public/schema/',
+    	//		'src/',
+    	//		'schema/',
+    	//		'public/',
+    	//		'public/schema/',
+    	//		'api/',
+    	//		'api/schema/',
+    	//		'api/public/',
+    	//		'api/public/schema/',
     	];
 
     	$extentions = [
     			'yaml',
-    			'json',
+    	//		'json',
     	//		'xml',
     	//		'csv',
     	//		'xls'
@@ -304,19 +326,19 @@ class GithubService
     {
     	$locations = [
     			'',
-    			'src/',
-    			'schema/',
-    			'public/',
-    			'public/schema/',
-    			'api/',
-    			'api/schema/',
-    			'api/public/',
-    			'api/public/schema/',
+    	//		'src/',
+    	//		'schema/',
+    	//		'public/',
+    	//		'public/schema/',
+    	//		'api/',
+    	//		'api/schema/',
+    	//		'api/public/',
+    	//		'api/public/schema/',
     	];
 
     	$extentions = [
     			'md',
-    			'rts',
+    	//		'rts',
     	//		'twig',
     	//		'doc',
     	//		'txt'
@@ -359,26 +381,17 @@ class GithubService
     		$component->getUpdatedAt() < $repository["updated_at"] ||
     		$component->getChecked() == null
    		){
-	   		$component->setChecked($now);
+	   		//$component->setChecked($now);
 	   		$component->setName($repository['name']);
 	   		$component->setDescription($repository['description']);
 	   		$component->setGit($repository['html_url']);
-
-	   		// Lets get the documentations as array
-	   		$oas = $this->checkForArrayFile($component,'openapi');
-	   		$publicCode= $this->checkForArrayFile($component,'publiccode');
-	   		// We can save those results as array's in our component entity
-	   		if($oas){
-	   			$component->setOas($this->fileToHTML($oas));
-	   		}
-	   		if($publicCode){
-	   			$component->setPubliccode($this->fileToHTML($oas));
-	   		}
+	   		$component->setUpdatedExternal($repository['updated_at']);
+	   		
+	   		/*	  
 
 	   		// Lets get the other files
 	   		$fileTypes = ['README','LICENSE','CHANGELOG','CONTRIBUTING','INSTALLATION','ROADMAP','CODE_OF_CONDUCT','AUTHORS','DESIGN','SECURITY','TUTORIAL'];
-
-/*	   		foreach($fileTypes as $type){
+ 		  foreach($fileTypes as $type){
 
 	   			// If the repro dosn't have a file of this type we should continue and do nothing
 	   			$fileData = $this->checkForTextFile($component, $type);
@@ -404,14 +417,102 @@ class GithubService
 	   			$file->setHtml(null);
 
 	   			$component->addFile($file);
-	   		}*/
-
-	   		if(!$oas){
-	   			$component->setCommonground(false);
-	   		}else{
-	   		    $component->setCommonground(true);
-            }
+	   		}
+            */
     	}
+    	return $component;
+    }
+    
+    // Finds all the repositories that mention a keyphrase
+    public function checkComponent($component)
+    {
+    	// Lets get the documentations as array
+    	$files = $this->getFiles($component);
+    	
+    	// Filese to parse
+    	$parasble = ['README','LICENSE','CHANGELOG','CONTRIBUTING','INSTALLATION','ROADMAP','CODE_OF_CONDUCT','AUTHORS','DESIGN','SECURITY','TUTORIAL','OPENAPI','PUBLICCODE'];
+    	
+    	foreach ($files as $file){
+    		
+    		$path_parts = pathinfo($file['path']);
+    		
+    		// Lets check if this file is parsable
+    		if(!in_array(strtoupper($path_parts['filename']),$parasble)){
+    			continue;
+    		}
+    		
+    		// Lets see if we already have this file in the db
+    		$componentFiles= $component->getFilesOnType($path_parts['filename']);
+    		if(count($componentFiles)>0){
+    			$componentFile = $componentFiles->first();
+    		}
+    		else{
+    			$componentFile = New ComponentFile;
+    			$componentFile->setComponent($component);
+    			$componentFile->setType(strtolower($path_parts['filename']));
+    			if(array_key_exists ('extension', $path_parts)){
+    				$componentFile->setExtention($path_parts['extension']);
+    			}
+    			$componentFile->setName($path_parts['filename']);
+    			$component->addFile($componentFile);
+    		}
+    		
+    		// We only want to continu changing the file if the exteren sha divers from the current sha
+    		if($componentFile->getSha() == $file['sha']){
+    			continue;	
+    		}
+    		
+    		// The file has changed so we want it reparsed
+    		$componentFile->setName($path_parts['filename']);
+    		$componentFile->setLocation($file['url']);
+    		$componentFile->setSha($file['sha']);
+    		$componentFile->setHtmlUpdated(null);
+    		$componentFile->setContentUpdated(null);
+    		
+    		// BAD WAY! determine if the component is commonground
+    		if($componentFile->getType() == 'openapi'){    			
+    			$component->setCommonground(true);
+    		}    		
+    	}
+    	
+    	$component->setChecked(New \Datetime);
+    	
+    	return $component;
+    	
+    }    
+    
+    // Finds all the repositories that mention a keyphrase
+    public function parseComponent($component)
+    {
+    	$fileTypes = ['README','LICENSE','CHANGELOG','CONTRIBUTING','INSTALLATION','ROADMAP','CODE_OF_CONDUCT','AUTHORS','DESIGN','SECURITY','TUTORIAL'];
+    	foreach($fileTypes as $type){
+    		
+    		// If the repro dosn't have a file of this type we should continue and do nothing
+    		$fileData = $this->checkForTextFile($component, $type);
+    		if(!$fileData){
+    			continue;
+    		}
+    		
+    		// lets first check if we already have an file of this type for this component
+    		$files = $component->getFilesOnType($type);
+    		
+    		// create a file if we dont have one
+    		if(!$file = $files->first()){
+    			$file = New ComponentFile;
+    		}
+    		
+    		// Since the repro has been updated we want to overwrite files
+    		$file->setComponent($component);
+    		$file->setName($type);
+    		$file->setType($type);
+    		$file->setExtention($fileData['extention']);
+    		$file->setLocation($fileData['location']);
+    		$file->setContent($fileData['content']);
+    		$file->setHtml(null);
+    		
+    		$component->addFile($file);
+    	}    	
+    	
     	return $component;
     }
 

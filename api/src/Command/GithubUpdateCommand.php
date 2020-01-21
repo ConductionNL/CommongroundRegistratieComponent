@@ -69,6 +69,7 @@ class GithubUpdateCommand extends Command
         	$this->em->persist($component);
         	$this->em->flush();
 
+        	// @todo die mag nooit naar prod
         	die;
         }
 
@@ -76,7 +77,7 @@ class GithubUpdateCommand extends Command
         $components = $this->em->getRepository('App:Component')->findUpdatable();
         //$components = $this->em->getRepository('App:Component')->findAll();
 
-        $io->success(sprintf('Found %s repositories to be checked.', count($components)));
+        $io->success(sprintf('Found %s repositories to be updated.', count($components)));
 		$now = New \Datetime;
 
 		$processes = [];

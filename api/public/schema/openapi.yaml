@@ -2460,6 +2460,11 @@ components:
           description: 'The moment this component was last checked for commonground compliance'
           type: string
           format: date-time
+        parsed:
+          readOnly: true
+          description: 'The moment this component was last parsed for file'
+          type: string
+          format: date-time
         createdAt:
           readOnly: true
           description: 'The moment this component was found by the crawler'
@@ -2468,6 +2473,11 @@ components:
         updatedAt:
           readOnly: true
           description: 'The last time this component was changed'
+          type: string
+          format: date-time
+        updatedExternal:
+          readOnly: true
+          description: 'The last time this components git was changed on the git provider'
           type: string
           format: date-time
     Component-write:
@@ -2571,6 +2581,11 @@ components:
           description: 'The moment this component was last checked for commonground compliance'
           type: string
           format: date-time
+        parsed:
+          readOnly: true
+          description: 'The moment this component was last parsed for file'
+          type: string
+          format: date-time
         createdAt:
           readOnly: true
           description: 'The moment this component was found by the crawler'
@@ -2579,6 +2594,11 @@ components:
         updatedAt:
           readOnly: true
           description: 'The last time this component was changed'
+          type: string
+          format: date-time
+        updatedExternal:
+          readOnly: true
+          description: 'The last time this components git was changed on the git provider'
           type: string
           format: date-time
     'Component:jsonld-write':
@@ -2611,10 +2631,23 @@ components:
           type: string
         extention:
           type: string
+        sha:
+          type: string
         content:
           type: string
         html:
           type: string
+        parsed:
+          type: string
+          format: date-time
+        contentUpdated:
+          description: 'The moment the content of this file was last updated by te crawler'
+          type: string
+          format: date-time
+        htmlUpdated:
+          description: 'The moment the html of this file was last updated by te crawler'
+          type: string
+          format: date-time
         createdAt:
           description: 'The moment this component was found by the crawler'
           type: string
@@ -2627,6 +2660,14 @@ components:
       type: object
       description: ''
       properties:
+        contentUpdated:
+          description: 'The moment the content of this file was last updated by te crawler'
+          type: string
+          format: date-time
+        htmlUpdated:
+          description: 'The moment the html of this file was last updated by te crawler'
+          type: string
+          format: date-time
         createdAt:
           description: 'The moment this component was found by the crawler'
           type: string
@@ -2661,10 +2702,23 @@ components:
           type: string
         extention:
           type: string
+        sha:
+          type: string
         content:
           type: string
         html:
           type: string
+        parsed:
+          type: string
+          format: date-time
+        contentUpdated:
+          description: 'The moment the content of this file was last updated by te crawler'
+          type: string
+          format: date-time
+        htmlUpdated:
+          description: 'The moment the html of this file was last updated by te crawler'
+          type: string
+          format: date-time
         createdAt:
           description: 'The moment this component was found by the crawler'
           type: string
@@ -2686,6 +2740,14 @@ components:
         '@type':
           readOnly: true
           type: string
+        contentUpdated:
+          description: 'The moment the content of this file was last updated by te crawler'
+          type: string
+          format: date-time
+        htmlUpdated:
+          description: 'The moment the html of this file was last updated by te crawler'
+          type: string
+          format: date-time
         createdAt:
           description: 'The moment this component was found by the crawler'
           type: string
@@ -3008,8 +3070,10 @@ definitions:
       publiccode: []
       commonground: []
       checked: []
+      parsed: []
       createdAt: []
       updatedAt: []
+      updatedExternal: []
       apis: []
       organisations: []
       files: []
@@ -3018,6 +3082,8 @@ definitions:
       - git
   ComponentFile-read:
     properties:
+      contentUpdated: []
+      htmlUpdated: []
       createdAt: []
       updatedAt: []
     required: []

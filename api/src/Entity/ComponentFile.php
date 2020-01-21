@@ -50,12 +50,18 @@ class ComponentFile
     private $location;
     
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $sha;    
+        
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $extention;
     
+    
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $content;
 
@@ -63,6 +69,23 @@ class ComponentFile
      * @ORM\Column(type="text", nullable=true)
      */
     private $html;
+    
+    
+    /**
+     * @var Datetime $contentUpdated The moment the content of this file was last updated by te crawler
+     *
+     * @Groups({"read"})
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $contentUpdated;
+    
+    /**
+     * @var Datetime $htmlUpdated The moment the html of this file was last updated by te crawler
+     *
+     * @Groups({"read"})
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $htmlUpdated;
     
     /**
      * @var Datetime $createdAt The moment this component was found by the crawler
@@ -145,6 +168,18 @@ class ComponentFile
     	$this->extention = $extention;
     	
     	return $this;
+    }
+    
+    public function getSha(): ?string
+    {
+    	return $this->sha;
+    }
+    
+    public function setSha(string $sha): self
+    {
+    	$this->sha = $sha;
+    	
+    	return $this;
     }   
 
     public function getContent(): ?string
@@ -169,6 +204,30 @@ class ComponentFile
         $this->html = $html;
 
         return $this;
+    }
+       
+    public function getContentUpdated(): ?\DateTimeInterface
+    {
+    	return $this->contentUpdated;
+    }
+    
+    public function setContentUpdated(?\DateTimeInterface $contentUpdated): self
+    {
+    	$this->contentUpdated = $contentUpdated;
+    	
+    	return $this;
+    }
+    
+    public function getHtmlUpdated(): ?\DateTimeInterface
+    {
+    	return $this->htmlUpdated;
+    }
+    
+    public function setHtmlUpdated(?\DateTimeInterface $htmlUpdated): self
+    {
+    	$this->htmlUpdated = $htmlUpdated;
+    	
+    	return $this;
     }
     
     public function getCreatedAt(): ?\DateTimeInterface

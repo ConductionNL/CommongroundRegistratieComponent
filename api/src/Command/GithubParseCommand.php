@@ -11,15 +11,12 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Yaml\Yaml;
-
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
+use Symfony\Component\Yaml\Yaml; 
 
 use App\Service\GithubService;
 use App\Entity\Component;
 
-class GithubCheckCommand extends Command
+class GithubParseCommand extends Command
 {
 	private $githubService; 
 	private $em;
@@ -38,7 +35,7 @@ class GithubCheckCommand extends Command
     protected function configure()
     {
         $this
-        ->setName('app:github:check')
+        ->setName('app:github:parse')
         // the short description shown while running "php bin/console list"
         ->setDescription('Checks all not het checked github repositories')
         
@@ -62,9 +59,9 @@ class GithubCheckCommand extends Command
     	
     	// Lets see if we have a component id and transform it into a component opbject
     	if($component && $component = $this->em->getRepository('App:Component')->find($component)){
-    		$component =  $this->githubService->checkComponent($component);
+    		$component =  $this->githubService->parseComponent($component);
     		
-    		$io->text(sprintf('Component %s has been checked.', $component->getName()));
+    		$io->text(sprintf('Component %s has been parsed.', $component->getName()));
     		//$io->text(var_dump($component->getCommonground()));
     		$this->em->persist($component);
     		$this->em->flush();
@@ -74,10 +71,10 @@ class GithubCheckCommand extends Command
     	}
     	
     	// Lets find the components to be updated
-    	$components = $this->em->getRepository('App:Component')->findCheckable();
+    	$components = $this->em->getRepository('App:Component')->findParsable();
     	//$components = $this->em->getRepository('App:Component')->findAll();
     	
-    	$io->success(sprintf('Found %s repositories to be checked.', count($components)));
+    	$io->success(sprintf('Found %s repositories to be parsed.', count($components)));
     	$now = New \Datetime;
     	
     	$processes = [];
@@ -86,7 +83,7 @@ class GithubCheckCommand extends Command
     		
     		$io->text(sprintf('starting update for component %s (%s).', $component->getName(),$component->getId()));
     		
-    		$process = new Process(['bin/console', 'app:github:check', '--component', $component->getId()]);
+    		$process = new Process(['bin/console', 'app:github:parse', '--component', $component->getId()]);
     		//$process->run();
     		// start() doesn't wait until the process is finished, oppose to run()
     		$process->start();
@@ -101,7 +98,7 @@ class GithubCheckCommand extends Command
     	// Lets wait until everything finishes
     	while (count($processes)) {
     		
-    		$io->success(sprintf('Currently running %s repositories checks.', count($processes)));
+    		$io->success(sprintf('Currently running %s repositories parses.', count($processes)));
     		
     		foreach ($processes as $i => $runningProcess) {
     			// specific process is finished, so we remove it
@@ -122,8 +119,9 @@ class GithubCheckCommand extends Command
     	}
     	// here we know that all are finished
     	
-    	$io->success(sprintf('Checked %s repositories.', count($components)));
+    	$io->success(sprintf('Parsed %s repositories.', count($components)));
     	
+		
 		
     }
 }
