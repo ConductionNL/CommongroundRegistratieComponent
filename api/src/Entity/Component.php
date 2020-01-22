@@ -54,7 +54,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *  }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ComponentRepository")
- * @ApiFilter(SearchFilter::class, properties={"name": "exact","description": "partial"})
+ * @ApiFilter(SearchFilter::class, properties={"name": "partial","summary": "partial","description": "partial"})
  * @ApiFilter(BooleanFilter::class, properties={"commonground"})
  */
 class Component
