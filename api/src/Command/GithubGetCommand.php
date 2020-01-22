@@ -45,7 +45,29 @@ class GithubGetCommand extends Command
         //->addOption('location', null, InputOption::VALUE_OPTIONAL, 'Write output to files in the given location', '/srv/api/helm')
         //->addOption('spec-version', null, InputOption::VALUE_OPTIONAL, 'Helm version to use ("0.1.0")', '0.1.0');
     }
+    private function createOrUpdateOrganization($organization, Component $component, SymfonyStyle $io){
+        $organizations = $this->em->getRepository('App:Organisation')->findBy(['gitId'=>$organization['id']]);
 
+        if(!$organizations){
+            $org = new Organisation();
+            $feedback = 'Created';
+        }
+        else{
+            $org = $organizations[0];
+            $feedback = 'Updated';
+        }
+
+        $org->setName($organization['login']);
+        $org->setGit($organization['html_url']);
+        $org->setGitId($organization['id']);
+        $org->addComponent($component);
+        $this->em->persist($org);
+        $this->em->flush();
+
+        $io->success(sprintf("$feedback organization %s", $org->getName()));
+
+    }
+    
     /**
      * {@inheritdoc}
      */
@@ -90,6 +112,7 @@ class GithubGetCommand extends Command
             $component->setUpdatedExternal(new \Datetime($repository['pushed_at']));
             $this->em->persist($component);
             $this->em->flush();
+            $this->createOrUpdateOrganization($repository['owner'], $component, $io);
             $io->success(sprintf($feedback.' repository %s', $repository['name']));
         }
 
