@@ -507,7 +507,7 @@ class GithubService
             $file->setHtml($html->getBody());
             $file->setHtmlUpdated(new \Datetime());
         }
-        
+
         // We want the readme content to replace the description of a component
         if( $file->getType() == 'readme' && $file->getHtml()){
         	$file->getComponent()->setDescription($file->getHtml());
@@ -531,6 +531,38 @@ class GithubService
             $repositories = array_merge($repositories, $items);
         }
 
+        return $repositories;
+    }
+    public function findOccurrencesByFile($search, $path)
+    {
+        //$repositories = [];
+        $resultingItems = [];
+        $items = [1,2,3];
+        $page=1;
+
+        while(count($items)>0){
+            $response = $this->client->get("search/code?q=filename:$search+path:$path&sort=stars&order=des&per_page=100&page=$page");
+            if($response->getStatusCode()==200) {
+                $responseDecoded = json_decode($response->getBody(), true);
+                $items = $responseDecoded['items'];
+                $resultingItems = array_merge($resultingItems, $items);
+                $page++;
+            }
+        }
+        return $resultingItems;
+    }
+    public function findRepositoriesByFile($search, $path){
+        $items = $this->findOccurrencesByFile($search, $path);
+        $repositories = [];
+
+        foreach ($items as $item) {
+            $response = $this->client->get($item["repository"]["url"]);
+            if ($response->getStatusCode() == 200) {
+                $repository = json_decode($response->getBody(), true);
+                array_push($repositories, $repository);
+
+            }
+        }
         return $repositories;
     }
 }

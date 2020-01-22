@@ -5,6 +5,7 @@
 namespace App\Command;
 
 use App\Entity\Component;
+use App\Entity\Organisation;
 use App\Service\GithubService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
@@ -51,45 +52,46 @@ class GithubGetCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-
-        $repositories = array_merge(
-        		$this->githubService->findRepositories('Common%20Ground'),
-        		$this->githubService->findRepositories('Commonground'),
-        		$this->githubService->findRepositories('commonground'),
-        		$this->githubService->findRepositories('common%20ground'),
-        		$this->githubService->findRepositories('vng'),
-        		$this->githubService->findRepositories('VNG')
-        );
+        $repositories = $this->githubService->findRepositoriesByFile('publiccode.yaml', "/");
+        //var_dump($repositories);
+//        $repositories = array_merge(
+//        		$this->githubService->findRepositories('Common%20Ground'),
+//        		$this->githubService->findRepositories('Commonground'),
+//        		$this->githubService->findRepositories('commonground'),
+//        		$this->githubService->findRepositories('common%20ground'),
+//        		$this->githubService->findRepositories('vng'),
+//        		$this->githubService->findRepositories('VNG'),
+//
+//        );
 
         $io->success(sprintf('Found %s repositories mentioning commonground.', count($repositories)));
 
         foreach ($repositories as $repository) {
         	// Lets see if we already have this repository
         	$components = $this->em->getRepository('App:Component')->findBy(['gitId'=>$repository['id']]);
-        	
+
         	// If we dont lets create one
         	if(!$components) {
         		$component = new Component();
         		$component->setCommonGround(false);
         		$feedback = 'Created';
-        	}	
-        	else{        		
+        	}
+        	else{
         		$component = $components[0];
         		$feedback = 'Updated';
         	}
-        	
-        	// And then we can update it      	
-            $component->setName($repository['name']);  
+
+        	// And then we can update it
+            $component->setName($repository['name']);
             $component->setSummary($repository['description']);
             $component->setGit($repository['html_url']);
             $component->setGitType('github');
             $component->setGitId($repository['id']);
-            $component->setUpdatedExternal(new \Datetime($repository['pushed_at'])); 
+            $component->setUpdatedExternal(new \Datetime($repository['pushed_at']));
             $this->em->persist($component);
             $this->em->flush();
-            
             $io->success(sprintf($feedback.' repository %s', $repository['name']));
         }
-        
+
     }
 }
