@@ -64,7 +64,8 @@ class ComponentRepository extends ServiceEntityRepository
     public function findCheckable()
     {
         return $this->createQueryBuilder('c')
-        ->where('c.checked < c.updatedExternal')
+        ->where('c.updatedExternal is null')
+        ->orwhere('c.checked < c.updatedExternal')
         ->orWhere('c.checked is null')
         ->orderBy('c.updatedExternal', 'ASC')
         ->setMaxResults(10)

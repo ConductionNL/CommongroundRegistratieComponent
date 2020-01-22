@@ -556,12 +556,13 @@ class GithubService
         $repositories = [];
 
         foreach ($items as $item) {
-            $response = $this->client->get($item["repository"]["url"]);
-            if ($response->getStatusCode() == 200) {
-                $repository = json_decode($response->getBody(), true);
-                array_push($repositories, $repository);
-
-            }
+//            $response = $this->client->get($item["repository"]["url"]);
+//            if ($response->getStatusCode() == 200) {
+//                $repository = json_decode($response->getBody(), true);
+//                array_push($repositories, $repository);
+//
+//            }
+            array_push($repositories, $item['repository']);
         }
         return $repositories;
     }

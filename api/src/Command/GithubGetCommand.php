@@ -67,7 +67,7 @@ class GithubGetCommand extends Command
         $io->success(sprintf("$feedback organization %s", $org->getName()));
 
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -109,7 +109,8 @@ class GithubGetCommand extends Command
             $component->setGit($repository['html_url']);
             $component->setGitType('github');
             $component->setGitId($repository['id']);
-            $component->setUpdatedExternal(new \Datetime($repository['pushed_at']));
+            if(key_exists('pushed_at', $repository))
+                $component->setUpdatedExternal(new \Datetime($repository['pushed_at']));
             $this->em->persist($component);
             $this->em->flush();
             $this->createOrUpdateOrganization($repository['owner'], $component, $io);
