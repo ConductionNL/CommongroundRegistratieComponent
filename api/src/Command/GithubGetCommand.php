@@ -52,7 +52,14 @@ class GithubGetCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $repositories = array_merge($this->githubService->findRepositories('Common%20Ground'), $this->githubService->findRepositories('commonground'));
+        $repositories = array_merge(
+        		$this->githubService->findRepositories('Common%20Ground'),
+        		$this->githubService->findRepositories('Commonground'),
+        		$this->githubService->findRepositories('commonground'),
+        		$this->githubService->findRepositories('common%20ground'),
+        		$this->githubService->findRepositories('vng'),
+        		$this->githubService->findRepositories('VNG')
+        );
 
         $io->success(sprintf('Found %s repositories mentioning commonground.', count($repositories)));
 
