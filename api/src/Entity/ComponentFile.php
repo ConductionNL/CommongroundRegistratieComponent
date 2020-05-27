@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
@@ -18,11 +17,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @author     	Ruben van der Linde <ruben@conduction.nl>
  * @license    	EUPL 1.2 https://opensource.org/licenses/EUPL-1.2
+ *
  * @version    	1.0
  *
  * @link   		http//:www.conduction.nl
- * @package		Common Ground Component
- * @subpackage  Commonground Registratie Component (CGRC)
  *
  * @ApiResource(
  *  normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
@@ -54,6 +52,7 @@ class ComponentFile
 
     /**
      * @var string The name of this resource
+     *
      * @example My component file
      *
      * @Groups({"read", "write"})
@@ -63,6 +62,7 @@ class ComponentFile
 
     /**
      * @var string The type of this resource
+     *
      * @example My type
      *
      * @Groups({"read", "write"})
@@ -72,6 +72,7 @@ class ComponentFile
 
     /**
      * @var string The location of this resource
+     *
      * @example https://github.com/repos/ConductionNL/Commongrounregistratiecomponent/contents/README.md?ref=master
      *
      * @Groups({"read", "write"})
@@ -89,6 +90,7 @@ class ComponentFile
 
     /**
      * @var string The extension of this resource
+     *
      * @example md
      *
      * @Groups({"read", "write"})

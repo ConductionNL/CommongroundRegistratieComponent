@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
-use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
@@ -78,7 +77,7 @@ class Component
      * @var string The name of this component
      *
      * @example My component
-	 *
+     *
      * @Assert\NotNull
      * @Assert\Length(
      *      max = 255
@@ -93,7 +92,7 @@ class Component
      *
      * @example This is the best component ever
      *
-	 *
+     *
      * @Assert\Length(
      *      max = 2550
      * )
@@ -107,7 +106,7 @@ class Component
      *
      * @example https://www.my-organisation.com/logo.png
      *
-	 *
+     *
      * @Assert\Url
      * @Assert\Length(
      *      max = 255
@@ -122,7 +121,7 @@ class Component
      *
      * @example v0.1.2.3-beta
      *
-	 *
+     *
      * @Assert\Length(
      *      max = 255
      * )
@@ -135,7 +134,7 @@ class Component
      * @var string The slug for this component
      *
      * @example my-organisation
-	 *
+     *
      * @Gedmo\Slug(fields={"name"})
      * @Assert\Length(
      *      max = 255
@@ -149,7 +148,7 @@ class Component
      * @var string The link to the git repository for this component
      *
      * @example https://www.github.com/my-organisation/my-component.git
-	 *
+     *
      * @Assert\NotNull
      * @Assert\Url
      * @Assert\Length(
@@ -164,7 +163,7 @@ class Component
      * @var string The git id for the repository for this component
      *
      * @example my-component
-	 *
+     *
      * @Assert\Length(
      *      max = 255
      * )
@@ -176,7 +175,7 @@ class Component
     /**
      * @var string The git type for the repository for this component
      * @example({"Github", "Gitlab", "Bitbucket"})
-	 *
+     *
      * @Assert\Length(
      *      max = 255
      * )
@@ -198,8 +197,8 @@ class Component
      * @var ArrayCollection The APIs provided by this component
      *
      * @Assert\Valid
-	 * @maxDepth(1)
-	 * @Groups({"read", "write"})
+     * @maxDepth(1)
+     * @Groups({"read", "write"})
      * @ORM\OneToMany(targetEntity="App\Entity\API", mappedBy="component",cascade={"persist"})
      */
     private $apis;
@@ -208,35 +207,35 @@ class Component
      * @var ArrayCollection The organisations that provide this component
      *
      * @Assert\Valid
-	 * @maxDepth(1)
-	 * @Groups({"read", "write"})
+     * @maxDepth(1)
+     * @Groups({"read", "write"})
      * @ORM\ManyToMany(targetEntity="App\Entity\Organisation", mappedBy="components",cascade={"persist"})
      */
     private $organisations;
 
     /**
-	 * @var array $oas The OAS (formely swagger) documentation for this component
-	 *
-	 * @maxDepth(1)
-	 * @Groups({"read", "write"})
+     * @var array The OAS (formely swagger) documentation for this component
+     *
+     * @maxDepth(1)
+     * @Groups({"read", "write"})
      * @ORM\Column(type="array", nullable=true)
      */
     private $oas = [];
 
     /**
-	 * @var array $publiccode The publiccode documentation for this component
-	 *
-	 * @maxDepth(1)
-	 * @Groups({"read", "write"})
+     * @var array The publiccode documentation for this component
+     *
+     * @maxDepth(1)
+     * @Groups({"read", "write"})
      * @ORM\Column(type="array", nullable=true)
      */
     private $publiccode = [];
 
     /**
-	 * @var ArrayCollection v The organisations that provide this component
-	 *
-	 * @maxDepth(1)
-	 * @Groups({"read", "write"})
+     * @var ArrayCollection v The organisations that provide this component
+     *
+     * @maxDepth(1)
+     * @Groups({"read", "write"})
      * @ORM\OneToMany(targetEntity="App\Entity\ComponentFile", mappedBy="component", orphanRemoval=true,cascade={"persist"})
      */
     private $files;
@@ -244,7 +243,7 @@ class Component
     /**
      * @var bool Whether tis component is intended for commonground
      *
-	 * @Groups({"read", "write"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="boolean")
      */
     private $commonground;
@@ -252,7 +251,7 @@ class Component
     /**
      * @var Datetime The moment this component was last checked for commonground compliance
      *
-	 * @Groups({"read", "write"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $checked;

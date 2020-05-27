@@ -24,13 +24,14 @@ class ComponentService
     private $bitbucket;
 
     public function __construct(
-            ParameterBagInterface $params,
-            MarkdownParserInterface $markdown,
-            CacheInterface $cache,
-            EntityManagerInterface $em,
-            GithubService $github,
-            GitlabService $gitlab,
-            BitbucketService $bitbucket)
+        ParameterBagInterface $params,
+        MarkdownParserInterface $markdown,
+        CacheInterface $cache,
+        EntityManagerInterface $em,
+        GithubService $github,
+        GitlabService $gitlab,
+        BitbucketService $bitbucket
+    )
     {
         $this->params = $params;
         $this->cash = $cache;
