@@ -22,15 +22,15 @@ class AddService
     private $api;
 
     public function __construct(
-            ParameterBagInterface $params,
-            MarkdownParserInterface $markdown,
-            CacheInterface $cache,
-            EntityManagerInterface $em,
-
-            GithubService $github,
-            GitlabService $gitlab,
-            BitbucketService $bitbucket,
-            ApiService $api)
+        ParameterBagInterface $params,
+        MarkdownParserInterface $markdown,
+        CacheInterface $cache,
+        EntityManagerInterface $em,
+        GithubService $github,
+        GitlabService $gitlab,
+        BitbucketService $bitbucket,
+        ApiService $api
+    )
     {
         $this->params = $params;
         $this->cash = $cache;
