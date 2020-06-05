@@ -80,7 +80,7 @@ api-01, api-02, api-03, api-05, api-06, api-10, api-11, api-12, api-13,api-14, a
 - [api-38](https://docs.geostandaarden.nl/api/API-Strategie/#api-38) Put results of a global spatial query in the relevant geometric context (see [queries](#queries))
 
 
-** We doubt or havenï¿½t made a choice yet about**
+** We doubt or haven’t made a choice yet about**
 
 - [api-15](https://docs.geostandaarden.nl/api/API-Strategie/#api-15) Use PKI overheid certificates for access-restricted or purpose-limited API authentication
 - [api-39](https://docs.geostandaarden.nl/api/API-Strategie/#api-39) Use ETRS89 as the preferred coordinate reference system (CRS)
@@ -176,7 +176,7 @@ The use of a `Content-Type: application/health+json` header returns an health js
 
 Notifications
 -------
-For notifications we do not YET use the current [ZGW standard](https://zaakgerichtwerken.vng.cloud/themas/achtergronddocumentatie/notificaties) since there is an [dicusion](https://github.com/VNG-Realisatie/gemma-zaken/issues/1427#issuecomment-549272696) about the possible insecurity of sending properties or data objects along with a notification. It also doesnï¿½t follow the [web standard](https://www.w3.org/TR/websub/). We wait for the conclusion of that discussion before making an implementation. 
+For notifications we do not YET use the current [ZGW standard](https://zaakgerichtwerken.vng.cloud/themas/achtergronddocumentatie/notificaties) since there is an [dicusion](https://github.com/VNG-Realisatie/gemma-zaken/issues/1427#issuecomment-549272696) about the possible insecurity of sending properties or data objects along with a notification. It also doesn’t follow the [web standard](https://www.w3.org/TR/websub/). We wait for the conclusion of that discussion before making an implementation. 
 
 __solution__
 In compliance with [w3.org](https://www.w3.org/TR/websub/) each endpoint `should` returns an header containing an subscription url. That can be used in accordance with the application to subscribe to both individual objects as collections whereby collections serve as 'kanalen'. We aim to implement the ZGW notificatie component, but feel that further features on that component would be required to make to be fully supported. We will supply feature requests per issue to support this effort.
@@ -263,7 +263,7 @@ To match a literal underscore or percent sign without matching other characters,
 ## Kubernetes
 
 ### Loadbalancers
-We no longer provide a load balancer per component, since this would require a IP address per component (and ipv 4 addresses are in short supply). Instead we make components available as an internal service. A central load balancer could then be used to provide several apiï¿½s in one 
+We no longer provide a load balancer per component, since this would require a IP address per component (and ipv 4 addresses are in short supply). Instead we make components available as an internal service. A central load balancer could then be used to provide several api’s in one 
 
 ### server naming
 A component is (speaking in kubernetes terms) a service that is available at a name corresponding to its designation 

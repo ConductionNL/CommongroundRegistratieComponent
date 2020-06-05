@@ -6,8 +6,8 @@ x-cache:
     - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-php
     - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nginx
     - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-varnish
-    - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-admin
-    - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-client
+    - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-phpdoc
+    - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-sphinx
 
 services:
   php:
@@ -33,14 +33,24 @@ services:
       - DATABASE_URL=mysql://api-platform:!ChangeMe!@db/api?serverVersion=10.1
       - APP_ENV=${APP_ENV}
       - APP_DEBUG=${APP_DEBUG} 
+      - APP_CACHE=${APP_CACHE}
       - APP_VERSION=${APP_VERSION}    
       - APP_NAME=${APP_NAME} 
       - APP_TITLE=${APP_TITLE}
+      - APP_ID=${APP_ID}
+      - APP_DOMAIN=${APP_DOMAIN}
       - APP_SUBDOMAIN=${APP_SUBDOMAIN}
-      - APP_DOMAINS=${APP_DOMAINS}
       - APP_DEMO=${APP_DEMO}
       - APP_REPRO=${APP_REPRO}
+      - APP_CONTAINER=${APP_CONTAINER}
       - APP_DESCRIPTION=${APP_DESCRIPTION}
+      - APP_TYPE=${APP_TYPE}
+      - APP_LOGO=${APP_LOGO}
+      - APP_HOME=${APP_HOME}
+      - APP_COMMONGROUND_ID=${APP_COMMONGROUND_ID}
+      - APP_COMMONGROUND_KEY=${APP_COMMONGROUND_KEY}
+      - APP_APPLICATION_KEY=${APP_APPLICATION_KEY}
+      - APP_USER_KEY=${APP_USER_KEY}
       - ORGANIZATION_NAME=${ORGANIZATION_NAME}
       - ORGANIZATION_EMAIL_ADDRESS=${ORGANIZATION_EMAIL_ADDRESS}
       - ORGANIZATION_COUNTRY_NAME=${ORGANIZATION_COUNTRY_NAME}
@@ -50,14 +60,20 @@ services:
       - TRUSTED_PROXIES=${TRUSTED_PROXIES}
       - TRUSTED_HOSTS=${TRUSTED_HOSTS}
       - AUTH_ENABLED=${AUTH_ENABLED}
+      - AUTH_PROVIDER_USER=${AUTH_PROVIDER_USER}
+      - AUTH_PROVIDER_APPLICATION=${AUTH_PROVIDER_APPLICATION}
       - AUDITTRAIL_ENABLED=${AUDITTRAIL_ENABLED}
       - NOTIFICATION_ENABLED=${NOTIFICATION_ENABLED}
       - HEALTH_ENABLED=${HEALTH_ENABLED}
       - ARCHIVE_ENABLED=${ARCHIVE_ENABLED}
       - NLX_OUTWAY=${NLX_OUTWAY}
       - NLX_INWAY=${NLX_INWAY}
+      - APP_COMMONGROUND_ZRC_LOCATION=${APP_COMMONGROUND_ZRC_LOCATION}
+      - APP_COMMONGROUND_ZTC_LOCATION=${APP_COMMONGROUND_ZTC_LOCATION}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
     ports:
-      - "8082:80"
+      - "82:80"
 
   api:
     image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nginx:${APP_ENV}
@@ -75,7 +91,7 @@ services:
     volumes:
       - ./api/public:/srv/api/public:ro
     ports:
-      - "8080:80"
+      - "80:80"
     environment:
       - NGINX_HOST=php
 
@@ -94,7 +110,7 @@ services:
     tmpfs:
       - /usr/local/var/varnish:exec
     ports:
-     - "8081:80"
+     - "81:80"
     environment:
      - BACKENDS=php
       
@@ -176,10 +192,34 @@ services:
   #    - POSTGRES_PASSWORD=!ChangeMe!
   #  volumes:
   #    - db-data:/var/lib/postgresql/data:rw
+  
+  # From: https://hub.docker.com/r/phpdoc/phpdoc/
+  phpDocumentor:
+    image: phpdoc/phpdoc
     
+  helmPackage:
+    image: alpine/helm:3.2.1
+    volumes: 
+      - ./api/helm:/apps
+    command: package /apps 
+    
+  helmIndex:
+    depends_on:
+      - helmPackage
+    image: alpine/helm:3.2.1
+    volumes:
+      - ./api/helm:/apps
+    command: repo index /apps
+    
+  redis:
+    image: redis:4-alpine
+      
+  # From: tsgkadot/docker-doxygen    
+  sphinx:
+    image: tsgkadot/docker-doxygen
+      
   db:
     image: mysql:5.7
-    restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=example
       - MYSQL_DATABASE=api
@@ -202,60 +242,6 @@ services:
       - DEMO=1
     ports:
       - "1337:80"
-
-  client:
-    # Use a static website hosting service in production
-    # See https://facebook.github.io/create-react-app/docs/deployment
-    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-client
-    build:
-      context: ./client
-      cache_from:
-        - ${CONTAINER_REGISTRY_BASE}/client
-    env_file:
-      - ./client/.env
-    volumes:
-      - ./client:/usr/src/client:rw,cached
-      - /usr/src/client/node_modules
-
-  admin:
-    # Use a static website hosting service in production
-    # See https://facebook.github.io/create-react-app/docs/deployment
-    image: ${CONTAINER_REGISTRY_BASE}/admin
-    build:
-      context: ./admin
-      cache_from:
-        - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-admin
-    volumes:
-      - ./admin:/usr/src/admin:rw,cached
-      - /usr/src/admin/node_modules
-    
-  h2-proxy:
-    # Don't use this proxy in prod
-    build:
-      context: ./h2-proxy
-      cache_from:
-        - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-h2-proxy
-    depends_on:
-      - db
-      - client
-      - admin
-      - api
-      - cache-proxy
-      - mercure
-      #- stag-pc-cache-proxy
-      #- dev-pc-cache-proxy
-    #volumes:
-    #  - ./conf.d/:/etc/nginx/conf.d/:rw,cached
-    ports:
-      - "80:80" #http port
-      - "443:443" #ssl port
-      - "444:444"
-      - "8443:8443"
-      - "8444:8444" 
-      - "5432:5432" #postgress port
-    environment:
-      - APP_ENV=${APP_ENV}
-      - APP_NAME=${CONTAINER_PROJECT_NAME}
 
 networks:
   nlx:

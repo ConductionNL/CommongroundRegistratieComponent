@@ -33,8 +33,8 @@ class NLXSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::VIEW => ['NLXLog', EventPriorities::PRE_VALIDATE],
-            KernelEvents::VIEW => ['NLXAudit', EventPriorities::PRE_SERIALIZE],
+                KernelEvents::VIEW => ['NLXLog', EventPriorities::PRE_VALIDATE],
+                KernelEvents::VIEW => ['NLXAudit', EventPriorities::PRE_SERIALIZE],
         ];
     }
 
@@ -54,16 +54,15 @@ class NLXSubscriber implements EventSubscriberInterface
 
         // now we need to overide the normal subscriber
         $json = $this->serializer->serialize(
-            $logs,
-            'jsonhal',
-            ['enable_max_depth' => true]
-        );
+                $logs,
+                'jsonhal', ['enable_max_depth' => true]
+                );
 
         $response = new Response(
-            $json,
-            Response::HTTP_OK,
-            ['content-type' => 'application/json+hal']
-        );
+                $json,
+                Response::HTTP_OK,
+                ['content-type' => 'application/json+hal']
+                );
 
         $event->setResponse($response);
     }
