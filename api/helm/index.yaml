@@ -3,14 +3,14 @@ entries:
   cgrc:
   - apiVersion: v1
     appVersion: V.0.1
-    created: "2020-06-09T12:12:11.000148486Z"
+    created: "2020-06-09T12:18:01.347617971Z"
     description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql)
       interface beschikbaar.&#039;'
-    digest: 3068984dd6d03a787a58db72c0e9485fcdc7d331f982f00aa28036b24e78c1d5
+    digest: 6e0ae82d433ac16991e8873a970986027ca8d4ce804a95a613900966cbe4dcf1
     home: pc.zaakonline.nl
     icon: pc.zaakonline.nl
     name: cgrc
     urls:
     - cgrc-0.1.0.tgz
     version: 0.1.0
-generated: "2020-06-09T12:12:10.995944486Z"
+generated: "2020-06-09T12:18:01.172781973Z"
