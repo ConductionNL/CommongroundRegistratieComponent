@@ -1,116 +1,138 @@
 publiccodeYmlVersion: "0.2"
 
-name: pc
-applicationSuite: commonground
-url: "https://github.com/ConductionNL/proto-component"
-landingURL: "pc.zaakonline.nl" 
-isBasedOn: "https://github.com/ConductionNL/Proto-component-commonground.git" 
-softwareVersion: "V.0.1"
-releaseDate: "2020-04-06"
-logo: pc.zaakonline.nl 
+name: Medusa
+applicationSuite: MegaProductivitySuite
+url: "https://example.com/italia/medusa.git"
+landingURL: "https://example.com/italia/medusa"
+isBasedOn: "https://github.com/italia/otello.git"
+softwareVersion: "1.0"
+releaseDate: "2017-04-15"
+logo: img/logo.svg
 monochromeLogo: img/logo-mono.svg
 
 inputTypes:
-  - application/json
-  - application/xml
-  
+  - text/plain
 outputTypes:
-  - application/json
-  - application/ld+json
-  - application/hal+json
-  - application/vnd.api+json
-  - application/health+json
-  - application/xml
-  - application/x-yaml
-  - text/csv
-  - text/html
+  - text/plain
 
 platforms:
-  - web
+  - android
+  - ios
 
 categories:
-  - it-development 
+  - content-management
+  - office
 
 usedBy:
-  - Gemeente Utrecht
-  - Gemeente Den Haag
-  - Gemeente Hoorn
-  
+  - Comune di Firenze
+  - Comune di Roma
 
-roadmap: "https://github.com/ConductionNL/proto-component/blob/master/ROADMAP.md"
+roadmap: "https://example.com/italia/medusa/roadmap"
 
 developmentStatus: development
 
-softwareType: "standalone/other"
+softwareType: "standalone/desktop"
 
-#intendedAudience:
-#  scope:
-#    - science-and-technology
-#  countries:
-#    - it
-#    - de
-#  unsupportedCountries:
-#    - us
+intendedAudience:
+  scope:
+    - science-and-technology
+  countries:
+    - it
+    - de
+  unsupportedCountries:
+    - us
 
 description:
   en:
-#    localisedName: Medusa
-#    genericName: Text Editor
-#    shortDescription: >
-#          This description can have a maximum 150
-#          characters long. We should not fill the
-#          remaining space with "Lorem Ipsum". End
-#
-#    longDescription: >
-#          Very long description of this software, also split
-#          on multiple rows. You should note what the software
-#          is and why one should need it.
+    localisedName: Medusa
+    genericName: Text Editor
+    shortDescription: >
+          This description can have a maximum 150
+          characters long. We should not fill the
+          remaining space with "Lorem Ipsum". End
 
-    documentation: "https://github.com/ConductionNL/proto-component/blob/master/README.md"
-    apiDocumentation: "pc.zaakonline.nl"
-#
-#    features:
-#       - Very important feature
-#       - Will run without a problem
-#       - Has zero bugs
-#       - Solves all the problems of the world
-#    screenshots:
-#       - img/sshot1.jpg
-#       - img/sshot2.jpg
-#       - img/sshot3.jpg
-#    videos:
-#       - https://youtube.com/xxxxxxxx
-#    awards:
-#       - 1st Price Software of the year
+    longDescription: >
+          Very long description of this software, also split
+          on multiple rows. You should note what the software
+          is and why one should need it.
+
+    documentation: "https://read.the.documentation/medusa/v1.0"
+    apiDocumentation: "https://read.the.api.doc/medusa/v1.0"
+
+    features:
+       - Very important feature
+       - Will run without a problem
+       - Has zero bugs
+       - Solves all the problems of the world
+    screenshots:
+       - img/sshot1.jpg
+       - img/sshot2.jpg
+       - img/sshot3.jpg
+    videos:
+       - https://youtube.com/xxxxxxxx
+    awards:
+       - 1st Price Software of the year
 
 legal:
-  license: EUPL-1.2
-  mainCopyrightOwner: Conduction
-  repoOwner: Conduction
-  authorsFile: AUTHORS.md
+  license: AGPL-3.0-or-later
+  mainCopyrightOwner: City of Chicago
+  repoOwner: City of Chicago
+  authorsFile: AUTHORS
 
 maintenance:
-  type: "internal"
+  type: "contract"
 
   contractors:
-    - name: "Conduction B.V"
-      email: "info@conduction.nl"
-      website: "https://www.conduction.nl"
-      until: "2099-01-01"
+    - name: "Fornitore Privato SPA"
+      email: "dario.bianchi@fornitore.it"
+      website: "https://privatecompany.com"
+      until: "2019-01-01"
 
   contacts:
-    - name: Ruben van der Linde
-      email: "ruben@conduction.nl"
-      affiliation: "Conduction B.V"
+    - name: Francesco Rossi
+      email: "francesco.rossi@comune.reggioemilia.it"
+      affiliation: Comune di Reggio Emilia
+      phone: "+3923113215112"
 
 localisation:
   localisationReady: yes
   availableLanguages:
     - en
-    - nl
+    - it
+    - fr
+    - de
 
 dependsOn:
   open:
-    - name: Kubernetes
-      versionMin: "1.15.5-do.1"
+    - name: MySQL
+      versionMin: "1.1"
+      versionMax: "1.3"
+      optional: yes
+    - name: PostgreSQL
+      version: "3.2"
+      optional: yes
+  proprietary:
+    - name: Oracle
+      versionMin: "11.4"
+    - name: IBM SoftLayer
+  hardware:
+    - name: NFC Reader
+      optional: yes
 
+it:
+  countryExtensionVersion: "0.2"
+
+  conforme:
+    lineeGuidaDesign: yes
+    modelloInteroperabilita: yes
+    misureMinimeSicurezza: yes
+    gdpr: yes
+
+  piattaforme:
+    spid: yes
+    cie: yes
+    anpr: yes
+    pagopa: yes
+
+  riuso:
+    codiceIPA: c_h501

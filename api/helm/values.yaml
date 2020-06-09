@@ -11,18 +11,18 @@ settings:
   id: 
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
   type: component
-  repro: https://github.com/ConductionNL/proto-component
-  demo: pc.zaakonline.nl
-  container: https://hub.docker.com/repository/docker/conduction/pc-php
+  repro: https://github.com/ConductionNL/Commongroundregistratiecomponent
+  demo: cgrc.zaakonline.nl
+  container: https://hub.docker.com/repository/docker/conduction/cgrc-php
   domain: conduction.nl
-  subdomain: pc
+  subdomain: cgrc
   organisationName: Conduction
   email: info@conduction.nl
   country: Netherlands
   state: Noord-Holland
   locality: Amsterdam
   unit: Common-Ground
-  demo: pc.zaakonline.nl
+  demo: cgrc.zaakonline.nl
   env: dev
   debug: 1
   cache: 1
