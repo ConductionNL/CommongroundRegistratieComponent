@@ -282,7 +282,7 @@ class Component
     /**
      * @var Datetime The moment this component was found by the crawler
      *
-     * @Groups({"read", "write"})
+     * @Groups({"read"})
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -291,7 +291,7 @@ class Component
     /**
      * @var Datetime The last time this component was changed
      *
-     * @Groups({"read", "write"})
+     * @Groups({"read"})
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=true)
      */
