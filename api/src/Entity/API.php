@@ -162,7 +162,7 @@ class API
     private $slug;
 
     /**
-     * @var string $endpoint The location where api calls should be directed to
+     * @var string The location where api calls should be directed to
      *
      * @example https://api.my-organisation.com
      *
