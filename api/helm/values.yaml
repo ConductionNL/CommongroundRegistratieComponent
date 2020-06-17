@@ -24,6 +24,7 @@ settings:
   unit: Common-Ground
   demo: cgrc.zaakonline.nl
   env: dev
+  web: false
   debug: 1
   cache: 1
   replicaCount: 1
