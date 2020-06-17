@@ -110,6 +110,15 @@ paths:
             type: integer
             default: 1
         -
+          name: limit
+          in: query
+          required: false
+          description: 'The number of items per page'
+          schema:
+            type: integer
+            default: 30
+            minimum: 0
+        -
           name: Authorization
           description: 'The JWT of the entity performing the request'
           in: header
@@ -913,6 +922,15 @@ paths:
           schema:
             type: integer
             default: 1
+        -
+          name: limit
+          in: query
+          required: false
+          description: 'The number of items per page'
+          schema:
+            type: integer
+            default: 30
+            minimum: 0
         -
           name: Authorization
           description: 'The JWT of the entity performing the request'
@@ -1811,6 +1829,15 @@ paths:
             type: integer
             default: 1
         -
+          name: limit
+          in: query
+          required: false
+          description: 'The number of items per page'
+          schema:
+            type: integer
+            default: 30
+            minimum: 0
+        -
           name: Authorization
           description: 'The JWT of the entity performing the request'
           in: header
@@ -2533,6 +2560,15 @@ paths:
             type: integer
             default: 1
         -
+          name: limit
+          in: query
+          required: false
+          description: 'The number of items per page'
+          schema:
+            type: integer
+            default: 30
+            minimum: 0
+        -
           name: Authorization
           description: 'The JWT of the entity performing the request'
           in: header
@@ -3253,15 +3289,11 @@ paths:
           schema:
             type: string
         -
-          name: 'name[]'
+          name: summary
           in: query
           required: false
           schema:
-            type: array
-            items:
-              type: string
-          style: form
-          explode: true
+            type: string
         -
           name: description
           in: query
@@ -3282,6 +3314,15 @@ paths:
           schema:
             type: integer
             default: 1
+        -
+          name: limit
+          in: query
+          required: false
+          description: 'The number of items per page'
+          schema:
+            type: integer
+            default: 30
+            minimum: 0
         -
           name: Authorization
           description: 'The JWT of the entity performing the request'
@@ -3842,6 +3883,15 @@ paths:
           schema:
             type: integer
             default: 1
+        -
+          name: limit
+          in: query
+          required: false
+          description: 'The number of items per page'
+          schema:
+            type: integer
+            default: 30
+            minimum: 0
         -
           name: Authorization
           description: 'The JWT of the entity performing the request'
@@ -4683,6 +4733,7 @@ components:
         summary:
           description: 'An short description of this component'
           type: string
+          nullable: true
         description:
           description: 'An short description of this component'
           type: string
@@ -4784,6 +4835,7 @@ components:
         summary:
           description: 'An short description of this component'
           type: string
+          nullable: true
         description:
           description: 'An short description of this component'
           type: string
@@ -4854,16 +4906,6 @@ components:
           type: string
           format: date-time
           nullable: true
-        createdAt:
-          description: 'The moment this component was found by the crawler'
-          type: string
-          format: date-time
-          nullable: true
-        updatedAt:
-          description: 'The last time this component was changed'
-          type: string
-          format: date-time
-          nullable: true
         updatedExternal:
           description: 'The last time this components git was changed on the git provider'
           type: string
@@ -4895,6 +4937,7 @@ components:
         summary:
           description: 'An short description of this component'
           type: string
+          nullable: true
         description:
           description: 'An short description of this component'
           type: string
@@ -5005,6 +5048,7 @@ components:
         summary:
           description: 'An short description of this component'
           type: string
+          nullable: true
         description:
           description: 'An short description of this component'
           type: string
@@ -5072,16 +5116,6 @@ components:
           nullable: true
         parsed:
           description: 'The moment this component was last parsed for file'
-          type: string
-          format: date-time
-          nullable: true
-        createdAt:
-          description: 'The moment this component was found by the crawler'
-          type: string
-          format: date-time
-          nullable: true
-        updatedAt:
-          description: 'The last time this component was changed'
           type: string
           format: date-time
           nullable: true
@@ -5593,6 +5627,8 @@ definitions:
         example: 'My component'
         maxLength: 255
       summary:
+        description: 'An short description of this component'
+        type: string
         example: 'This is the best component ever'
         maxLength: 2550
       description:
@@ -5676,6 +5712,8 @@ definitions:
         example: 'My component'
         maxLength: 255
       summary:
+        description: 'An short description of this component'
+        type: string
         example: 'This is the best component ever'
         maxLength: 2550
       description:
@@ -5729,12 +5767,6 @@ definitions:
         type: \Datetime
       parsed:
         description: 'The moment this component was last parsed for file'
-        type: \Datetime
-      createdAt:
-        description: 'The moment this component was found by the crawler'
-        type: \Datetime
-      updatedAt:
-        description: 'The last time this component was changed'
         type: \Datetime
       updatedExternal:
         description: 'The last time this components git was changed on the git provider'
@@ -6017,12 +6049,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-06-09 12:18:52'
+        example: '2020-06-17 13:26:22'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-06-09 12:18:52'
+        example: '2020-06-17 13:26:22'
     required: []
   AuditTrail-write:
     properties:
@@ -6070,12 +6102,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-06-09 12:18:52'
+        example: '2020-06-17 13:26:22'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-06-09 12:18:52'
+        example: '2020-06-17 13:26:22'
     required: []
   ChangeLog-write:
     properties:
