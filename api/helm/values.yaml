@@ -14,7 +14,7 @@ settings:
   repro: https://github.com/ConductionNL/Commongroundregistratiecomponent
   demo: cgrc.zaakonline.nl
   container: https://hub.docker.com/repository/docker/conduction/cgrc-php
-  domain: conduction.nl
+  domain: dev
   subdomain: cgrc
   organisationName: Conduction
   email: info@conduction.nl
@@ -24,6 +24,7 @@ settings:
   unit: Common-Ground
   demo: cgrc.zaakonline.nl
   env: dev
+  web: false
   debug: 1
   cache: 1
   replicaCount: 1

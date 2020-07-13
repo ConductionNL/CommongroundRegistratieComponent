@@ -53,7 +53,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *  }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ComponentRepository")
- * @ApiFilter(SearchFilter::class, properties={"name": "exact","description": "partial"})
+ * @ApiFilter(SearchFilter::class, properties={"name": "partial","summary": "partial","description": "partial"})
  * @ApiFilter(BooleanFilter::class, properties={"commonground"})
  */
 class Component
@@ -86,6 +86,20 @@ class Component
      * @ORM\Column(type="string", length=255)
      */
     private $name;
+
+    /**
+     * @var string An short description of this component
+     *
+     * @example This is the best component ever
+     *
+     *
+     * @Assert\Length(
+     *      max = 2550
+     * )
+     * @Groups({"read", "write"})
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $summary;
 
     /**
      * @var string An short description of this component
@@ -267,7 +281,7 @@ class Component
     /**
      * @var Datetime The moment this component was found by the crawler
      *
-     * @Groups({"read", "write"})
+     * @Groups({"read"})
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -276,7 +290,7 @@ class Component
     /**
      * @var Datetime The last time this component was changed
      *
-     * @Groups({"read", "write"})
+     * @Groups({"read"})
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -310,6 +324,18 @@ class Component
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getSummary(): ?string
+    {
+        return $this->summary;
+    }
+
+    public function setSummary(?string $summary): self
+    {
+        $this->summary = $summary;
 
         return $this;
     }
