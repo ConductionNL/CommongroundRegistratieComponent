@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b690b4ef-1aca-4252-a7ed-95d7dfdbbd33" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/helm/index.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/index.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/helm/pc-0.1.0.tgz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/helm/templates/cron-github-check.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/helm/templates/cron-github-get.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/helm/templates/cron-github-parse.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/helm/templates/ingress.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/templates/ingress.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,7 +11,9 @@
   </component>
   <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/api/composer.json</pharConfigPath>
-    <execution />
+    <execution>
+      <executable />
+    </execution>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
