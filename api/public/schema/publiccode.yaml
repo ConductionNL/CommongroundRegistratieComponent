@@ -16,8 +16,10 @@ outputTypes:
   - text/plain
 
 platforms:
-  - android
-  - ios
+    - web
+    - haven
+    - nlx
+    - gaia-x
 
 categories:
   - content-management
@@ -136,3 +138,7 @@ it:
 
   riuso:
     codiceIPA: c_h501
+
+installations:
+    - type: helm
+      url: "https://raw.githubusercontent.com/ConductionNL/Commongroundregistratiecomponent/master/api/helm/"
