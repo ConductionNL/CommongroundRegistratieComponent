@@ -51,10 +51,11 @@ This component adheres to international, national and local standards (in that o
 
 Developers toolkit and technical information
 ----
-You can find the data model, OAS documentation and other helpfull developers material like a  postman collection under api/public/schema, development support is provided trough the [samenorganiseren slack channel](https://join.slack.com/t/samenorganiseren/shared_invite/zt-dex1d7sk-wy11sKYWCF0qQYjJHSMW5Q).
+We make our datamodels with the tool [modelio](https://www.modelio.org) which can be found along the OAS documentation and the postman collection in api/public/schema.
+If you need development support we provide that through the [samenorganiseren slack channel](https://join.slack.com/t/samenorganiseren/shared_invite/zt-dex1d7sk-wy11sKYWCF0qQYjJHSMW5Q).
 
 Couple of quick tips when you start developing
-- If you not yet have setup the component locally read the Tutorial for setting up your local environment.
+- If you haven't setup the component locally read the Installation part for setting up your local environment.
 - You can find the other components on [Github](https://github.com/ConductionNL).
 - Take a look at the [commonground componenten catalogus](https://componentencatalogus.commonground.nl/componenten?) to prevent development collitions.
 - Use [Commongroun.conduction.nl](https://commonground.conduction.nl/) for easy deployment of test environments to deploy your development to.
