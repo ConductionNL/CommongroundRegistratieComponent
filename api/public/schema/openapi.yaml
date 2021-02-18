@@ -12,7 +12,7 @@ info:
     - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/cgrc-php) 
     - Datamodel: [postman](/schema/cgrc.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [modelio (zip)](/schema/Datamodel_Modelio.zip) 
     
-    'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         
+    Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.         
     
 paths:
   /a_p_is:
@@ -5783,6 +5783,79 @@ definitions:
     required:
       - name
       - git
+  ComponentFile-read:
+    properties:
+      id:
+        description: 'The UUID identifier of this object'
+        type: string
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      name:
+        description: 'The name of this resource'
+        type: string
+        example: 'My component file'
+      type:
+        description: 'The type of this resource'
+        type: string
+        example: 'My type'
+      location:
+        description: 'The location of this resource'
+        type: string
+        example: 'https://github.com/repos/ConductionNL/Commongrounregistratiecomponent/contents/README.md?ref=master'
+      sha:
+        description: 'The sha of this resource'
+        type: string
+      extention:
+        description: 'The extension of this resource'
+        type: string
+        example: md
+      content:
+        description: 'The raw content of this resource'
+        type: string
+      html:
+        description: 'The html content of this resource'
+        type: string
+      contentUpdated:
+        description: 'The moment the content of this file was last updated by te crawler'
+        type: \DateTime
+      htmlUpdated:
+        description: 'The moment the html of this file was last updated by te crawler'
+        type: \DateTime
+      createdAt:
+        description: 'The moment this component was found by the crawler'
+        type: \DateTime
+      updatedAt:
+        description: 'The last time this component was changed'
+        type: \DateTime
+    required: []
+  ComponentFile-write:
+    properties:
+      name:
+        description: 'The name of this resource'
+        type: string
+        example: 'My component file'
+      type:
+        description: 'The type of this resource'
+        type: string
+        example: 'My type'
+      location:
+        description: 'The location of this resource'
+        type: string
+        example: 'https://github.com/repos/ConductionNL/Commongrounregistratiecomponent/contents/README.md?ref=master'
+      sha:
+        description: 'The sha of this resource'
+        type: string
+      extention:
+        description: 'The extension of this resource'
+        type: string
+        example: md
+      content:
+        description: 'The raw content of this resource'
+        type: string
+      html:
+        description: 'The html content of this resource'
+        type: string
+    required: []
   Organisation-read:
     properties:
       id:
@@ -5872,79 +5945,6 @@ definitions:
     required:
       - name
       - git
-  ComponentFile-read:
-    properties:
-      id:
-        description: 'The UUID identifier of this object'
-        type: string
-        example: e2984465-190a-4562-829e-a8cca81aa35d
-        format: uuid
-      name:
-        description: 'The name of this resource'
-        type: string
-        example: 'My component file'
-      type:
-        description: 'The type of this resource'
-        type: string
-        example: 'My type'
-      location:
-        description: 'The location of this resource'
-        type: string
-        example: 'https://github.com/repos/ConductionNL/Commongrounregistratiecomponent/contents/README.md?ref=master'
-      sha:
-        description: 'The sha of this resource'
-        type: string
-      extention:
-        description: 'The extension of this resource'
-        type: string
-        example: md
-      content:
-        description: 'The raw content of this resource'
-        type: string
-      html:
-        description: 'The html content of this resource'
-        type: string
-      contentUpdated:
-        description: 'The moment the content of this file was last updated by te crawler'
-        type: \DateTime
-      htmlUpdated:
-        description: 'The moment the html of this file was last updated by te crawler'
-        type: \DateTime
-      createdAt:
-        description: 'The moment this component was found by the crawler'
-        type: \DateTime
-      updatedAt:
-        description: 'The last time this component was changed'
-        type: \DateTime
-    required: []
-  ComponentFile-write:
-    properties:
-      name:
-        description: 'The name of this resource'
-        type: string
-        example: 'My component file'
-      type:
-        description: 'The type of this resource'
-        type: string
-        example: 'My type'
-      location:
-        description: 'The location of this resource'
-        type: string
-        example: 'https://github.com/repos/ConductionNL/Commongrounregistratiecomponent/contents/README.md?ref=master'
-      sha:
-        description: 'The sha of this resource'
-        type: string
-      extention:
-        description: 'The extension of this resource'
-        type: string
-        example: md
-      content:
-        description: 'The raw content of this resource'
-        type: string
-      html:
-        description: 'The html content of this resource'
-        type: string
-    required: []
   AuditTrail-read:
     properties:
       id:
@@ -6049,12 +6049,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-06-17 13:26:22'
+        example: '2021-02-17 19:48:28'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-06-17 13:26:22'
+        example: '2021-02-17 19:48:28'
     required: []
   AuditTrail-write:
     properties:
@@ -6102,12 +6102,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-06-17 13:26:22'
+        example: '2021-02-17 19:48:28'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-06-17 13:26:22'
+        example: '2021-02-17 19:48:28'
     required: []
   ChangeLog-write:
     properties:
@@ -6131,15 +6131,15 @@ tags:
       
       
   -
-    name: Organisation
-    description: |
-      An Organisation.
-      
-      
-  -
     name: ComponentFile
     description: |
       A Component file.
+      
+      
+  -
+    name: Organisation
+    description: |
+      An Organisation.
       
       
   -

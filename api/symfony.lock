@@ -25,6 +25,9 @@
     "composer/ca-bundle": {
         "version": "1.2.6"
     },
+    "composer/package-versions-deprecated": {
+        "version": "1.8.0"
+    },
     "composer/semver": {
         "version": "1.5.0"
     },
@@ -148,6 +151,9 @@
     "knplabs/knp-markdown-bundle": {
         "version": "1.8.1"
     },
+    "lcobucci/jwt": {
+        "version": "3.3.1"
+    },
     "league/html-to-markdown": {
         "version": "4.8.1"
     },
@@ -179,7 +185,7 @@
         "version": "1.5.1"
     },
     "php": {
-        "version": "7.3"
+        "version": "7.4"
     },
     "php-cs-fixer/diff": {
         "version": "v1.3.0"
@@ -414,6 +420,9 @@
     "symfony/polyfill-intl-idn": {
         "version": "v1.11.0"
     },
+    "symfony/polyfill-intl-normalizer": {
+        "version": "v1.18.1"
+    },
     "symfony/polyfill-mbstring": {
         "version": "v1.11.0"
     },
@@ -422,6 +431,9 @@
     },
     "symfony/polyfill-php73": {
         "version": "v1.11.0"
+    },
+    "symfony/polyfill-php80": {
+        "version": "v1.18.1"
     },
     "symfony/process": {
         "version": "v4.3.1"
