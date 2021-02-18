@@ -7,7 +7,8 @@ settings:
   projectName: cgrc
   name: cgrc
   title: Common Ground Registratie Component
-  version: V.0.1
+  version: V1.0
+  majorVersion: v1
   id: 
   description: 'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'
   type: component
@@ -16,6 +17,8 @@ settings:
   container: https://hub.docker.com/repository/docker/conduction/cgrc-php
   domain: conduction.nl
   subdomain: cgrc
+  subpath: pc
+  subpathRouting: true
   organisationName: Conduction
   email: info@conduction.nl
   country: Netherlands

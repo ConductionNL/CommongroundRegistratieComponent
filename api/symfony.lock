@@ -128,12 +128,6 @@
     "doctrine/persistence": {
         "version": "1.1.1"
     },
-    "doctrine/reflection": {
-        "version": "v1.0.0"
-    },
-    "doctrine/rst-parser": {
-        "version": "0.1.0"
-    },
     "doctrine/sql-formatter": {
         "version": "1.1.1"
     },
@@ -154,6 +148,9 @@
         "files": [
             ".php_cs.dist"
         ]
+    },
+    "friendsofphp/proxy-manager-lts": {
+        "version": "v1.0.1"
     },
     "gedmo/doctrine-extensions": {
         "version": "v2.4.37"
@@ -563,6 +560,9 @@
     },
     "symfony/property-info": {
         "version": "v4.3.1"
+    },
+    "symfony/proxy-manager-bridge": {
+        "version": "v5.1.10"
     },
     "symfony/routing": {
         "version": "4.2",
