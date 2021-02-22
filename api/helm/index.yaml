@@ -2,11 +2,11 @@ apiVersion: v1
 entries:
   cgrc:
   - apiVersion: v1
-    appVersion: V.0.1
-    created: "2021-02-18T09:24:47.5161768Z"
+    appVersion: V1.0
+    created: "2021-02-19T10:50:14.2420027Z"
     description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
       beschikbaar.
-    digest: bbc0472d22b759e1d16ab0105bd0d82f9c880a3bfda2f79dd233ce79d6807529
+    digest: 06cb9bdccd90fd018127a226ed6d48c32bfa1c8cad15873152fa3998b9037547
     home: pc.zaakonline.nl
     icon: pc.zaakonline.nl
     name: cgrc
@@ -18,7 +18,7 @@ entries:
       category: Database
     apiVersion: v2
     appVersion: 11.10.0
-    created: "2021-02-18T09:24:47.5273567Z"
+    created: "2021-02-19T10:50:14.3928782Z"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -47,4 +47,4 @@ entries:
     urls:
     - charts/postgresql-10.1.1.tgz
     version: 10.1.1
-generated: "2021-02-18T09:24:47.5054756Z"
+generated: "2021-02-19T10:50:14.0393277Z"
