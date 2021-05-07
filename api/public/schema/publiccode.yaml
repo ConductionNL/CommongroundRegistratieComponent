@@ -81,21 +81,6 @@ legal:
   repoOwner: City of Chicago
   authorsFile: AUTHORS
 
-maintenance:
-  type: "contract"
-
-  contractors:
-    - name: "Fornitore Privato SPA"
-      email: "dario.bianchi@fornitore.it"
-      website: "https://privatecompany.com"
-      until: "2019-01-01"
-
-  contacts:
-    - name: Francesco Rossi
-      email: "francesco.rossi@comune.reggioemilia.it"
-      affiliation: Comune di Reggio Emilia
-      phone: "+3923113215112"
-
 localisation:
   localisationReady: yes
   availableLanguages:
